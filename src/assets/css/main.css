@@ -97,6 +97,15 @@ body {
   font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
 }
 
+/* Fix global para que correos y teléfonos no se inviertan en árabe */
+[dir="rtl"] a[href^="tel:"],
+[dir="rtl"] a[href^="mailto:"],
+[dir="rtl"] .ltr-text {
+  direction: ltr !important;
+  display: inline-block;
+  unicode-bidi: embed;
+}
+
 a {
   color: inherit;
   text-decoration: none;
