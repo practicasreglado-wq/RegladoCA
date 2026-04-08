@@ -1,0 +1,526 @@
+{
+  "contact_page": {
+    "hero_title": "Estamos aquí para ayudarle",
+    "info_title": "Información de contacto",
+    "form_title": "Envíenos un mensaje",
+    "labels": {
+      "name": "Nombre completo *",
+      "email": "Correo electrónico *",
+      "phone": "Teléfono",
+      "subject": "Asunto *",
+      "message": "Mensaje *",
+      "privacy_prefix": "He leído y acepto la ",
+      "privacy_link": "Política de Privacidad"
+    },
+    "placeholders": {
+      "name": "Su nombre",
+      "email": "su@email.com",
+      "phone": "+34 600 000 000",
+      "subject": "Seleccione un servicio",
+      "message": "Describa su consulta..."
+    },
+    "subjects": {
+      "inspecciones": "Inspecciones Tributarias",
+      "juridica": "Consultoría Jurídica",
+      "tecnica": "Consultoría Técnica",
+      "economica": "Consultoría Económica",
+      "energetica": "Consultoría Energética",
+      "subvenciones": "Subvenciones Europeas",
+      "otro": "Otro"
+    },
+    "errors": {
+      "name": "El nombre es obligatorio.",
+      "email": "Introduzca un email válido.",
+      "message": "El mensaje debe tener al menos 10 caracteres."
+    },
+    "submit": "Enviar mensaje",
+    "success": "✓ Mensaje enviado"
+  },
+  "nav": {
+    "about": "Sobre nosotros",
+    "services": "Qué hacemos",
+    "contact": "Contacto",
+    "services_list": {
+      "inspecciones": "Inspecciones Tributarias",
+      "juridica": "Consultoría Jurídica",
+      "tecnica": "Consultoría Técnica",
+      "economica": "Consultoría Económica"
+    }
+  },
+  "cookie_banner": {
+    "text": "Utilizamos cookies propias y de terceros para mejorar su experiencia y nuestros servicios. Si continúa navegando, consideramos que acepta su uso.",
+    "more_info": "Más información",
+    "accept": "Aceptar"
+  },
+  "hero": {
+    "eyebrow": "Profesionales del Derecho, la Economía y la Ingeniería",
+    "title": "Realizamos inspecciones tributarias para los ayuntamientos y aumentamos sus ingresos",
+    "title_highlight": "sin perjudicar a los ciudadanos.",
+    "cta": "Contáctanos"
+  },
+  "services": {
+    "label": "Nuestros Servicios",
+    "title": "Profesionales del derecho, la economía y la ingeniería",
+    "subtitle": "Todos nuestros servicios son ejecutados por especialistas en su sector.",
+    "cta": "CONTÁCTANOS",
+    "more": "Saber más →",
+    "items": [
+      {
+        "icon": "inspecciones",
+        "title": "Inspecciones Tributarias",
+        "description": "IAE, IBI, TASA 1,5%, ICIO y regularización de tributos locales."
+      },
+      {
+        "icon": "juridica",
+        "title": "Consultoría Jurídica",
+        "description": "Asesoría jurídica integral de entidades locales y administraciones públicas."
+      },
+      {
+        "icon": "economica",
+        "title": "Consultoría Económica",
+        "description": "Asistencia y reestructuración económica de ayuntamientos."
+      },
+      {
+        "icon": "tecnica",
+        "title": "Consultoría Técnica",
+        "description": "Energías renovables, licencias urbanísticas y de actividad."
+      }
+    ]
+  },
+  "banner": {
+    "label": "Inspecciones Tributarias",
+    "title": "Gestión de la bonificación del 95% en el IAE de las cooperativas.",
+    "text": "La Ley 20/1990, de Régimen Fiscal de Cooperativas, establece una bonificación del 95% de la cuota del IAE disponiendo que los ayuntamientos comuniquen anualmente la relación de cooperativas que hayan disfrutado de estas bonificaciones."
+  },
+  "about": {
+    "tags": ["Experiencia", "Confianza", "Principios"],
+    "label": "Especialistas",
+    "title": "Profesionales del derecho, la economía y la ingeniería",
+    "paragraphs": [
+      "Reglado Consultores, está formada por un grupo de profesionales del derecho, la economía y la ingeniería con amplia experiencia en el sector de la consultoría, abogacía y colaboración en la prestación de servicios integrales a las administraciones públicas.",
+      "Nuestros técnicos cuentan con una alta cualificación profesional que, unida al conocimiento del mundo local y más concretamente, de los tributos municipales y sectores regulados, permite detectar bolsas de fraude, optimizando los recursos de los ayuntamientos y aumentando su recaudación.",
+      "Todo nuestro personal se encuentra inmerso en un plan de formación permanente que permite una total actualización conforme a la abundante doctrina jurisprudencia, así como, la comunicación de las distintas novedades al personal de los ayuntamientos.",
+      "Nuestra política laboral se basa en la confianza y en el esfuerzo de nuestros trabajadores, fomentando la conciliación entre la vida personal y laboral, así como, la consecución del 100% de la jornada laboral en modalidad de teletrabajo.",
+      "Por tanto, toda nuestra actuación se orienta principalmente a garantizar la calidad del empleo y buscando unas condiciones y un ambiente de trabajo en el que los empleados se sientan cómodos, valorados y satisfechos"
+    ],
+    "cta": "Contáctanos"
+  },
+  "stats": [
+    { "value": "1K", "label": "Casos disputados" },
+    { "value": "98%", "label": "Casos ganados" },
+    { "value": "15", "label": "Años de experiencia" },
+    { "value": "30", "label": "Profesionales" }
+  ],
+  "ordenanzas": {
+    "label": "Inspecciones y Regularizaciones Tributarias",
+    "title": "Redacción y revisión de ordenanzas fiscales y elaboración de informes complementarios.",
+    "items": [
+      "Ordenanzas de IAE",
+      "Ordenanzas de Tasa 1,5",
+      "Ordenanzas de IBI.",
+      "Ordenanzas de ICIO",
+      "Ordenanzas de Licencias Urbanísticas",
+      "Ordenanzas de Canon Urbanístico",
+      "Tasas."
+    ],
+    "text": "Ponemos a disposición del Ayuntamiento nuestra experiencia para revisar sus Ordenanzas fiscales, con un triple objetivo, facilitar los trámites a los contribuyentes, aumentar la recaudación y dar las pautas para comprobar la correcta tributación de los hechos imponibles realizados en el municipio.",
+    "cta": "Contáctanos"
+  },
+  "footer": {
+    "brand_desc": "Profesionales del derecho, la economia y la ingenieria al servicio de administraciones publicas y proyectos complejos.",
+    "nav_title": "Navegación",
+    "contact_title": "Contacto",
+    "phone_label": "Teléfono",
+    "office_label": "Oficina",
+    "office_address": "Avda. Isla Graciosa 7, S.S. de los Reyes, Madrid",
+    "email_label": "Email",
+    "links": {
+      "legal_privacy": "Aviso Legal y Privacidad",
+      "cookies": "Política de Cookies"
+    },
+    "copy": "©2026 Reglado Consultores & Abogados · Todos los derechos reservados"
+  },
+  "legal_notice": {
+    "title": "Aviso Legal y Política de Privacidad",
+    "sections": [
+      {
+        "title": "1. TITULARIDAD DEL PORTAL.",
+        "content": "REGLADO ABOGADOS & CONSULTORES, S.L.U, es la titular y responsable de este sitio web, poniendo a disposición de los usuarios el presente documento, con el que pretende dar cumplimiento a las obligaciones dispuestas en la Ley 34/2002, de 11 de julio, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSICE), así como informar a todos los usuarios del sitio web respecto a cuáles son las condiciones de uso. Toda persona que acceda a este sitio web asume el papel de usuario, comprometiéndose a la observancia y cumplimiento riguroso de las disposiciones aquí dispuestas, así como a cualquier otra disposición legal que fuera de aplicación.\n\nREGLADO ABOGADOS & CONSULTORES, S.L.U se reserva el derecho de modificar cualquier tipo de información que pudiera aparecer en el sitio web, sin que exista obligación de preavisar o poner en conocimiento de los usuarios dichas obligaciones, entendiéndose como suficiente con la publicación en el sitio web."
+      },
+      {
+        "title": "2. DATOS IDENTIFICATIVOS.",
+        "content": "Denominación social: REGLADO ABOGADOS & CONSULTORES, S.L.U\nNombre Comercial: REGLADO CONSULTORES\nCIF: B09662081\nDomicilio: AVDA. ISLA GRACIOSA, 7 PISO 1º DESPACHOS 5-6 28703 SAN SEBASTIÁN DE LOS REYES.\nTeléfono: 615-641-081\nDirección electrónica: info@regladoconsultores.com\nDichos nombres de dominios no podrán ser utilizados en conexión con otros contenidos, productos o servicios que no sean titularidad de la Empresa, ni de ninguna manera que pueda causar confusión entre los usuarios finales o el descrédito de la Empresa."
+      },
+      {
+        "title": "3. OBJETO.",
+        "content": "El presente Aviso Legal recoge las condiciones de uso que regulan el acceso, navegación y uso del Portal, así como las responsabilidades derivadas de la utilización, prestación y/o contratación de los productos o servicios que, en su caso, puedan ser ofrecidos, así como de los contenidos que lo integran, y sin perjuicio de que la Empresa pueda establecer condiciones particulares que regulen la utilización, prestación y/o contratación de productos o servicios que, en su caso, sean ofrecidos a los Usuarios a través del Portal.\n\nEn todo caso, dichas condiciones particulares formarán parte integrante del presente Aviso Legal.\n\nEl mero acceso al Portal, el envío de solicitudes de información, consultas y cualquier acto de naturaleza similar a los anteriores, realizados a través de los formularios y/o buzones electrónicos existentes en el Portal implicará, por su parte, la aceptación sin reservas de todas y cada una de las normas integrantes del presente Aviso Legal y la adquisición de la consideración de Usuario del Portal. En consecuencia, Vd. debe leer atentamente y conocer el contenido del presente Aviso Legal."
+      },
+      {
+        "title": "4. ACEPTACIÓN.",
+        "content": "El acceso y utilización de este portal de Internet como usuario implica la aceptación de las disposiciones contenidas en este Aviso legal, el cual puede cambiar en cualquier momento."
+      },
+      {
+        "title": "5. ACCESO Y USO DEL PORTAL.",
+        "content": "El acceso al Portal por parte de los Usuarios tiene carácter libre y gratuito. No obstante, la utilización, prestación y/o contratación de los productos o servicios que, en su caso, puedan ser ofrecidos por la Empresa puede estar sujeta a la previa observancia de requisitos formalistas tales como la cumplimentación del correspondiente formulario, abono de gastos o tasas y/o la previa aceptación de las condiciones particulares que resulten de aplicación a los mismos.\n\nEl mero acceso al Portal no implica, en sí mismo, el establecimiento de ningún tipo de vínculo o relación comercial entre la Empresa y el Usuario, salvo cuando se hayan establecido los medios oportunos para ello y el Usuario haya dado cumplimiento previo a los requisitos que, en su caso, sean establecidos.\n\nLa inclusión en el Portal de información relativa a productos o servicios ofrecidos por la Empresa tiene exclusivamente fines informativos y publicitarios, salvo que sea establecida expresamente otra finalidad.\n\nSi para la utilización, prestación y/o contratación de algún producto o servicio ofrecido a través del Portal, el Usuario debiera proceder a su registro, éste será responsable de aportar información veraz y lícita, garantizando la autenticidad de todos aquellos datos que introduzca a la hora de cumplimentar los formularios preestablecidos para acceder a los productos o servicios de que se trate.\n\nEn todo caso, el acceso, navegación y uso del Portal y, en su caso, el uso o contratación de los servicios o productos que sean ofrecidos a través del mismo se hace bajo la única y exclusiva responsabilidad del Usuario, por lo que éste se compromete a observar diligente y fielmente cualquier instrucción adicional, impartida por la Empresa o por personal autorizado de la Empresa, relativa al uso del Portal y sus contenidos."
+      },
+      {
+        "title": "6. CONDICIONES DE USO.",
+        "content": "El portal y sus servicios son, en general, de libre acceso y no exigen la previa suscripción o registro del Usuario. El Usuario se compromete a utilizar este sitio web sin incurrir en actividades que puedan ser consideradas ilícitas o ilegales, que infrinjan los derechos de terceros o que puedan atentar contra las presentes Condiciones de uso, la legislación vigente y los usos generalmente aceptados. En particular, y a título informativo, el Usuario se compromete expresamente a abstenerse de llevar a cabo cualquiera de las actividades siguientes:\n\n• Destruir, alterar, inutilizar o de cualquier otra forma dañar los datos o documentos electrónicos contenidos en la web.\n\n• Obstaculizar el acceso de otros Usuarios a la web y a sus servicios.\n\n• Enviar mensajes de correo electrónico de forma masiva o con finalidades comerciales o publicitarias sin el consentimiento del destinatario.\n\n• Intentar interceptar, leer, borrar, copiar o modificar mensajes de correo electrónico de otros Usuarios.\n\n• Utilizar el sistema para intentar acceder a áreas restringidas.\n\n• Introducir, por cualquier medio, programas o código que causen o sean susceptibles de causar cualquier tipo de alteración en la web\n\n• Vulnerar los derechos de propiedad intelectual de los propietarios de la web o de terceros.\n\n• Vulnerar los derechos fundamentales y las libertades públicas reconocidas en la Constitución, los Tratados Internacionales y el resto de la legislación.\n\nLos contenidos se ofrecen como un servicio al Usuario, debiendo ser utilizados con los fines para los cuales fueron creados y puestos a su disposición."
+      },
+      {
+        "title": "7. PRIVACIDAD Y TRATAMIENTO DE DATOS.",
+        "content": "Cuando para el acceso a determinados contenidos o servicio sea necesario facilitar datos de carácter personal, los Usuarios garantizarán su veracidad, exactitud, autenticidad y vigencia. La empresa dará a dichos datos el tratamiento automatizado que corresponda en función de su naturaleza o finalidad, en los términos indicados en la sección de Política de Privacidad, aplicando las correspondientes medidas de seguridad, todo ello en cumplimiento del RGPD, LOPDGDD y LSSI."
+      },
+      {
+        "title": "8. RESPONSABILIDADES Y LIMITACIONES.",
+        "content": "La Empresa no puede garantizar la fiabilidad, utilidad o veracidad de la información que se preste a través del Portal. En consecuencia, la Empresa no garantiza ni se hace responsable de:\n\n• La continuidad de los contenidos del Portal y/o la falta de disponibilidad o accesibilidad del Portal o continuidad técnica del mismo.\n\n• La ausencia de virus y demás componentes maliciosos o lesivos en los contenidos en el Portal o en el servidor que lo suministra, a pesar de haber adoptado todas las medidas tecnológicas necesarias para evitarlo.\n\n• La invulnerabilidad del Portal y/o la inexpugnabilidad de las medidas de seguridad que se adopten en el mismo.\n\n• Los daños o perjuicios de cualquier naturaleza que pudieran ocasionar, tales como errores u omisiones en los contenidos, que cause, a sí mismo o a un tercero, cualquier persona que infringiera las condiciones, normas e instrucciones que la Empresa establece en el Portal o a través de la vulneración de los sistemas de seguridad del mismo.\n\n• Cualesquiera otros daños que pudieran ser causados por motivos inherentes al no funcionamiento o al funcionamiento defectuoso del Portal o de los sitios web a los que, en su caso, se hayan podido establecer links.\n\nREGLADO ABOGADOS & CONSULTORES declara que ha adoptado todas las medidas necesarias, dentro de sus posibilidades y del estado de la tecnología, para garantizar el funcionamiento del Portal y evitar la existencia y transmisión de virus y demás componentes dañinos o maliciosos a los Usuarios.\n\nLa Empresa realiza los máximos esfuerzos para evitar errores en los contenidos que se publican en el Portal. Todos los contenidos que se ofrecen a través del Portal se encuentran actualizados, reservándose la Empresa la facultad de poder modificarlos en cualquier momento. La Empresa no se responsabiliza de las consecuencias que puedan derivarse de los errores en los contenidos que puedan aparecer en the Portal proporcionados por terceros.\n\nQueda prohibida cualquier comunicación o transmisión de contenidos que infrinja los derechos de terceros y cuyo contenido sea amenazante, obsceno, difamatorio, pornográfico, xenófobo, atentatorio contra la dignidad de la persona o los derechos de la infancia, la legalidad vigente o cualquier conducta que incite o constituya la realización de una ofensa penal.\n\nAsimismo queda prohibida la inclusión y comunicación de contenidos, por parte de los usuarios, que sean falsos o inexactos y que induzcan o puedan inducir a error al resto de usuarios o al personal de la Empresa, en particular los contenidos que se encuentren protegidos por cualesquiera derechos de propiedad intelectual o industrial, pertenecientes a terceras personas, cuando no cuenten con la autorización del titular de los derechos, menoscaben o desprestigien la fama o crédito de la Empresa, sean considerados como un caso de publicidad ilícita, engañosa o desleal y/o incorporen virus o cualquier otro elemento electrónico que pudiese dañar o impedir el funcionamiento del sitio web, de la red, equipos informáticos de la Empresa o terceros y/o el acceso al portal del resto de usuarios.\n\nLa Empresa podrá prohibir el acceso al Portal de cualquier Usuario que realice cualquiera de las conductas referenciadas, con carácter enunciativo y no limitativo, en el presente apartado."
+      },
+      {
+        "title": "9. DERECHOS DE PROPIEDAD INTELECTUAL E INDUSTRIAL.",
+        "content": "Todos aquellos activos intangibles (obras intelectuales, contenido, información, videos o imágenes, marcas o signos distintivos y, en general cualquier activo susceptible de ser protegido por las Leyes reguladoras de la Propiedad Industrial e Intelectual) puestos a disposición del público por la presente página web y cuya titularidad no pertenezca a la Empresa, han sido incluidos en el presente sitio previa autorización de sus legítimos titulares y / o cumpliendo con la legislación y normativa vigentes.\n\nQuedan reservados todos los derechos de propiedad intelectual e industrial sobre los Contenidos y, en particular, queda prohibido modificar, copiar, reproducir, comunicar públicamente, transformar o distribuir de cualquier forma la totalidad o parte de los contenidos incluidos en el Portal, para propósitos públicos o comerciales, si no se cuenta con la autorización previa, expresa y por escrito de la Empresa o, en su caso, del titular de los derechos a que corresponda.\n\nEl acceso y navegación del usuario por la Web en ningún caso se entenderá como una renuncia, transmisión, licencia o cesión total ni parcial de los derechos antes indicados por parte de la Empresa.\n\nEn consecuencia, no está permitido suprimir, eludir o manipular el aviso de derechos de autor («copyright») y cualesquiera otros datos de identificación de los derechos de la Empresa o de sus titulares incorporados a los Contenidos, así como los dispositivos técnicos de protección, las huellas digitales o cualesquiera mecanismos de información y/o de identificación que pudieren contenerse en los mismos.\n\nLas referencias a nombres y marcas comerciales o registradas, logotipos u otros signos distintivos, ya sean titularidad de la Empresa o de terceras empresas, llevan implícitas la prohibición sobre su uso sin el consentimiento de la Empresa o de sus legítimos propietarios. En ningún momento, salvo manifestación expresa el acceso o uso del Portal y/o de sus Contenidos, confiere al usuario derecho alguno sobre las marcas, logotipos y/o signos distintivos en él incluidos protegidos por Ley"
+      },
+      {
+        "title": "10. HIPERVÍNCULOS Y ENLACES A OTRAS PÁGINAS WEB",
+        "content": "El Usuario se obliga a no reproducir de ningún modo, ni siquiera mediante un hiperenlace o hipervínculo, el Espacio Web, así como ninguno de sus contenidos, salvo autorización expresa y por escrito del responsable del fichero.\n\nEn el caso de que se dispusiesen enlaces o hipervínculos hacía otros sitios de Internet, directa o indirectamente, a recursos o páginas web de Internet que se encuentran fuera del Portal, REGLADO ABOGADOS & CONSULTORES no ejercerá ningún tipo de control sobre dichos sitios y contenidos, ni asumirá responsabilidad alguna por los contenidos de algún enlace perteneciente a una web ajeno.\n\nEn cualquier caso, la presencia de estos enlaces en el Portal tiene una finalidad informativa, y no implica la existencia de vínculo o relación mercantil o de dependencia con la Empresa titular de la página web enlazada. En estos casos, la Empresa no será responsable de establecer las condiciones generales y particulares para tener en cuenta en la utilización, prestación o contratación de estos servicios por terceros y, por lo tanto, no podrá ser considerado responsable de los mismos.\n\nTampoco se garantizará la disponibilidad técnica, calidad, fiabilidad, exactitud, amplitud, veracidad, validez y constitucionalidad de cualquier material o información contenida en ninguno de dichos hipervínculos u otros sitios de Internet.\n\nIgualmente, la inclusión de estas conexiones externas no implicará ningún tipo de asociación, fusión o participación con las entidades conectadas."
+      },
+      {
+        "title": "11. COOKIES.",
+        "content": "La empresa se reserva el derecho de utilizar la tecnología “cookie” en el espacio Web, a fin de reconocerlo como Usuario frecuente y personalizar el uso que realice del espacio Web mediante la preselección de su idioma, o contenidos más deseados o específicos, pudiendo acceder a las mismas a través de la Política de Cookies."
+      },
+      {
+        "title": "12. DURACIÓN Y MODIFICACIÓN.",
+        "content": "REGLADO ABOGADOS & CONSULTORES se reserva el derecho de modificar el presente Aviso Legal y/o las condiciones particulares que, en su caso, hayan sido establecidas para la utilización y/o contratación de los productos o servicios prestados a través del Portal, cuando lo considere oportuno o con la finalidad de adecuarse a los cambios legislativos y tecnológicos, siendo válidas y surtiendo sus efectos desde la publicación en el Portal.\n\nLa vigencia temporal de estas condiciones de uso coincide, por lo tanto, con el tiempo de su exposición, hasta que sean modificadas total o parcialmente, momento en el cual pasarán a tener vigencia las condiciones de uso modificadas.\nLa Empresa podrá dar por terminado, suspender o interrumpir, en cualquier momento sin necesidad de preaviso, el acceso a los contenidos de la página, sin posibilidad por parte del Usuario de exigir indemnización alguna. Tras dicha extinción, seguirán vigentes las prohibiciones de uso de los contenidos, expuestas anteriormente en el presente Aviso Legal."
+      },
+      {
+        "title": "13. COMUNICACIONES.",
+        "content": "Cualquier comunicación entre REGLADO ABOGADOS & CONSULTORES y el Usuario, deberá dirigirse a la Empresa a la dirección electrónica: info@regladoconsultores.com\n\nEn todo caso, las comunicaciones de la Empresa hacia el Usuario se realizarán de conformidad con los datos de contacto aportados o facilitados. Expresamente, el Usuario acepta la utilización del correo electrónico como procedimiento válido para el intercambio de información y la remisión de comunicaciones entre y/o con la Empresa."
+      },
+      {
+        "title": "14. LEGISLACIÓN APLICABLE Y TRIBUNALES COMPETENTES.",
+        "content": "El presente Aviso Legal y las relaciones establecidas entre la Empresa y el Usuario, en particular el conocimiento y resolución de cualesquiera litigios, discrepancias o diferencias que pudieran surgir, se regirán y resolverán de conformidad con lo establecido en la normativa española relativa a legislación aplicable y jurisdicción competente.\n\nNo obstante, para los casos en los que la normativa prevea la posibilidad a las partes de someterse a un fuero, la Empresa y el Usuario, con renuncia expresa a cualquier otro fuero que pudiera corresponderles, someterán cualesquiera controversias y/o litigios al conocimiento de los Juzgados y Tribunales de la ciudad del domicilio de la Empresa previsto en el presente Aviso Legal."
+      }
+    ]
+  },
+  "cookies_page": {
+    "title": "Política de Cookies",
+    "sections": [
+      {
+        "title": "1. ¿QUÉ SON LAS COOKIES?",
+        "content": "Una cookie es un fichero que se descarga en su ordenador al acceder a determinadas páginas web. Las cookies permiten a una página web, entre otras cosas, almacenar y recuperar información sobre los hábitos de navegación de un usuario o de su equipo y, dependiendo de la información que contengan y de la forma en que utilice su equipo, pueden utilizarse para reconocer al usuario."
+      },
+      {
+        "title": "2. TIPOS DE COOKIES QUE UTILIZA ESTA PÁGINA WEB",
+        "content": "• Cookies técnicas: Son aquellas que permiten al usuario la navegación a través de una página web, plataforma o aplicación y la utilización de las diferentes opciones o servicios que en ella existan.\n• Cookies de personalización: Son aquellas que permiten al usuario acceder al servicio con algunas características de carácter general predefinidas en función de una serie de criterios en el terminal del usuario.\n• Cookies de análisis: Son aquellas que bien tratadas por nosotros o por terceros, nos permiten cuantificar el número de usuarios y así realizar la medición y análisis estadístico de la utilización que hacen los usuarios del servicio ofertado."
+      },
+      {
+        "title": "3. DESACTIVACIÓN Y ELIMINACIÓN DE COOKIES",
+        "content": "Tiene la opción de permitir, bloquear o eliminar las cookies instaladas en su equipo mediante la configuración de las opciones del navegador instalado en su equipo. Al desactivar cookies, algunos de los servicios disponibles podrían dejar de estar operativos. La forma de deshabilitar las cookies es diferente para cada navegador, pero normalmente puede hacerse desde el menú Herramientas u Opciones.\n\nPara más información sobre cómo configurar las cookies según el navegador que estás utilizando, por favor visita los enlaces correspondientes según tu navegador (Chrome, Firefox, Safari, Edge, etc.)."
+      },
+      {
+        "title": "4. ACEPTACIÓN DE LA POLÍTICA DE COOKIES",
+        "content": "Reglado Energy asume que usted acepta el uso de cookies si continúa navegando. No obstante, muestra información sobre su Política de cookies en la parte inferior o superior de cualquier página del portal con cada inicio de sesión con el objeto de que usted sea consciente."
+      }
+    ]
+  },
+  "home_page": {
+    "about": {
+      "label": "Reglado Consultores & Abogados",
+      "title": "Nuestra meta es velar por sus intereses.",
+      "paragraphs": [
+        "Reglado Consultores, está formada por un grupo de profesionales del derecho, la economía y la ingeniería con amplia experiencia en el sector de la consultoría, abogacía y colaboración en la prestación de servicios integrales a las administraciones públicas.",
+        "Nuestra experiencia junto con la formación de nuestro equipo, nos ha permitido optimizar los ingresos fiscales en las administraciones locales reduciendo la defraudación fiscal, ayudando a elaborar un Plan de Inspección y organizando la asistencia en procesos de Inspección y Regularización de Tributos Locales."
+      ]
+    }
+  },
+  "about_page": {
+    "hero": {
+      "title": "Profesionales del derecho, la economía y la ingeniería"
+    },
+    "truth_header": {
+      "title": "Servimos Para Hacer Valer La Verdad Y La Justicia Tributaria"
+    },
+    "values": [
+      {
+        "title": "Experiencia",
+        "text": "Somos una consultora joven, pero con gran experiencia en la Administración Local, al contar con técnicos que han dedicado su vida a los Ayuntamientos."
+      },
+      {
+        "title": "Dedicación",
+        "text": "En REGLADO CONSULTORES estamos comprometidos con nuestro trabajo y con nuestros clientes, desarrollando nuestro trabajo evitando cualquier tipo de trastorno a los trabajadores municipales."
+      },
+      {
+        "title": "Principios",
+        "text": "Basamos nuestra actuación en la humildad y honestidad para con nuestros clientes sentando nuestra actuación en el trato individualizado adaptado a la idiosincrasia de cada administración local y sus necesidades."
+      },
+      {
+        "title": "Éxito",
+        "text": "Nuestro éxito radica en un trato individualizado, caracterizado por la calidad de nuestros trabajos que se ve reflejado en la confianza y la satisfacción de cada uno de nuestros clientes al realizar trabajos"
+      }
+    ],
+    "law_section": {
+      "label": "Ponemos La Ley De Su Parte",
+      "title": "La Ley Debe Ser Justa E Imparcial Para Con Todos."
+    },
+    "presence": {
+      "label": "Donde Hemos Trabajado",
+      "title": "Experiencia En Distintos Territorios",
+      "description": "Hemos trabajado en diferentes municipios y territorios, participando en proyectos para administraciones y entidades con necesidades diversas. Esta experiencia nos permite adaptarnos con solvencia a cada entorno y ofrecer un servicio riguroso, cercano y bien implantado.",
+      "map_placeholder": "Espacio reservado para integrar el mapa corporativo mediante API",
+      "map_caption": "Este bloque queda preparado para incorporar una visualizacion cartografica externa manteniendo una integracion limpia, profesional y adaptable a cualquier dispositivo.",
+      "highlights": [
+        {
+          "title": "Cobertura versatil",
+          "text": "Hemos intervenido en proyectos con realidades locales distintas y necesidades tecnicas variadas."
+        },
+        {
+          "title": "Conocimiento del terreno",
+          "text": "Conocemos los retos de cada ubicacion y trabajamos con una vision practica del contexto territorial."
+        }
+      ]
+    },
+    "metrics": [
+      { "label": "Experiencia", "value": 97 },
+      { "label": "Compromiso", "value": 100 },
+      { "label": "Principios", "value": 100 },
+      { "label": "Éxito", "value": 99 }
+    ]
+  },
+  "juridica_page": {
+    "hero": {
+      "title": "Consultoría Jurídica",
+      "subtitle": "Ponemos la ley a trabajar para usted"
+    },
+    "section1": {
+      "eyebrow": "Procedimientos Administrativos",
+      "title": "Asesoría Jurídica De Entidades Locales",
+      "items": [
+        "Asesoramiento en procedimientos administrativos de toda clase.",
+        "Reclamaciones de Responsabilidad Patrimonial de la Administraciones Públicas.",
+        "Elaboración de informes jurídicos.",
+        "Redacción de convenios administrativos.",
+        "Redacción de textos legales y reglamentos.",
+        "Asesoramiento en materia de bienes de dominio público (concesiones y autorizaciones demaniales).",
+        "Asesoramiento en materia de obtención autorizaciones administrativas, licencias y comunicaciones previas de actividad.",
+        "Recursos Administrativos y Contencioso Administrativo: Los abogados de REGLADO CONSULTORES tienen una dilatada experiencia en la dirección letrada de los procedimientos judiciales de nuestros clientes ante los distintos órganos del orden jurisdiccional contencioso-administrativo, habiendo intervenido tanto en defensa de empresas o particulares como en defense de Administraciones y entidades del sector público."
+      ]
+    },
+    "section2": {
+      "eyebrow": "Asesoramiento de Ayuntamientos",
+      "title": "Asesoría En Contratación Pública",
+      "items": [
+        "Asistencia técnica a la Administración Pública y al resto de entidades del sector público en la preparación de los expedientes de contratación pública hasta la adjudicación de los contratos.",
+        "Redacción de Pliegos de Prescripciones Técnicas.",
+        "Redacción de Pliegos de Cláusulas Administrativas Particulares.",
+        "Redacción de Memorias complementarias.",
+        "Anexos de Personal etc.",
+        "Asesoramiento a personas físicas y a empresas del sector privado en la participación de concursos con la Administración Pública o el resto entidades del sector público.",
+        "Resolución de las controversias que surjan en la ejecución y extinción de los contratos celebrados con la Administración Pública o el resto de entidades del sector público.",
+        "Preparación de recursos especiales en materia de contratación contra todos aquellos actos recurribles de conformidad con la legislación de contratación del sector púbico.",
+        "Elaboración de dictámenes jurídicos relativos a cuestiones vinculadas a la contratación del sector público."
+      ]
+    },
+    "section3": {
+      "eyebrow": "Asesoramiento Jurídico Y Periodístico",
+      "title": "Permanente En Materia De Estrategia Política Y Comunicativa",
+      "items": [
+        "Resolución de controversias propuestas a órganos colegiados o derivadas de estos.",
+        "Elaboración de estrategias para la solventar desacuerdos.",
+        "Desarrollo de estrategias de comunicación:",
+        "Redacción y difusión de notas de prensa a los medios de comunicación de su entorno.",
+        "Preparación y ejecución de campañas de publicidad o promoción de su municipio.",
+        "Elaboración y Gestión de webs de noticias sobre su municipio.",
+        "Preparación y convocatorias de ruedas de prensa.",
+        "Campaña de comunicación y marketing"
+      ]
+    },
+    "banner": {
+      "logo_text": "Reglado Consultores & Abogados",
+      "title": "Disponemos De Un Servicio Integral De Consultoría.",
+      "text": "Disponemos de un servicio integral de consultoría, fruto de nuestra dilatada experiencia en el sector y la gran cualificación y especialización de nuestros profesionales, permitiéndonos prestar una asistencia fiable y sin competencia a las distintas entidades locales para quienes trabajamos."
+    }
+  },
+  "tecnica_page": {
+    "hero": {
+      "title": "Consultoría Técnica",
+      "subtitle": "Nuestro equipo diseña la mejor solución para ayuntamientos, empresas y ciudadanos en materia de energías renovables, licencias urbanísticas y licencias de actividad"
+    },
+    "section1": {
+      "eyebrow": "Estudios Energéticos",
+      "title": "Consultoría Energética",
+      "items": [
+        "Política Energética, enfocada al desarrollo de planes energéticos municipales.",
+        "Comprobación y modificación de normativa local. Ordenanzas locales en materia energética.",
+        "Planes de acción, auditoría y gestión Energética.",
+        "Estudios de mejora de eficiencia energética de edificios.",
+        "Certificaciones energéticas.",
+        "Simulación energética",
+        "Alumbrado público."
+      ]
+    },
+    "section2": {
+      "eyebrow": "Proyectos de",
+      "title": "Energías Renovables",
+      "items": [
+        "Proyectos de Placas fotovoltaicas",
+        "Proyectos de parques eólicos.",
+        "Proyectos de plantas termosolares."
+      ]
+    },
+    "section3": {
+      "eyebrow": "Tramitación completa de",
+      "title": "Licencias Urbanísticas",
+      "items": [
+        "Estudio de viabilidad urbanística",
+        "Asesoramiento en materia de obtención autorizaciones administrativas, licencias y comunicaciones previas",
+        "Proyectos básicos de ejecución.",
+        "Proyectos de Obras de construcción.",
+        "Dirección de obras y coordinación de seguridad y salud en obras.",
+        "Declaración responsable de obras y actividades económicas.",
+        "Comunicación previa de obra sencilla.",
+        "Licencias de terrazas y veladores.",
+        "Licencia para ocupación de vía pública para sacos industriales o contenedores",
+        "Legalización de instalaciones.",
+        "Cambios de uso y de titularidad.",
+        "Cálculo de estructuras"
+      ]
+    },
+    "section4": {
+      "eyebrow": "Preparación y presentación completa de",
+      "title": "Licencias de Actividad",
+      "items": [
+        "Proyectos de licencia de actividad.",
+        "Legalización de locales para la obtención de la correspondiente licencia de actividad and funcionamiento.",
+        "Planes de Emergencia and autoprotección. Planos, instalaciones and protocolos de emergencia de actividades.",
+        "Cambios de uso.",
+        "Proyecto eléctrico. Diseño de Instalaciones Eléctricas, Cálculos, planos and memorias.",
+        "Proyecto de Instalaciones de protección contra incendios.",
+        "Proyectos de Climatización and ventilación",
+        "Proyectos de Fontanería and Saneamiento",
+        "Autorización de gestión de residuos. Autorizaciones para Residuos Peligrosos, No peligrosos, RAEES and CATV.",
+        "OCAS, ICIS"
+      ]
+    },
+    "banner": {
+      "logo_text": "reglado Consultores & Abogados",
+      "title": "Disponemos de un Servicio Integral de Consultoría",
+      "text": "Disponemos de un servicio integral de consultoría, fruto de nuestra dilatada experiencia en el sector y la gran cualificación and especialización de nuestros profesionales, permitiéndonos prestar una asistencia fiable and sin competencia a las distintas entidades locales para quienes trabajamos."
+    }
+  },
+  "economica_page": {
+    "hero": {
+      "title": "Consultoría Económica",
+      "subtitle": "Estudiamos el ámbito económico y financiero de los ayuntamientos ofreciendo un plan de mejora tendente a aumentar la recaudación, regularizar la intervención y simplificar los trámites administrativos."
+    },
+    "section1": {
+      "eyebrow": "Análisis de ordenanzas fiscales",
+      "title": "Ordenanzas fiscales",
+      "text": "Consultoría económica en la cual ponemos a disposición de los Ayuntamientos, la posibilidad de estudiar, revisar, actualizar e implantar Ordenanzas fiscales, con el fin de agilizar los trámites de los contribuyentes y aumentar la recaudación. Para ello elaboramos una propuesta de modificación de dichas ordenanzas, así como, desarrollo de nuevas ordenanzas.\n\nSi el Ayuntamiento estuviera conforme con dicho proyecto, se procederá a realizar la propuesta de todos los informes técnicos y se resolverá cualquier alegación hasta la entrada en vigor de dicha Ordenanza."
+    },
+    "section2": {
+      "eyebrow": "Elaboración, seguimiento y auditoría",
+      "title": "Planes de Inspección Tributaria",
+      "text": "Los ayuntamientos disponen de una serie de figuras impositivas bajo su competencia, siendo los encargados de su gestión, liquidación, inspección y recaudación. Las administraciones locales con más recursos suelen ser autosuficientes a la hora de realizar estas labores que les encomienda la Ley Reguladora de Haciendas Locales, pero los recursos técnicos y humanos son limitados en los de pequeño y mediano tamaño.\n\nEsta imposibilidad de llevar a cabo un plan de inspección tributaria hace que se creen bolsas de fraude que menoscaban la economía municipal. Como solución, REGLADO CONSULTORES se encarga de esta función con los siguientes objetivos:",
+      "items": [
+        "Estudio y optimización del modelo organizativo a nivel tributario",
+        "Mejora la eficiencia tributaria del ayuntamiento",
+        "Elaboración de una propuesta de mejora y apoyo en la implantación",
+        "Simplificación de la tramitación administrativa"
+      ]
+    },
+    "cards": [
+      {
+        "title": "Informes Técnicos Económicos",
+        "text": "Estudiamos las distintas propuestas de Ordenanzas fiscales del municipio en comparación con los municipios limítrofes y de población similar para dar cumplimiento a la obligatoriedad de elaborar un informe técnico económico en el caso de establecimiento de una nueva tasa o de las modificaciones específicas para una tasa ya existente."
+      },
+      {
+        "title": "Revisión De Formularios Tributarios.",
+        "text": "Con el fin de reducir a la mínima expresión los problemas derivados del ámbito tributario, se procede al estudio de formularios tributarios y a la posterior propuesta de mejoras, con el fin de mejorar la relación del ciudadano con la Administración."
+      },
+      {
+        "title": "Auditorías",
+        "text": "Ponemos a disposición de los Ayuntamientos nuestros servicios para la emisión de informes técnico-jurídicos, realización de peritajes y/o de auditorías externas, en cualquier ámbito relacionado con la organización y gestión de sus competencias con el fin de determinar cuál es la mejor forma de gestión de sus servicios municipales."
+      }
+    ],
+    "section3": {
+      "eyebrow": "equipo de consultores técnicos",
+      "title": "Planes económicos financieros",
+      "text": "Desde nuestra Consultoría Económica, ponemos a disposición de los Ayuntamientos y sus áreas de intervención un equipo de consultores altamente cualificados, expertos en el desarrollo y ejecución de planes económico-financieros para municipios.\n\nNuestro equipo llevará a cabo un análisis exhaustivo de la situación del municipio, identificando soluciones y medidas orientadas a la mejora y el saneamiento económico:",
+      "items": [
+        "Estudio integral de la situación actual.",
+        "Análisis detallado de los datos (Ingresos, Gastos, Inversiones, Endeudamiento).",
+        "Propuesta de medidas estratégicas.",
+        "Propuesta de un Plan de Saneamiento Económico-Financiero."
+      ]
+    },
+    "section4": {
+      "eyebrow": "Cálculo de costes",
+      "title": "Coste efectivo de los servicios públicos",
+      "text": "Cálculo de los costes directos exclusivamente asociados a cada servicio, y costes indirectos determinados con arreglo a unos criterios de imputación establecidos, analizando los costes tanto para los servicios de prestación obligatoria como los servicios correspondientes a competencias propias.\n\nEl fin de dicho cálculo es colaborar con el cumplimiento del principio de transparencia en la acción pública local y en una gestión eficaz de los servicios que prestan las Entidades Locales a los ciudadanos."
+    },
+    "banner": {
+      "title": "Disponemos de un Servicio Integral de Consultoría",
+      "text": "Disponemos de un servicio integral de consultoría, fruto de nuestra dilatada experiencia en el sector y la gran cualificación y especialización de nuestros profesionales."
+    }
+  },
+  "inspecciones_page": {
+    "section1": {
+      "label": "Inspecciones tributarias",
+      "title": "Inspecciones y Regularizaciones Tributarias",
+      "block": {
+        "title": "Gestión de la bonificación del 95 % en el IAE de las cooperativas",
+        "p1": "La Ley 20/1990, de Régimen Fiscal de Cooperativas, establece una bonificación del 95% de la cuota de Impuesto de Actividades Económicas (IAE) disponiendo que los ayuntamientos “comunicarán anualmente a la Dirección General de Coordinación con las Haciendas Territoriales del Ministerio de Economía y Hacienda la relación de cooperativas que hayan disfrutado efectivamente de estas bonificaciones y el importe total del gasto fiscal soportado”.",
+        "p2": "Sobre estos datos, los municipios recibirán las compensaciones que procedan con cargo a los Presupuestos Generales del Estado.",
+        "p3": "Desde 2018, las administraciones locales deben gestionar la solicitud de dicha compensación de forma telemática.",
+        "p4": "Los técnicos de REGLADO A&C realizarán el estudio de la matrícula y el padrón del Impuesto de Actividades Económicas (IAE) que nos permitirá identificar las cooperativas con actividad en el término municipal, y elaborar un plan de asistencia técnica con el objetivo de que les sean abonadas tanto las cantidades correspondientes al presente ejercicio, como las de los ejercicios no prescritos."
+      }
+    },
+    "section2": {
+      "label": "Profesionales a su servicio",
+      "title": "Redacción y revisión de ordenanzas fiscales y elaboración de informes complementarios.",
+      "iae_block": {
+        "title": "Inspecciones y Regularizaciones Tributarias",
+        "subtitle": "IAE . Impuesto de Actividades Económicas.",
+        "text": "Con el procedimiento de regularización del IAE, conseguiremos adecuar y corregir las declaraciones presentadas por las actividades industriales e inmobiliarias de gran volumen, que suelen omitir a Hacienda las variaciones o ampliaciones de sus elementos tributarios, quedando la matrícula obsoleta y siendo necesaria la regularización de las mismas para actualizarlas."
+      },
+      "tasa_block": {
+        "title": "Tasas Municipales",
+        "subtitle": "Tasa 1,5",
+        "text": "La Tasa del 1,5 es un tributo municipal que grava los ingresos de empresas comercializadoras y distribuidoras de servicios de interés general, como son las compañías eléctricas, de agua, gas y fibra óptica, las cuáles deberían abonar al Ayuntamiento, en concepto de esta tasa el 1,5 % de sus ingresos brutos en el término municipal del que se trate. Es habitual que la mayoría de las empresas que operan en el municipio no declaren estos ingresos, y que otras declaren sólo parte de los mismos por excluir conceptos que deberían de ser incluidos en la base imponible.",
+        "text2": "REGLADO A&C colaboramos en materia de asistencia técnica y soporte a la inspección municipal, facilitando la recaudación mediante una exhaustiva revisión de la tributación y la correcta aplicación de la tasa del 1,5 %."
+      },
+      "ibi_block": {
+        "title": "IBI. Gestión de la Bonificación del 50% en el IBI de Colegios Concertados.",
+        "subtitle": "Estudio de la compensación anual",
+        "text": "El artículo 62.2.a) TRLRHL otorga el derecho a la exención del IBI a “los bienes inmuebles que se destinen a la enseñanza por centros docentes acogidos, total o parcialmente, al régimen de concierto educativo, en cuanto a la superficie afectada a la enseñanza concertada”.",
+        "text2": "En base a dicho artículo, los Ayuntamientos deben tramitar dicha exención ante la Administración del Estado con el fin de ser compensados por el importe correspondiente a la exención del IBI de la que disfruten los colegios concertados de su municipio.",
+        "text3": "Los técnicos de REGLADO A&C realizarán el estudio de la compensación anual que correspondería, así como de los ejercicios no prescritos, y elaborarán y recabarán informes de las distintas instituciones implicadas como son Catastro y la Autoridad Educativa, para posteriormente asistir al ayuntamiento en la solicitud de dicha Bonificación."
+      },
+      "icio_block": {
+        "title": "Revisión de las liquidaciones de",
+        "subtitle": "ICIO",
+        "text": "El ICIO es un tributo cuyo sistema de gestión da lugar a la existencia de dos liquidaciones, una previa basada en el presupuesto de ejecución de la obra y otra final en función del coste real y efectivo de la misma. Es en ésta última donde se generan irregularidades al ser el coste de ejecución superior al declarado, lo que conlleva la generación de pérdidas en las arcas municipales, pudiendo solucionarse mediante la revisión de las licencias de obra realizadas, calculando el coste real y efectivo de las mismas, mediante la revisión de la facturación, contabilidad y de todos los medios de prueba disponibles, para que el Ayuntamiento pueda emitir la liquidación definitiva por el impuesto.",
+        "text2": "Igualmente, se debe advertir el fraude existente en las obras dedicadas a la energía Solar, eólica y termosolar, no correspondiéndose las liquidaciones provisionales con el coste real de las obras, pudiendo aflorar importantes ingresos para los ayuntamientos."
+      }
+    },
+    "section3": {
+      "label": "Profesionales a su servicio",
+      "title": "Elaboración, Seguimiento Y Auditoría. Planes De Inspección Tributaria.",
+      "licencias_block": {
+        "title": "Contratación pública y licitaciones",
+        "subtitle": "Licencias de obra",
+        "text": "Licencias Urbanísticas.",
+        "text2": "La tasa por licencias de obras es un tributo que se suele liquidar o autoliquidar en el momento de la solicitud de dicha Licencia. En algunos casos son unas tarifas fijas en función de determinados parámetros, pero en otros son un porcentaje del coste real y efectivo de la obra para la cual se solicita la Licencia, teniendo un sistema de gestión similar al del Impuesto sobre Construcciones, Instalaciones y Obras. Es por ello que, en estos segundos casos, se hace necesaria una inspección integral al sujeto pasivo, de tal forma que en el mismo procedimiento se regularice tanto el ICIO, como la Tasa por Licencia de Obras, como el Canon urbanístico si lo hubiere."
+      },
+      "canon_block": {
+        "title": "Ordenanzas y comprobación del Canon Urbanístico",
+        "subtitle": "Canon Urbanístico.",
+        "text": "En determinadas Comunidades Autónomas se establece el pago de un canon urbanístico por aprovechamiento especial del suelo rústico cuya gestión y cobro corresponde a los Ayuntamientos. Este canon supone un porcentaje del coste total de la obra o instalación realizada sobre dicho suelo, sin excluir determinadas partidas que sí deben de ser excluidas de la base imponible del ICIO.",
+        "text2": "Esta figura ha cobrado una especial importancia en los últimos tiempos, como consecuencia de su posible aplicación a las instalaciones de energías renovables (Plantas fotovoltaicas, parques eólicos, centrales termosolares, etc).",
+        "text3": "La inspección del Canon Urbanístico junto con el ICIO y la Tasa por Licencia de obras puede generar un gran beneficio para las arcas municipales."
+      }
+    }
+  },
+  "common": {
+    "contact_us": "Contáctanos"
+  }
+}

@@ -1,0 +1,529 @@
+{
+  "contact_page": {
+    "hero_title": "We are here to help you",
+    "info_title": "Contact Information",
+    "form_title": "Send us a message",
+    "labels": {
+      "name": "Full Name *",
+      "email": "Email Address *",
+      "phone": "Phone Number",
+      "subject": "Subject *",
+      "message": "Message *",
+      "privacy_prefix": "I have read and accept the ",
+      "privacy_link": "Privacy Policy"
+    },
+    "placeholders": {
+      "name": "Your name",
+      "email": "your@email.com",
+      "phone": "+34 600 000 000",
+      "subject": "Select a service",
+      "message": "Describe your inquiry..."
+    },
+    "subjects": {
+      "inspecciones": "Tax Inspections",
+      "juridica": "Legal Consultancy",
+      "tecnica": "Technical Consultancy",
+      "economica": "Economic Consultancy",
+      "energetica": "Energy Consultancy",
+      "subvenciones": "European Grants",
+      "otro": "Other"
+    },
+    "errors": {
+      "name": "Name is required.",
+      "email": "Enter a valid email.",
+      "message": "The message must be at least 10 characters long."
+    },
+    "submit": "Send message",
+    "success": "✓ Message sent"
+  },
+  "nav": {
+    "about": "About us",
+    "services": "What we do",
+    "subvenciones": "European Grants",
+    "contrataciones": "Procurement",
+    "contact": "Contact",
+    "services_list": {
+      "inspecciones": "Tax Inspections",
+      "juridica": "Legal Consultancy",
+      "tecnica": "Technical Consultancy",
+      "economica": "Economic Consultancy",
+      "energetica": "Energy Consultancy"
+    }
+  },
+  "cookie_banner": {
+    "text": "We use our own and third-party cookies to improve your experience and our services. If you continue browsing, we consider that you accept their use.",
+    "more_info": "More information",
+    "accept": "Accept"
+  },
+  "hero": {
+    "eyebrow": "Professionals in Law, Economics and Engineering",
+    "title": "We conduct tax inspections for local governments and increase their revenues",
+    "title_highlight": "without harming citizens.",
+    "cta": "Contact us"
+  },
+  "services": {
+    "label": "Our Services",
+    "title": "Professionals in law, economics and engineering",
+    "subtitle": "All our services are carried out by specialists in their field.",
+    "cta": "CONTACT US",
+    "more": "Learn more →",
+    "items": [
+      {
+        "icon": "inspecciones",
+        "title": "Tax Inspections",
+        "description": "IAE, IBI, 1.5% Tax, ICIO and local tax regularisation."
+      },
+      {
+        "icon": "juridica",
+        "title": "Legal Consultancy",
+        "description": "Comprehensive legal advisory for local entities and public administrations."
+      },
+      {
+        "icon": "economica",
+        "title": "Economic Consultancy",
+        "description": "Assistance and economic restructuring for local councils."
+      },
+      {
+        "icon": "tecnica",
+        "title": "Technical Consultancy",
+        "description": "Renewable energy, urban planning and activity licences."
+      }
+    ]
+  },
+  "banner": {
+    "label": "Tax Inspections",
+    "title": "Management of the 95% IAE bonus for cooperatives.",
+    "text": "Law 20/1990 on the Tax Regime of Cooperatives establishes a 95% reduction on the Business Activities Tax (IAE), requiring local councils to annually report the list of cooperatives that have benefited from these reductions."
+  },
+  "about": {
+    "tags": ["Experience", "Trust", "Principles"],
+    "label": "Specialists",
+    "title": "Professionals in law, economics and engineering",
+    "paragraphs": [
+      "Reglado Consultores is formed by a group of professionals in law, economics and engineering with extensive experience in the consultancy sector, law practice and collaboration in providing comprehensive services to public administrations.",
+      "Our technicians have high professional qualifications that, combined with knowledge of the local world and more specifically of municipal taxes and regulated sectors, allow us to detect fraud pockets, optimizing the resources of local councils and increasing their revenue.",
+      "All our staff are immersed in a permanent training plan that allows total updating according to the abundant case law doctrine, as well as the communication of various news to the staff of the local councils.",
+      "Our labor policy is based on trust and the effort of our workers, promoting reconciliation between personal and work life, as well as achieving 100% of the working day in teleworking mode.",
+      "Therefore, all our actions are mainly oriented towards guaranteeing employment quality and seeking working conditions and an environment in which employees feel comfortable, valued and satisfied."
+    ],
+    "cta": "Contact us"
+  },
+  "stats": [
+    { "value": "1K", "label": "Cases disputed" },
+    { "value": "98%", "label": "Cases won" },
+    { "value": "15", "label": "Years of experience" },
+    { "value": "30", "label": "Professionals" }
+  ],
+  "ordenanzas": {
+    "label": "Tax Inspections & Regularisations",
+    "title": "Drafting and review of tax bylaws and complementary reports.",
+    "items": [
+      "IAE Ordinances",
+      "1.5% Tax Ordinances",
+      "IBI Ordinances",
+      "ICIO Ordinances",
+      "Urban Planning Licence Ordinances",
+      "Urban Development Fee Ordinances",
+      "Fees"
+    ],
+    "text": "We put our experience at the disposal of the Council to review its fiscal ordinances, with three objectives: simplify procedures for taxpayers, increase revenues and provide guidelines for verifying correct taxation.",
+    "cta": "Contact us"
+  },
+  "footer": {
+    "brand_desc": "Professionals in law, economics and engineering at the service of public administrations and complex projects.",
+    "nav_title": "Navigation",
+    "contact_title": "Contact",
+    "phone_label": "Phone",
+    "office_label": "Offices",
+    "office_address": "Avda. Isla Graciosa 7, San Sebastián de los Reyes, 28703 Madrid",
+    "email_label": "Email",
+    "links": {
+      "legal_privacy": "Legal Notice & Privacy",
+      "cookies": "Cookies"
+    },
+    "copy": "©2026 Reglado Consultores & Abogados · All rights reserved"
+  },
+  "legal_notice": {
+    "title": "Legal Notice & Privacy Policy",
+    "sections": [
+      {
+        "title": "1. PORTAL OWNERSHIP.",
+        "content": "REGLADO ABOGADOS & CONSULTORES, S.L.U, is the owner and responsible for this website, making this document available to users, with which it intends to comply with the obligations established in Law 34/2002, of July 11, on Services of the Information Society and Electronic Commerce (LSSICE), as well as informing all website users regarding the conditions of use. Any person accessing this website assumes the role of user, committing to the observance and rigorous compliance with the provisions set forth herein, as well as any other legal provision that may be applicable.\n\nREGLADO ABOGADOS & CONSULTORES, S.L.U reserves the right to modify any type of information that may appear on the website, without any obligation to pre-notify or inform users of said obligations, it being understood as sufficient with the publication on the website."
+      },
+      {
+        "title": "2. IDENTIFICATION DATA.",
+        "content": "Corporate name: REGLADO ABOGADOS & CONSULTORES, S.L.U\nTrade name: REGLADO CONSULTORES\nCIF: B09662081\nAddress: AVDA. ISLA GRACIOSA, 7 FLOOR 1 OFFICES 5-6 28703 SAN SEBASTIÁN DE LOS REYES.\nPhone: 615-641-081\nEmail: info@regladoconsultores.com\nThese domain names may not be used in connection with other content, products, or services that are not owned by the Company, nor in any way that may cause confusion among end-users or discredit the Company."
+      },
+      {
+        "title": "3. OBJECT.",
+        "content": "This Legal Notice contains the terms of use that regulate access, navigation, and use of the Portal, as well as the responsibilities derived from the use, provision, and/or hiring of products or services that, as the case may be, may be offered, as well as the contents that integrate it, and without prejudice to the Company being able to establish specific conditions that regulate the use, provision, and/or hiring of products or services that, as the case may be, are offered to Users through the Portal.\n\nIn any case, these specific conditions will form an integral part of this Legal Notice.\n\nMere access to the Portal, the sending of information requests, inquiries, and any act of a nature similar to the previous ones, carried out through the forms and/or electronic mailboxes existing on the Portal will imply, on your part, the unreserved acceptance of each and every one of the rules integrating this Legal Notice and the acquisition of the consideration of User of the Portal. Consequently, you must carefully read and know the content of this Legal Notice."
+      },
+      {
+        "title": "4. ACCEPTANCE.",
+        "content": "Access and use of this Internet portal as a user implies acceptance of the provisions contained in this Legal Notice, which may change at any time."
+      },
+      {
+        "title": "5. ACCESS AND USE OF THE PORTAL.",
+        "content": "Access to the Portal by Users is free and gratis. However, the use, provision, and/or hiring of products or services that, as the case may be, may be offered by the Company may be subject to prior compliance with formal requirements such as completing the corresponding form, payment of expenses or fees, and/or prior acceptance of the specific conditions that apply to them.\n\nMere access to the Portal does not imply, in itself, the establishment of any type of link or business relationship between the Company and the User, except when the appropriate means for this have been established and the User has previously complied with the requirements that, as the case may be, are established.\n\nThe inclusion in the Portal of information related to products or services offered by the Company is exclusively for informational and advertising purposes, unless another purpose is expressly established.\n\nIf for the use, provision, and/or hiring of some product or service offered through the Portal, the User must proceed to their registration, they will be responsible for providing truthful and lawful information, guaranteeing the authenticity of all those data they enter when filling out the pre-established forms to access the products or services in question.\n\nIn any case, the access, navigation, and use of the Portal and, as the case may be, the use or hiring of the services or products offered through it is done under the sole and exclusive responsibility of the User, for which they commit to observe diligently and faithfully any additional instruction, given by the Company or by authorized personnel of the Company, related to the use of the Portal and its contents."
+      },
+      {
+        "title": "6. CONDITIONS OF USE.",
+        "content": "The portal and its services are, in general, freely accessible and do not require prior subscription or registration of the User. The User commits to use this website without incurring in activities that could be considered unlawful or illegal, that infringe the rights of third parties, or that could violate these Conditions of Use, the current legislation, and generally accepted uses. In particular, and for informational purposes, the User expressly commits to abstain from carrying out any of the following activities:\n\n• Destroy, alter, disable, or in any other way damage the data or electronic documents contained in the web.\n\n• Obstacle the access of other Users to the web and its services.\n\n• Send email messages massively or for commercial or advertising purposes without the recipient's consent.\n\n• Attempt to intercept, read, delete, copy, or modify email messages from other Users.\n\n• Use the system to attempt access to restricted areas.\n\n• Introduce, by any means, programs or code that cause or are susceptible to cause any type of alteration in the web\n\n• Violate the intellectual property rights of the owners of the web or third parties.\n\n• Violate the fundamental rights and public freedoms recognized in the Constitution, International Treaties, and the rest of the legislation.\n\nThe contents are offered as a service to the User, and must be used for the purposes for which they were created and made available."
+      },
+      {
+        "title": "7. PRIVACY AND DATA PROCESSING.",
+        "content": "When for access to certain content or services it is necessary to provide personal data, Users will guarantee its truthfulness, accuracy, authenticity, and validity. The company will give said data the automated treatment that corresponds based on its nature or purpose, in the terms indicated in the Privacy Policy section, applying the corresponding security measures, all in compliance with the GDPR, LOPDGDD, and LSSI."
+      },
+      {
+        "title": "8. RESPONSIBILITIES AND LIMITATIONS.",
+        "content": "The Company cannot guarantee the reliability, usefulness, or truthfulness of the information provided through the Portal. Consequently, the Company does not guarantee nor is responsible for:\n\n• The continuity of the contents of the Portal and/or the lack of availability or accessibility of the Portal or technical continuity thereof.\n\n• The absence of viruses and other malicious or harmful components in the contents of the Portal or in the server that supplies it, despite having adopted all necessary technological measures to prevent it.\n\n• The invulnerability of the Portal and/or the inexpugnability of the security measures adopted therein.\n\n• Damage or prejudice of any nature that may be caused, such as errors or omissions in the contents, caused to themselves or to a third party, by any person who infringes the conditions, rules, and instructions that the Company establishes on the Portal or through the violation of the security systems thereof.\n\n• Any other damages that could be caused by reasons inherent to the non-functioning or defective functioning of the Portal or the websites to which, as the case may be, links may have been established.\n\nREGLADO ABOGADOS & CONSULTORES declares that it has adopted all necessary measures, within its possibilities and the state of technology, to guarantee the functioning of the Portal and prevent the existence and transmission of viruses and other harmful or malicious components to Users.\n\nThe Company makes its best efforts to avoid errors in the contents published on the Portal. All contents offered through the Portal are updated, and the Company reserves the power to modify them at any time. The Company is not responsible for the consequences that may derive from errors in the contents that may appear on the Portal provided by third parties.\n\nAny communication or transmission of content that infringes the rights of third parties and whose content is threatening, obscene, defamatory, pornographic, xenophobic, attacking the dignity of the person or the rights of children, current legality, or any conduct that incites or constitutes the realization of a criminal offense is prohibited.\n\nLikewise, the inclusion and communication of content by users that is false or inaccurate and that induces or could induce error in other users or the Company's personnel is prohibited, in particular content that is protected by any intellectual or industrial property rights, belonging to third parties, when they do not have the authorization of the rights holder, undermine or discredit the fame or credit of the Company, are considered as cases of unlawful, deceptive or unfair advertising and/or incorporate viruses or any other electronic element that could damage or prevent the functioning of the website, the network, the Company's computer equipment or third parties, and/or the access to the portal of other users.\n\nThe Company may prohibit access to the Portal of any User who carries out any of the referenced behaviors, by way of example and not limited to, in this section."
+      },
+      {
+        "title": "9. INTELLECTUAL AND INDUSTRIAL PROPERTY RIGHTS.",
+        "content": "All those intangible assets (intellectual works, content, information, videos or images, brands or distinctive signs and, in general, any asset susceptible of being protected by the Industrial and Intellectual Property regulatory laws) made available to the public by this website and whose ownership does not belong to the Company, have been included in this site with the prior authorization of their legitimate owners and / or complying with current legislation and regulations.\n\nAll intellectual and industrial property rights over the Contents are reserved and, in particular, it is prohibited to modify, copy, reproduce, publicly communicate, transform or distribute in any way all or part of the contents included in the Portal, for public or commercial purposes, if prior, express, and written authorization from the Company or, as the case may be, the holder of the corresponding rights is not counted.\n\nAccess and navigation of the user through the Web will in no case be understood as a waiver, transmission, license or total or partial assignment of the aforementioned rights by the Company.\n\nConsequently, it is not permitted to delete, bypass or manipulate the copyright notice («copyright») and any other identification data of the rights of the Company or its holders incorporated into the Contents, as well as electronic protection devices, digital fingerprints or any information and/or identification mechanisms that could be contained therein.\n\nReferences to commercial or registered names and trademarks, logos or other distinctive signs, whether owned by the Company or third-party companies, carry the implied prohibition on their use without the consent of the Company or its legitimate owners. At no time, unless express manifestation, access or use of the Portal and/or its Contents, confers on the user any right over the brands, logos and/or distinctive signs included in it protected by Law"
+      },
+      {
+        "title": "10. HYPERLINKS AND LINKS TO OTHER WEB PAGES",
+        "content": "The User is obligated not to reproduce in any way, not even through a hyperlink or link, the Web Space, as well as any of its contents, unless express and written authorization from the person responsible for the file.\n\nIn the event that links or hyperlinks towards other Internet sites were arranged, directly or indirectly, to resources or web pages on the Internet that are outside the Portal, REGLADO ABOGADOS & CONSULTORES will not exercise any type of control over said sites and contents, nor will assume any responsibility for the contents of any link belonging to an external website.\n\nIn any case, the presence of these links on the Portal has an informative purpose, and does not imply the existence of a bond or mercantile relationship or dependency with the Company owner of the linked web page. In these cases, the Company will not be responsible for establishing the general and specific conditions to take into account in the use, provision or hiring of these services by third parties and, therefore, cannot be considered responsible for them.\n\nNor will the technical availability, quality, reliability, accuracy, breadth, truthfulness, validity, and constitutionality of any material or information contained in any of said hyperlinks or other Internet sites be guaranteed.\n\nLikewise, the inclusion of these external connections will not imply any type of association, merger or participation with the connected entities."
+      },
+      {
+        "title": "11. COOKIES.",
+        "content": "The company reserves the right to use “cookie” technology in the Web space, in order to recognize you as a frequent User and personalize the use you make of the Web space through the pre-selection of your language, or most desired or specific content, being able to access them through the Cookie Policy."
+      },
+      {
+        "title": "12. DURATION AND MODIFICATION.",
+        "content": "REGLADO ABOGADOS & CONSULTORES reserves the right to modify this Legal Notice and/or the specific conditions that, as the case may be, have been established for the use and/or hiring of the products or services provided through the Portal, when it deems it appropriate or with the aim of adapting to legislative and technological changes, being valid and taking effect from publication on the Portal.\n\nThe temporary validity of these conditions of use coincides, therefore, with the time of their exposure, until they are modified totally or partially, at which time the modified conditions of use will become effective.\nThe Company may terminate, suspend or interrupt, at any time without pre-notice, access to the contents of the page, without the possibility on the part of the User of demanding any compensation. After said extinction, the prohibitions for the use of the contents set forth above in this Legal Notice will remain in effect."
+      },
+      {
+        "title": "13. COMMUNICATIONS.",
+        "content": "Any communication between REGLADO ABOGADOS & CONSULTORES and the User must be addressed to the Company at the electronic address: info@regladoconsultores.com\n\nIn any case, communications from the Company to the User will be made in accordance with the contact details provided or facilitated. Expressly, the User accepts the use of email as a valid procedure for information exchange and the sending of communications between and/or with the Company."
+      },
+      {
+        "title": "14. APPLICABLE LAW AND COMPETENT COURTS.",
+        "content": "This Legal Notice and the relationships established between the Company and the User, in particular the knowledge and resolution of any litigations, discrepancies or differences that could arise, will be governed and resolved in accordance with the provisions of Spanish regulations regarding applicable law and competent jurisdiction.\n\nHowever, for cases in which the regulation provides for the possibility for the parties to submit to a jurisdiction, the Company and the User, with express waiver of any other jurisdiction that may correspond to them, will submit any controversies and/or litigations to the knowledge of the Courts and Tribunals of the city of the Company's domicile provided for in this Legal Notice."
+      }
+    ]
+  },
+  "cookies_page": {
+    "title": "Cookie Policy",
+    "sections": [
+      {
+        "title": "1. WHAT ARE COOKIES?",
+        "content": "A cookie is a file that is downloaded to your computer when accessing certain web pages. Cookies allow a web page, among other things, to store and retrieve information about the browsing habits of a user or their equipment and, depending on the information they contain and the way they use their equipment, they can be used to recognize the user."
+      },
+      {
+        "title": "2. TYPES OF COOKIES USED BY THIS WEBSITE",
+        "content": "• Technical cookies: Are those that allow the user to navigate through a web page, platform or application and use the different options or services that exist on it.\n• Customization cookies: Are those that allow the user to access the service with some predefined general characteristics based on a series of criteria in the user's terminal.\n• Analysis cookies: Are those that, whether treated by us or by third parties, allow us to quantify the number of users and thus perform the measurement and statistical analysis of the use made by users of the offered service."
+      },
+      {
+        "title": "3. DEACTIVATION AND ELIMINATION OF COOKIES",
+        "content": "You have the option to allow, block or delete the cookies installed on your equipment by configuring the options of the browser installed on your equipment. By disabling cookies, some of the available services could stop being operational. The way to disable cookies is different for each browser, but it can usually be done from the Tools or Options menu.\n\nFor more information on how to configure cookies according to the browser you are using, please visit the corresponding links according to your browser (Chrome, Firefox, Safari, Edge, etc.)."
+      },
+      {
+        "title": "4. ACCEPTANCE OF THE COOKIE POLICY",
+        "content": "Reglado Energy assumes that you accept the use of cookies if you continue browsing. However, it displays information about its Cookie Policy at the bottom or top of any page of the portal with each login so that you are aware."
+      }
+    ]
+  },
+  "home_page": {
+    "about": {
+      "label": "Reglado Consultores & Abogados",
+      "title": "Our goal is to protect your interests.",
+      "paragraphs": [
+        "Reglado Consultores is formed by a group of professionals in law, economics and engineering with extensive experience in the consultancy sector, law practice and collaboration in providing comprehensive services to public administrations.",
+        "Our experience, together with the training of our team, has allowed us to optimize fiscal revenues in local administrations by reducing tax fraud, helping to prepare an Inspection Plan and organizing assistance in processes of Inspection and Regularization of Local Taxes."
+      ]
+    }
+  },
+  "about_page": {
+    "hero": {
+      "title": "Professionals in law, economics and engineering"
+    },
+    "truth_header": {
+      "title": "We Serve to Enforce Truth and Tax Justice"
+    },
+    "values": [
+      {
+        "title": "Experience",
+        "text": "We are a young consulting firm, but with great experience in Local Administration, as we have technicians who have dedicated their lives to City Councils."
+      },
+      {
+        "title": "Dedication",
+        "text": "At REGLADO CONSULTORES we are committed to our work and our clients, developing our task avoiding any type of disruption to municipal workers."
+      },
+      {
+        "title": "Principles",
+        "text": "We base our actions on humility and honesty toward our clients, establishing our performance on individualized treatment adapted to the idiosyncrasy and needs of each local administration."
+      },
+      {
+        "title": "Success",
+        "text": "Our success lies in individualized treatment, characterized by the quality of our work that is reflected in the trust and satisfaction of each of our clients when performing services."
+      }
+    ],
+    "law_section": {
+      "label": "We Put the Law on Your Side",
+      "title": "The Law Must Be Fair and Impartial to All."
+    },
+    "presence": {
+      "label": "Scope Of Work",
+      "title": "Our Presence Across Different Territories",
+      "description": "We have delivered projects and services in a variety of settings, working with public administrations and organizations on local, supramunicipal and regional initiatives. This experience allows us to quickly understand the specific features of each territory, adapt to different administrative realities and provide a reliable methodology wherever technical rigor, legal certainty and close support are required.",
+      "map_placeholder": "Reserved space to integrate the corporate map through an API",
+      "map_caption": "This block is prepared to host an external map visualization while preserving a clean, professional and mobile-friendly integration.",
+      "highlights": [
+        {
+          "title": "Flexible coverage",
+          "text": "Our experience reaches municipalities, entities and projects with very different needs, strengthening our ability to respond in diverse scenarios."
+        },
+        {
+          "title": "Territorial insight",
+          "text": "Each engagement adds operational and regulatory knowledge, helping us act with a realistic understanding of the institutional and territorial context."
+        }
+      ]
+    },
+    "metrics": [
+      { "label": "Experience", "value": 97 },
+      { "label": "Commitment", "value": 100 },
+      { "label": "Principles", "value": 100 },
+      { "label": "Success", "value": 99 }
+    ]
+  },
+  "juridica_page": {
+    "hero": {
+      "title": "Legal Consultancy",
+      "subtitle": "We put the law to work for you"
+    },
+    "section1": {
+      "eyebrow": "Administrative Procedures",
+      "title": "Legal Advisory for Local Entities",
+      "items": [
+        "Advisory in administrative procedures of all kinds.",
+        "Claims for Patrimonial Responsibility of Public Administrations.",
+        "Preparation of legal reports.",
+        "Drafting of administrative agreements.",
+        "Drafting of legal texts and regulations.",
+        "Advisory on public domain assets (concessions and administrative authorizations).",
+        "Advisory on obtaining administrative authorizations, licenses and prior activity communications.",
+        "Administrative and Contentious-Administrative Appeals: REGLADO CONSULTORES lawyers have extensive experience in the legal direction of our clients' judicial procedures before the various bodies of the contentious-administrative jurisdictional order, having intervened both in defense of companies or individuals and in defense of Administrations and public sector entities."
+      ]
+    },
+    "section2": {
+      "eyebrow": "Advisory for City Councils",
+      "title": "Public Procurement Advisory",
+      "items": [
+        "Technical assistance to the Public Administration and other public sector entities in the preparation of public procurement files until the contract award.",
+        "Drafting of Technical Specifications.",
+        "Drafting of Particular Administrative Clauses.",
+        "Drafting of complementary Reports.",
+        "Personnel Annexes, etc.",
+        "Advisory to individuals and private sector companies in participation in tenders with the Public Administration or other public sector entities.",
+        "Resolution of controversies arising in the execution and termination of contracts concluded with the Public Administration or other public sector entities.",
+        "Preparation of special appeals in procurement matters against all appealable acts in accordance with public sector procurement legislation.",
+        "Preparation of legal opinions on issues related to public sector procurement."
+      ]
+    },
+    "section3": {
+      "eyebrow": "Legal and Journalistic Advisory",
+      "title": "Permanent Advisory in Political and Communication Strategy",
+      "items": [
+        "Resolution of controversies proposed to or derived from collegiate bodies.",
+        "Preparation of strategies to resolve disagreements.",
+        "Development of communication strategies:",
+        "Drafting and distribution of press releases to local media outlets.",
+        "Preparation and execution of advertising or promotion campaigns for your municipality.",
+        "Development and Management of news websites about your municipality.",
+        "Preparation and convening of press conferences.",
+        "Communication and marketing campaigns."
+      ]
+    },
+    "banner": {
+      "logo_text": "Reglado Consultores & Abogados",
+      "title": "We Provide a Comprehensive Consultancy Service.",
+      "text": "We provide a comprehensive consultancy service, the result of our extensive experience in the sector and the high qualification and specialization of our professionals, allowing us to provide reliable and unparalleled assistance to the various local entities for whom we work."
+    }
+  },
+  "tecnica_page": {
+    "hero": {
+      "title": "Technical Consultancy",
+      "subtitle": "Our team designs the best solution for city councils, companies, and citizens in terms of renewable energy, urban planning licenses, and activity licenses."
+    },
+    "section1": {
+      "eyebrow": "Energy Studies",
+      "title": "Energy Consultancy",
+      "items": [
+        "Energy Policy focused on the development of municipal energy plans.",
+        "Verification and modification of local regulations. Local ordinances on energy matters.",
+        "Action plans, energy auditing and management.",
+        "Studies for improving the energy efficiency of buildings.",
+        "Energy certifications.",
+        "Energy simulation.",
+        "Public lighting."
+      ]
+    },
+    "section2": {
+      "eyebrow": "Projects for",
+      "title": "Renewable Energies",
+      "items": [
+        "Photovoltaic panel projects.",
+        "Wind farm projects.",
+        "Solar thermal plant projects."
+      ]
+    },
+    "section3": {
+      "eyebrow": "Complete Processing of",
+      "title": "Urban Planning Licenses",
+      "items": [
+        "Urban planning feasibility study.",
+        "Advisory on obtaining administrative authorizations, licenses, and prior communications.",
+        "Basic execution projects.",
+        "Construction work projects.",
+        "Project management and health and safety coordination in works.",
+        "Responsible declaration of works and economic activities.",
+        "Prior communication of simple work.",
+        "Terrace and sidewalk licenses.",
+        "License for public road occupation for industrial bags or containers.",
+        "Legalization of installations.",
+        "Changes of use and ownership.",
+        "Structural calculation."
+      ]
+    },
+    "section4": {
+      "eyebrow": "Complete Preparation and Presentation of",
+      "title": "Activity Licenses",
+      "items": [
+        "Activity license projects.",
+        "Legalization of premises for obtaining the corresponding activity and operation license.",
+        "Emergency and self-protection plans. Plans, installations, and emergency protocols for activities.",
+        "Changes of use.",
+        "Electrical project. Design of Electrical Installations, Calculations, plans, and reports.",
+        "Fire protection installation project.",
+        "Air conditioning and ventilation projects.",
+        "Plumbing and Sanitation projects.",
+        "Waste management authorization. Authorizations for Hazardous, Non-hazardous waste, RAEES and CATV.",
+        "OCAS, ICIS."
+      ]
+    },
+    "banner": {
+      "logo_text": "Reglado Consultores & Abogados",
+      "title": "We Provide a Comprehensive Consultancy Service",
+      "text": "We provide a comprehensive consultancy service, the result of our extensive experience in the sector and the high qualification and specialization of our professionals, allowing us to provide reliable and unparalleled assistance to the various local entities for whom we work."
+    }
+  },
+  "economica_page": {
+    "hero": {
+      "title": "Economic Consultancy",
+      "subtitle": "We study the economic and financial sphere of city councils, offering an improvement plan aimed at increasing collection, regularizing intervention, and simplifying administrative procedures."
+    },
+    "section1": {
+      "eyebrow": "Tax Ordinance Analysis",
+      "title": "Tax Ordinances",
+      "text": "Economic consultancy in which we provide City Councils with the possibility of studying, reviewing, updating, and implementing Tax Ordinances, in order to streamline taxpayer procedures and increase revenue. To this end, we prepare a proposal for the modification of said ordinances, as well as the development of new ordinances.\n\nShould the City Council agree with said project, all technical reports will be proposed and any allegations resolved until the entry into force of said Ordinance."
+    },
+    "section2": {
+      "eyebrow": "Preparation, Monitoring, and Auditing",
+      "title": "Tax Inspection Plans",
+      "text": "City councils have a series of tax figures under their jurisdiction, being responsible for their management, settlement, inspection, and collection. Larger local administrations tend to be self-sufficient in carrying out these tasks entrusted to them by the Regulatory Law of Local Treasuries, but technical and human resources are limited in small and medium-sized ones.\n\nThis impossibility of carrying out a tax inspection plan creates pockets of fraud that undermine the municipal economy. As a solution, REGLADO CONSULTORES takes on this function with the following objectives:",
+      "items": [
+        "Study and optimization of the organizational model at the tax level.",
+        "Improve the tax efficiency of the city council.",
+        "Preparation of an improvement proposal and support in implementation.",
+        "Simplification of administrative processing."
+      ]
+    },
+    "cards": [
+      {
+        "title": "Technical Economic Reports",
+        "text": "We study the various Tax Ordinance proposals of the municipality in comparison with neighboring municipalities and those of similar population, to comply with the obligation to prepare a technical economic report in the case of establishing a new fee or specific modifications to an existing fee."
+      },
+      {
+        "title": "Tax Form Review",
+        "text": "With the aim of reducing problems derived from the tax field to the minimum expression, tax forms are studied and followed by proposed improvements, in order to improve the relationship between the citizen and the Administration."
+      },
+      {
+        "title": "Audits",
+        "text": "We provide City Councils with our services for the issuance of technical-legal reports, performance of expert reports and/or external audits, in any area related to the organization and management of their competencies in order to determine the best form of management for their municipal services."
+      }
+    ],
+    "section3": {
+      "eyebrow": "Technical Consultant Team",
+      "title": "Economic-Financial Plans",
+      "text": "From our Economic Consultancy, we provide City Councils and their intervention areas with a team of highly qualified consultants, experts in the development and execution of economic-financial plans for municipalities.\n\nOur team will carry out an exhaustive analysis of the municipality's situation, identifying solutions and measures aimed at improvement and economic restructuring:",
+      "items": [
+        "Integral study of the current situation.",
+        "Detailed analysis of data (Income, Expenses, Investments, Indebtedness).",
+        "Proposal of strategic measures.",
+        "Proposal of an Economic-Financial Restructuring Plan."
+      ]
+    },
+    "section4": {
+      "eyebrow": "Cost Calculation",
+      "title": "Effective Cost of Public Services",
+      "text": "Calculation of direct costs exclusively associated with each service, and indirect costs determined according to established allocation criteria, analyzing costs both for mandatory services and those corresponding to own competencies.\n\nThe purpose of this calculation is to collaborate with the fulfillment of the principle of transparency in local public action and in the effective management of the services that Local Entities provide to citizens."
+    },
+    "banner": {
+      "title": "We Provide a Comprehensive Consultancy Service",
+      "text": "We provide a comprehensive consultancy service, the result of our extensive experience in the sector and the high qualification and specialization of our professionals."
+    }
+  },
+  "inspecciones_page": {
+    "section1": {
+      "label": "Tax Inspections",
+      "title": "Tax Inspections and Regularizations",
+      "block": {
+        "title": "Management of the 95% IAE reduction for cooperatives",
+        "p1": "Law 20/1990 on the Tax Regime of Cooperatives establishes a 95% reduction on the Business Activities Tax (IAE) quota, requiring city councils to 'report annually to the General Directorate of Coordination with Territorial Treasuries of the Ministry of Economy and Finance the list of cooperatives that have effectively benefited from these reductions and the total amount of tax expenditure supported.'",
+        "p2": "Based on this data, municipalities shall receive the appropriate compensation from the General State Budgets.",
+        "p3": "Since 2018, local governments must manage the request for such compensation electronically.",
+        "p4": "REGLADO A&C technicians will carry out a study of the IAE register and tax roll, which will allow us to identify cooperatives operating within the municipal area, and prepare a technical assistance plan with the aim of ensuring they are paid the amounts corresponding to both the current fiscal year and non-prescribed years."
+      }
+    },
+    "section2": {
+      "label": "Professionals at your service",
+      "title": "Drafting and review of tax ordinances and preparation of complementary reports.",
+      "iae_block": {
+        "title": "Tax Inspections and Regularizations",
+        "subtitle": "IAE . Business Activities Tax.",
+        "text": "Through the IAE regularization procedure, we will achieve the adaptation and correction of the returns filed by large industrial and real estate activities, which often fail to report to the Treasury the variations or extensions of their taxable elements, leaving the register obsolete and requiring their regularization for updating."
+      },
+      "tasa_block": {
+        "title": "Municipal Fees",
+        "subtitle": "1.5% Fee",
+        "text": "The 1.5% Fee is a municipal tax levied on the income of companies that market and distribute services of general interest, such as electricity, water, gas, and fiber optic companies, which should pay the City Council 1.5% of their gross income in the relevant municipality as this fee. It is common for most companies operating in the municipality not to report this income, and for others to report only part of it by excluding concepts that should be included in the taxable base.",
+        "text2": "At REGLADO A&C we collaborate in technical assistance and support for the municipal inspection, facilitating collection through an exhaustive review of taxation and the correct application of the 1.5% fee."
+      },
+      "ibi_block": {
+        "title": "IBI. Management of the 50% IBI reduction for subsidized private schools.",
+        "subtitle": "Annual compensation study",
+        "text": "Article 62.2.a) TRLRHL grants the right to IBI exemption to 'real estate destined for education by educational centers fully or partially under the educational agreement regime, regarding the area assigned to subsidized education.'",
+        "text2": "Based on this article, City Councils must process this exemption before the State Administration in order to be compensated for the amount corresponding to the IBI exemption enjoyed by subsidized private schools in their municipality.",
+        "text3": "REGLADO A&C technicians will conduct the study of the corresponding annual compensation, as well as non-prescribed fiscal years, and will prepare and collect reports from the different institutions involved such as Catastro and the Educational Authority, to subsequently assist the city council in requesting said reduction."
+      },
+      "icio_block": {
+        "title": "Review of settlements for",
+        "subtitle": "ICIO",
+        "text": "The ICIO is a tax whose management system leads to the existence of two settlements: a preliminary one based on the construction budget and a final one based on the real and effective cost of the project. It is in the latter where irregularities arise as the execution cost is higher than declared, resulting in losses for municipal coffers. This can be resolved by reviewing building licenses, calculating the actual cost through the review of invoicing, accounting, and all available proof, so that the City Council can issue the final tax settlement.",
+        "text2": "Likewise, fraud in projects dedicated to solar, wind, and solar thermal energy should be noted, as provisional settlements often do not correspond to the real cost of the works, which could reveal significant income for city councils."
+      }
+    },
+    "section3": {
+      "label": "Professionals at your service",
+      "title": "Development, Monitoring, and Auditing. Tax Inspection Plans.",
+      "licencias_block": {
+        "title": "Public procurement and tenders",
+        "subtitle": "Building licenses",
+        "text": "Urban Planning Licenses.",
+        "text2": "The building license fee is a tax that is usually settled or self-assessed at the time of the license application. In some cases, these are fixed rates based on certain parameters, but in others, they are a percentage of the real and effective cost of the work for which the license is requested, having a management system similar to the Tax on Installations, Construction and Works (ICIO). Therefore, in these latter cases, a comprehensive inspection of the taxpayer is necessary so that in the same procedure the ICIO, the Building License Fee, and the urban development levy (if any) are regularized."
+      },
+      "canon_block": {
+        "title": "Ordinances and verification of the Urban Development Levy",
+        "subtitle": "Urban Development Levy.",
+        "text": "In certain Autonomous Communities, the payment of an urban development levy is established for the special use of rural land, the management and collection of which corresponds to the City Councils. This levy represents a percentage of the total cost of the work or installation carried out on said land, without excluding certain items that must be excluded from the ICIO taxable base.",
+        "text2": "This figure has gained special importance in recent times as a result of its possible application to renewable energy installations (Solar plants, wind farms, solar thermal plants, etc.).",
+        "text3": "The inspection of the Urban Development Levy along with the ICIO and the Building License Fee can generate a significant benefit for municipal coffers."
+      }
+    }
+  },
+  "common": {
+    "contact_us": "Contact us"
+  }
+}
