@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .stats {
-  background: linear-gradient(180deg, var(--color-navy-deep), var(--color-navy));
+  background: transparent;
   padding: 72px 0;
 }
 
