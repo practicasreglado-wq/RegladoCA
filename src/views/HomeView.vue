@@ -6,9 +6,9 @@
       <div id="inicio">
         <HeroSection />
         <ServicesSection :show-cta="false" />
+        <OrdenanzasSection :show-cta="false" />
         <BannerSection />
         <StatsSection />
-        <OrdenanzasSection :show-cta="false" />
       </div>
 
       <!-- Sobre Nosotros -->
