@@ -22,7 +22,7 @@ const props = defineProps({
   },
   video1: {
     type: Object,
-    default: () => ({ name: 'video', frameCount: 240 })
+    default: () => ({ name: 'video', frameCount: 0 })
   }
 });
 
@@ -82,8 +82,12 @@ const render = (canvas, images, frame, id) => {
   if (id === 1) lastDrawnFrame1 = frame;
   if (id === 2) lastDrawnFrame2 = frame;
 
-  const ctx = canvas.getContext('2d', { alpha: false }); // Optimización: sin alpha si no es necesario
+  const ctx = canvas.getContext('2d', { alpha: false });
   
+  // Set smoothing to false for sharper results on some browsers if images are crisp
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+
   // Guardamos el aspect ratio para no recalcularlo si no ha cambiado el canvas
   const canvasAspect = canvas.width / canvas.height;
   const imgAspect = img.width / img.height;
@@ -106,18 +110,19 @@ const render = (canvas, images, frame, id) => {
 };
 
 const resizeCanvas = () => {
+  const dpr = window.devicePixelRatio || 1;
   const w = window.innerWidth;
   const h = window.innerHeight;
   
   if (canvas1Ref.value) {
-    canvas1Ref.value.width = w;
-    canvas1Ref.value.height = h;
-    render(canvas1Ref.value, images1, Math.round(playhead1.frame));
+    canvas1Ref.value.width = w * dpr;
+    canvas1Ref.value.height = h * dpr;
+    render(canvas1Ref.value, images1, Math.round(playhead1.frame), 1);
   }
   if (canvas2Ref.value) {
-    canvas2Ref.value.width = w;
-    canvas2Ref.value.height = h;
-    render(canvas2Ref.value, images2, Math.round(playhead2.frame));
+    canvas2Ref.value.width = w * dpr;
+    canvas2Ref.value.height = h * dpr;
+    render(canvas2Ref.value, images2, Math.round(playhead2.frame), 2);
   }
 };
 
@@ -145,7 +150,7 @@ onMounted(async () => {
       start: "top top",
       endTrigger: "#sobre-nosotros",
       end: "bottom bottom",
-      scrub: 1, // Reducimos de 1.5 a 1 para respuesta más directa y menos frames intermedios
+      scrub: 1.8, // Restauramos a 1.8 para un scroll más fluido y premium
       onUpdate: () => render(canvas2Ref.value, images2, Math.round(playhead2.frame), 2)
     }
   });
@@ -172,7 +177,7 @@ onMounted(async () => {
       start: "top bottom",
       endTrigger: "#consultoria-juridica",
       end: "bottom top",
-      scrub: 1,
+      scrub: 1.8,
       onUpdate: () => render(canvas1Ref.value, images1, Math.round(playhead1.frame), 1)
     }
   });

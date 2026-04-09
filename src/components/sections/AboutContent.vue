@@ -45,7 +45,7 @@
         </div>
 
         <div class="about-law__visual">
-          <img :src="ladyJustice" alt="Figura de la justicia" />
+          <ScrollScrubber name="Temis" :frame-count="240" trigger=".about-law" />
         </div>
       </div>
     </section>
@@ -91,7 +91,7 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import AboutSection from '@/components/sections/AboutSection.vue'
 import aboutBg from '@media/image-section-82-min.jpg'
-import ladyJustice from '@media/image-section-86-min.png'
+import ScrollScrubber from '@/components/ScrollScrubber.vue'
 
 const { t, tm } = useI18n()
 const metricsVisible = ref(false)
@@ -142,6 +142,7 @@ onBeforeUnmount(() => {
   margin-bottom: 0;
 }
 
+
 .about-values__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -151,30 +152,31 @@ onBeforeUnmount(() => {
 
 .about-value-card {
   height: 100%;
-  min-height: 320px;
-  padding: 38px 30px 30px;
-  border-radius: 14px;
-  background: var(--color-white);
-  color: #314159;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  min-height: 340px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  background: var(--color-white) !important;
+  color: #314159 !important;
+  box-shadow: 0 20px 50px rgba(16, 32, 58, 0.12);
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .about-value-card h2 {
   margin: 0 0 20px;
   font-family: var(--font-heading);
   font-size: 1.35rem;
-  font-weight: 400;
-  color: #10203a;
+  font-weight: 500;
+  color: #10203a !important;
   line-height: 1.25;
 }
 
 .about-value-card p {
   margin: 0;
-  color: #314159;
-  font-size: 0.88rem;
-  line-height: 1.85;
+  color: #314c7a !important;
+  font-size: 0.94rem;
+  line-height: 1.7;
 }
 
 .about-law__grid {
@@ -299,15 +301,15 @@ onBeforeUnmount(() => {
 .about-law__visual {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.about-law__visual img {
-  width: min(108%, 790px);
-  max-height: 620px;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+.about-law__visual :deep(.scroll-scrubber) {
+  width: 160%;
+  flex-shrink: 0;
+  margin-left: 0;
+  height: 900px;
+  max-height: none;
 }
 
 .about-presence {
@@ -325,13 +327,25 @@ onBeforeUnmount(() => {
 .about-presence__content,
 .about-presence__map-card {
   border-radius: 24px;
-  background: var(--color-white);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
+  background: var(--color-white) !important;
+  box-shadow: 0 30px 70px rgba(16, 32, 58, 0.12);
+}
+
+.about-presence__content .section__title {
+  color: #10203a !important;
+}
+
+.about-presence__content p {
+  color: #314c7a !important;
+}
+
+.about-presence__content .section__label {
+  color: var(--color-accent) !important;
 }
 
 .about-presence__content {
   padding: 42px;
+  backdrop-filter: blur(12px);
 }
 
 .about-presence__content .section__label {

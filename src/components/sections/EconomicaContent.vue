@@ -192,7 +192,7 @@ const getCardIcon = (index) => {
   position: relative;
   background: var(--color-white);
   padding: 40px 32px;
-  color: #314159;
+  color: #314c7a !important;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
@@ -225,13 +225,14 @@ const getCardIcon = (index) => {
   line-height: 1.3;
   margin-bottom: 24px;
   font-weight: 500;
-  color: #10203a;
+  color: #10203a !important;
 }
 .economica-card__text {
   font-size: 0.95rem;
   line-height: 1.7;
-  opacity: 0.85;
-  font-weight: 300;
+  color: #314c7a !important;
+  opacity: 1;
+  font-weight: 400;
   flex-grow: 1;
 }
 .economica-card__footer { margin-top: 32px; }

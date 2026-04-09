@@ -85,8 +85,9 @@ onMounted(() => {
   display: flex;
   align-items: center;
   overflow: hidden;
-  padding: 132px 0 88px;
+  padding: 160px 0 88px;
   isolation: isolate;
+  background: var(--color-bg-main);
 }
 
 .hero__media,
@@ -97,10 +98,12 @@ onMounted(() => {
 
 .hero__media {
   background: transparent !important;
+  z-index: -2;
 }
 
 .hero__bg-overlay {
-  background: transparent !important;
+  background: rgba(16, 32, 58, 0.65) !important;
+  z-index: -1;
 }
 
 .hero__shell {

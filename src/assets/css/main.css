@@ -4,11 +4,11 @@
    ============================================ */
 
 :root {
-  --color-navy: #203b63;
+  --color-navy: #10203a;
   --color-navy-deep: #10203a;
-  --color-navy-mid: #315784;
+  --color-navy-mid: #10203a;
   --color-accent: #4d79b8;
-  --color-accent-dark: #2f5f9f;
+  --color-accent-dark: #123f7a;
   --color-accent-light: #dce8f7;
 
   /* Compatibility aliases for existing components */
