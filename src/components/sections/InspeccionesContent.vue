@@ -172,14 +172,14 @@ const { t } = useI18n()
   margin: 0 0 10px;
   font-family: var(--font-heading);
   font-size: 1.35rem;
-  color: var(--color-navy);
+  color: var(--color-accent-light);
 }
 
 .service-page__content h4 {
   margin: 18px 0 10px;
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-accent-light);
 }
 
 @media (max-width: 900px) {

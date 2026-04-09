@@ -76,7 +76,7 @@ const titleText = computed(() => props.title || t('about.title'))
   background: var(--color-white);
   border: 1px solid var(--color-border);
   font-weight: 700;
-  color: var(--color-navy);
+  color: #10203a;
   font-size: 0.82rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;

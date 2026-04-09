@@ -87,19 +87,19 @@ const services = computed(() =>
 .service-card {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(180deg, #3c5f8e 0%, #29496f 100%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
   padding: 34px 28px;
   border-radius: var(--radius-lg);
   transition: box-shadow var(--transition), transform var(--transition);
   text-decoration: none;
-  color: inherit;
+  color: #314159;
   min-height: 300px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .service-card:hover {
-  box-shadow: var(--shadow);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
   transform: translateY(-5px);
 }
 
@@ -109,7 +109,7 @@ const services = computed(() =>
   display: grid;
   place-items: center;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.12);
+  background: #cbd5e1;
   font-size: 1.6rem;
   margin-bottom: 20px;
   line-height: 1;
@@ -118,20 +118,20 @@ const services = computed(() =>
 .service-card__icon :deep(svg) {
   width: 28px;
   height: 28px;
-  color: var(--color-white);
+  color: #10203a;
 }
 
 .service-card__title {
   font-family: var(--font-heading);
   font-size: 1.18rem;
-  color: var(--color-white);
+  color: #10203a;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .service-card__desc {
   font-size: 0.92rem;
-  color: rgba(255, 255, 255, 0.78);
+  color: #314159;
   line-height: 1.8;
   margin-bottom: 20px;
 }
@@ -141,7 +141,7 @@ const services = computed(() =>
   margin-top: auto;
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--color-accent-light);
+  color: var(--color-accent);
   letter-spacing: 0.04em;
   transition: color var(--transition);
 }

@@ -133,7 +133,7 @@ const getCardIcon = (index) => {
 <style scoped>
 
 .economica-section { padding: 120px 0; overflow: hidden; }
-.economica-section--alt { background: #fcfdfe; }
+.economica-section--alt { background: var(--color-bg-light); }
 .economica-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -159,7 +159,7 @@ const getCardIcon = (index) => {
   padding-left: 28px;
   font-size: 0.98rem;
   line-height: 1.75;
-  color: #4b5563;
+  color: var(--color-text);
 }
 .economica-list li::before {
   content: "";
@@ -181,7 +181,7 @@ const getCardIcon = (index) => {
 }
 .economica-cards-section {
   padding: 100px 0;
-  background: #f8fafc;
+  background: var(--color-bg-light);
 }
 .economica-cards-grid {
   display: grid;
@@ -190,14 +190,15 @@ const getCardIcon = (index) => {
 }
 .economica-card {
   position: relative;
-  background: rgba(43, 76, 126, 0.9);
+  background: var(--color-white);
   padding: 40px 32px;
-  color: var(--color-white);
+  color: #314159;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   min-height: 440px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 .economica-card:hover {
   transform: translateY(-8px);
@@ -210,13 +211,13 @@ const getCardIcon = (index) => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
+  background: #cbd5e1;
   border-radius: 12px;
 }
 .economica-card__icon :deep(svg) {
   width: 32px;
   height: 32px;
-  color: var(--color-white);
+  color: #10203a;
 }
 .economica-card__title {
   font-family: var(--font-heading);
@@ -224,6 +225,7 @@ const getCardIcon = (index) => {
   line-height: 1.3;
   margin-bottom: 24px;
   font-weight: 500;
+  color: #10203a;
 }
 .economica-card__text {
   font-size: 0.95rem;
@@ -239,9 +241,9 @@ const getCardIcon = (index) => {
   justify-content: center;
   width: 48px;
   height: 48px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(16, 32, 58, 0.08);
   border-radius: 50%;
-  color: var(--color-white);
+  color: #10203a;
   transition: background 0.3s ease;
 }
 .economica-card__arrow:hover { background: var(--color-gold); }
