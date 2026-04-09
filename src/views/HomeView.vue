@@ -9,7 +9,6 @@
         <ServicesSection :show-cta="false" />
         <BannerSection />
         <StatsSection />
-        <OrdenanzasSection :show-cta="false" />
       </div>
 
       <!-- Sobre Nosotros -->
@@ -56,7 +55,6 @@ import HeroSection     from '@/components/sections/HeroSection.vue'
 import ServicesSection from '@/components/sections/ServicesSection.vue'
 import BannerSection   from '@/components/sections/BannerSection.vue'
 import StatsSection    from '@/components/sections/StatsSection.vue'
-import OrdenanzasSection from '@/components/sections/OrdenanzasSection.vue'
 
 // New content components
 import AboutContent        from '@/components/sections/AboutContent.vue'

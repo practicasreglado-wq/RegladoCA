@@ -3,8 +3,7 @@
     <div v-if="!isReady" class="canvas-loader">
       <div class="loader-spinner"></div>
     </div>
-    <canvas ref="canvas2Ref" class="canvas-bg" :style="{ opacity: opacity2 }"></canvas>
-    <canvas ref="canvas1Ref" class="canvas-bg" :style="{ opacity: opacity1 }"></canvas>
+    <canvas ref="canvasRef" class="canvas-bg" :style="{ opacity: opacity }"></canvas>
   </div>
 </template>
 
@@ -26,19 +25,14 @@ const props = defineProps({
   }
 });
 
-const canvas1Ref = ref(null);
-const canvas2Ref = ref(null);
-const opacity1 = ref(0);
-const opacity2 = ref(1);
+const canvasRef = ref(null);
+const opacity = ref(1);
 const isReady = ref(false);
 
-const images1 = [];
-const images2 = [];
-const playhead1 = { frame: 0 };
-const playhead2 = { frame: 0 };
+const images = [];
+const playhead = { frame: 0 };
 
-let lastDrawnFrame1 = -1;
-let lastDrawnFrame2 = -1;
+let lastDrawnFrame = -1;
 
 // Precarga de imágenes inteligente: carga inicial mínima y diferida del resto
 const preloadSequence = async (video, imagesArray) => {
@@ -69,22 +63,19 @@ const preloadSequence = async (video, imagesArray) => {
   await Promise.all(loadPromises);
 };
 
-const render = (canvas, images, frame, id) => {
+const render = (canvas, images, frame) => {
   if (!canvas || !images[frame]) return;
   
   // Evitar redibujar el mismo frame
-  if (id === 1 && frame === lastDrawnFrame1) return;
-  if (id === 2 && frame === lastDrawnFrame2) return;
+  if (frame === lastDrawnFrame) return;
 
   const img = images[frame];
   if (!img.complete) return;
 
-  if (id === 1) lastDrawnFrame1 = frame;
-  if (id === 2) lastDrawnFrame2 = frame;
+  lastDrawnFrame = frame;
 
-  const ctx = canvas.getContext('2d', { alpha: false }); // Optimización: sin alpha si no es necesario
+  const ctx = canvas.getContext('2d', { alpha: false });
   
-  // Guardamos el aspect ratio para no recalcularlo si no ha cambiado el canvas
   const canvasAspect = canvas.width / canvas.height;
   const imgAspect = img.width / img.height;
   
@@ -109,24 +100,16 @@ const resizeCanvas = () => {
   const w = window.innerWidth;
   const h = window.innerHeight;
   
-  if (canvas1Ref.value) {
-    canvas1Ref.value.width = w;
-    canvas1Ref.value.height = h;
-    render(canvas1Ref.value, images1, Math.round(playhead1.frame));
-  }
-  if (canvas2Ref.value) {
-    canvas2Ref.value.width = w;
-    canvas2Ref.value.height = h;
-    render(canvas2Ref.value, images2, Math.round(playhead2.frame));
+  if (canvasRef.value) {
+    canvasRef.value.width = w;
+    canvasRef.value.height = h;
+    render(canvasRef.value, images, Math.round(playhead.frame));
   }
 };
 
 onMounted(async () => {
-  // Cargamos secuencias
-  await Promise.all([
-    preloadSequence(props.video2, images2),
-    preloadSequence(props.video1, images1)
-  ]);
+  // Solo cargamos la secuencia del video2 (Hero y Servicios)
+  await preloadSequence(props.video2, images);
 
   isReady.value = true;
   
@@ -134,72 +117,32 @@ onMounted(async () => {
   resizeCanvas();
 
   // Forzar primer render
-  render(canvas2Ref.value, images2, 0);
+  render(canvasRef.value, images, 0);
 
-  // Animación VIDEO 2 (Intro -> Servicios)
-  gsap.to(playhead2, {
+  // Animación VIDEO PRINCIPAL (Intro -> Servicios)
+  gsap.to(playhead, {
     frame: props.video2.frameCount - 1,
     ease: "none",
     scrollTrigger: {
       trigger: ".hero",
       start: "top top",
       endTrigger: "#sobre-nosotros",
-      end: "bottom bottom",
-      scrub: 1, // Reducimos de 1.5 a 1 para respuesta más directa y menos frames intermedios
-      onUpdate: () => render(canvas2Ref.value, images2, Math.round(playhead2.frame), 2)
+      end: "top top", // Termina justo al llegar a Sobre Nosotros
+      scrub: 1,
+      onUpdate: () => render(canvasRef.value, images, Math.round(playhead.frame))
     }
   });
 
-  // Transición Fade Out Video 2 (Mantenemos hasta servicios)
-  gsap.to(opacity2, {
+  // Transición Fade Out Video (Se desvanece al terminar servicios)
+  gsap.to(opacity, {
     value: 0,
     ease: "none",
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
-      start: "top center",
-      end: "top top",
+      start: "center top", // Empieza a desvanecerse a mitad de servicios
+      end: "bottom top",    // Desaparece al llegar a Sobre Nosotros
       scrub: true,
-      onUpdate: (self) => { opacity2.value = 1 - self.progress }
-    }
-  });
-
-  // Animación VIDEO 1 (Segunda secuencia: Inspecciones -> Jurídica)
-  gsap.to(playhead1, {
-    frame: props.video1.frameCount - 1,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#inspecciones-tributarias",
-      start: "top bottom",
-      endTrigger: "#consultoria-juridica",
-      end: "bottom top",
-      scrub: 1,
-      onUpdate: () => render(canvas1Ref.value, images1, Math.round(playhead1.frame), 1)
-    }
-  });
-
-  // Transición Fade In Video 1
-  gsap.to(opacity1, {
-    value: 1,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#inspecciones-tributarias",
-      start: "top bottom",
-      end: "+=600",
-      scrub: true,
-      onUpdate: (self) => { opacity1.value = self.progress }
-    }
-  });
-
-  // Transición Fade Out Video 1 (Desaparece al finalizar Consultoría Jurídica)
-  gsap.to(opacity1, {
-    value: 0,
-    ease: "none",
-    scrollTrigger: {
-      trigger: "#consultoria-juridica",
-      start: "bottom center",
-      end: "bottom top",
-      scrub: true,
-      onUpdate: (self) => { opacity1.value = 1 - self.progress }
+      onUpdate: (self) => { opacity.value = 1 - self.progress }
     }
   });
 });
@@ -218,7 +161,7 @@ onUnmounted(() => {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background-color: #1a335a; /* Cambiado de #000 a Azul corporativo */
+  background-color: #10203a; /* Azul corporativo base */
   pointer-events: none;
   transition: background-color 0.5s ease;
 }
