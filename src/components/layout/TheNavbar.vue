@@ -39,6 +39,10 @@
           {{ t('nav.contact') }}
         </a>
 
+        <a class="navbar__link" href="https://regladogroup.com" target="_blank">
+          {{ t('nav.group') }}
+        </a>
+
         <div class="lang-switcher">
           <button
             v-for="loc in locales"
