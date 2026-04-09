@@ -13,11 +13,11 @@
       "privacy_link": "سياسة الخصوصية"
     },
     "placeholders": {
-      "name": "اسمك",
-      "email": "your@email.com",
+      "name": "أدخل اسمك الكامل",
+      "email": "name@example.com",
       "phone": "+34 600 000 000",
-      "subject": "اختر خدمة",
-      "message": "صف استفسارك..."
+      "subject": "اختر نوع الخدمة",
+      "message": "اكتب رسالتك هنا بالتفصيل..."
     },
     "subjects": {
       "inspecciones": "التفتيش الضريبي",
@@ -42,6 +42,7 @@
     "subvenciones": "المنح الأوروبية",
     "contrataciones": "المشتريات",
     "contact": "اتصل بنا",
+    "group": "Reglado Group",
     "services_list": {
       "inspecciones": "التفتيش الضريبي",
       "juridica": "الاستشارات القانونية",

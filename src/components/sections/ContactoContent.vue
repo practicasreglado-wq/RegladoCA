@@ -313,6 +313,25 @@ function handleSubmit() {
 
 button[disabled] { opacity: 0.55; cursor: not-allowed; }
 
+[dir="rtl"] .form-group input,
+[dir="rtl"] .form-group select,
+[dir="rtl"] .form-group textarea {
+  text-align: right;
+  direction: rtl;
+}
+
+/* Campos técnicos: Mantener orden de caracteres LTR pero alineación a la derecha */
+[dir="rtl"] .form-group #email,
+[dir="rtl"] .form-group #phone {
+  direction: ltr;
+  text-align: right;
+}
+
+[dir="rtl"] .form-group input::placeholder,
+[dir="rtl"] .form-group textarea::placeholder {
+  text-align: right;
+}
+
 @media (max-width: 900px) {
   .contact__grid { grid-template-columns: 1fr; gap: 40px; }
   .form-row { grid-template-columns: 1fr; }

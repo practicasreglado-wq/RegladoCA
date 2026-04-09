@@ -7,6 +7,7 @@
       <div id="inicio" class="dark-transition-bg">
         <HeroSection />
         <ServicesSection :show-cta="false" />
+        <OrdenanzasSection :show-cta="false" />
         <BannerSection />
         <StatsSection />
       </div>
