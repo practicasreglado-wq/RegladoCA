@@ -18,7 +18,7 @@ const { t } = useI18n()
 <style scoped>
 .banner {
   padding: var(--section-py) 0;
-  background: var(--color-bg-main);
+  background: transparent;
 }
 
 .banner__content {
@@ -44,7 +44,7 @@ const { t } = useI18n()
 }
 
 .banner__text {
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.96rem;
   line-height: 1.9;
 }

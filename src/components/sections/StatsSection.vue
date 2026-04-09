@@ -106,7 +106,7 @@ onBeforeUnmount(() => {
 
 <style scoped>
 .stats {
-  background: var(--color-bg-main);
+  background: transparent;
   padding: 72px 0;
 }
 

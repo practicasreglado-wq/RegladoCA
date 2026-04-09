@@ -1,9 +1,13 @@
 <template>
-  <section class="section section--light" id="servicios">
+  <section class="section section--light section-servicios-trigger">
     <div class="container text-center">
       <span class="section__label">{{ t('services.label') }}</span>
-      <h2 class="section__title">{{ t('services.title') }}</h2>
-      <p class="section__subtitle">{{ t('services.subtitle') }}</p>
+      <div class="section__reveal-container">
+        <h2 class="section__title">{{ t('services.title') }}</h2>
+      </div>
+      <div class="section__reveal-container">
+        <p class="section__subtitle">{{ t('services.subtitle') }}</p>
+      </div>
       <a v-if="showCta" href="/#contacto" @click.prevent="scrollTo('contacto')" class="btn btn--contact">{{ t('services.cta') }}</a>
     </div>
 
@@ -25,10 +29,14 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const { t, tm } = useI18n()
 const { scrollTo } = useScroll()
@@ -74,33 +82,163 @@ const services = computed(() =>
     route: routes[i] || '#'
   }))
 )
+
+onMounted(() => {
+  // 1. Transición de fondo: Empieza mucho más tarde (cuando la sección está bien entrada)
+  gsap.to("#inicio", {
+    backgroundColor: "#10203a",
+    scrollTrigger: {
+      trigger: ".section-servicios-trigger",
+      start: "top 5%", // Empieza casi al llegar arriba
+      end: "bottom top", 
+      scrub: true
+    }
+  })
+
+  // 2. Secuencia de REVELADO: Título (Desde arriba) -> Subtítulo (Desde abajo)
+  const tlReveal = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".section-servicios-trigger",
+      start: "top 90%",
+      toggleActions: "play none none none"
+    }
+  })
+
+  tlReveal.fromTo(".section__title", 
+    { 
+      y: "-110%", 
+      opacity: 0,
+      filter: "blur(10px)"
+    },
+    {
+      y: "0%",
+      opacity: 1,
+      filter: "blur(0px)",
+      duration: 2.5, // Duración aumentada para mayor dramatismo
+      ease: "expo.out"
+    }
+  )
+  .fromTo(".section__subtitle", 
+    { 
+      y: "110%", 
+      opacity: 0,
+      filter: "blur(10px)"
+    },
+    {
+      y: "0%",
+      opacity: 1,
+      filter: "blur(0px)",
+      duration: 2.5,
+      ease: "expo.out"
+    },
+    "-=2.1" // "Un instante después" (solapamiento casi total pero con inicio retrasado)
+  )
+
+  // 3. Timeline para el anclado y las tarjetas (empieza en top top)
+  const tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".section-servicios-trigger",
+      start: "top top",
+      end: "+=2200", 
+      pin: true,
+      scrub: 1,
+      anticipatePin: 1
+    }
+  })
+
+  // Solo las tarjetas viven en el anclado
+  const cards = gsap.utils.toArray(".service-card")
+  cards.forEach((card, index) => {
+    tl.from(card, {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power2.out"
+    }, index * 0.8) 
+  })
+})
 </script>
 
 <style scoped>
+.section-servicios-trigger {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: transparent; 
+}
+
+.section__reveal-container {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+}
+
+.section__title, .section__subtitle {
+  opacity: 0; /* Asegurar que no hay flash antes de GSAP */
+}
+
 .services__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
   margin-top: 56px;
+}
+
+@media (max-width: 1024px) {
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .service-card {
   display: flex;
   flex-direction: column;
-  background: var(--color-white);
-  border: 1px solid var(--color-border);
+  background: #ffffff !important; /* Forzado blanco */
+  border: 1px solid rgba(32, 59, 99, 0.1);
   padding: 34px 28px;
   border-radius: var(--radius-lg);
-  transition: box-shadow var(--transition), transform var(--transition);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              background 0.3s ease, 
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
   text-decoration: none;
-  color: #314159;
-  min-height: 300px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: var(--color-navy) !important; /* Forzado azul oscuro */
+  height: 100%; 
+  min-height: 400px; 
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(16, 32, 58, 0.08);
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(77, 121, 184, 0.05), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 
 .service-card:hover {
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  transform: translateY(-5px);
+  transform: translateY(-12px);
+  background: var(--color-bg-light);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-lg);
+}
+
+.service-card:hover::after {
+  opacity: 1;
 }
 
 .service-card__icon {
@@ -109,7 +247,7 @@ const services = computed(() =>
   display: grid;
   place-items: center;
   border-radius: 14px;
-  background: #cbd5e1;
+  background: var(--color-bg-section);
   font-size: 1.6rem;
   margin-bottom: 20px;
   line-height: 1;
@@ -118,20 +256,20 @@ const services = computed(() =>
 .service-card__icon :deep(svg) {
   width: 28px;
   height: 28px;
-  color: #10203a;
+  color: var(--color-accent);
 }
 
 .service-card__title {
   font-family: var(--font-heading);
   font-size: 1.18rem;
-  color: #10203a;
+  color: #1a335a !important; /* Azul más intenso */
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .service-card__desc {
   font-size: 0.92rem;
-  color: #314159;
+  color: #315784 !important; /* Azul intermedio forzado */
   line-height: 1.8;
   margin-bottom: 20px;
 }
@@ -147,6 +285,6 @@ const services = computed(() =>
 }
 
 .service-card:hover .service-card__link {
-  color: var(--color-white);
+  color: var(--color-accent-dark);
 }
 </style>

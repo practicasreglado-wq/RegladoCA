@@ -7,15 +7,25 @@
       <div class="hero__content">
         <aside class="hero__sidebar" aria-label="Contexto">
           <span class="hero__intro-line" aria-hidden="true"></span>
-          <p class="hero__eyebrow">Reglado . Consultores & Abogados</p>
+          <div class="hero__reveal-sidebar">
+            <p class="hero__eyebrow">{{ t('hero.eyebrow') }}</p>
+          </div>
           <span class="hero__intro-line" aria-hidden="true"></span>
         </aside>
 
         <div class="hero__main">
-          <h1 class="hero__title">
-            {{ t('hero.title') }}
-            <span class="hero__highlight">{{ t('hero.title_highlight') }}</span>
-          </h1>
+          <div class="hero__reveal-title">
+            <h1 class="hero__title">
+              {{ t('hero.title') }}
+              <span class="hero__highlight">{{ t('hero.title_highlight') }}</span>
+            </h1>
+          </div>
+
+          <div class="hero__reveal-subtitle">
+            <p class="hero__subtitle">
+              {{ t('hero.subtitle') }}
+            </p>
+          </div>
 
           <div class="hero__actions">
             <a href="/#contacto" @click.prevent="scrollTo('contacto')" class="btn btn--primary btn--contact btn--lg hero__cta">
@@ -26,21 +36,46 @@
       </div>
     </div>
 
-    <div class="hero__scroll" aria-hidden="true">
-      <span class="hero__scroll-line"></span>
-      <span class="hero__scroll-text">Scroll</span>
-    </div>
   </section>
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import gsap from 'gsap'
 import heroImage from '../../../media/image-section-82-min.jpg'
 import { useScroll } from '../../composables/useScroll'
 
 const { t } = useI18n()
 const { scrollTo } = useScroll()
+
+onMounted(() => {
+  const tl = gsap.timeline({ 
+    defaults: { ease: "expo.out", duration: 1.5 } 
+  })
+
+  // Secuencia de entrada: sidebar -> titulo -> subtitulo -> acciones
+  tl.fromTo(".hero__eyebrow", 
+    { y: "100%", opacity: 0 }, 
+    { y: "0%", opacity: 1, delay: 0.6 }
+  )
+  .fromTo(".hero__title", 
+    { y: "60%", opacity: 0 }, 
+    { y: "0%", opacity: 1 }, 
+    "-=1.1"
+  )
+  .fromTo(".hero__subtitle", 
+    { y: "40%", opacity: 0 }, 
+    { y: "0%", opacity: 1 }, 
+    "-=1.2"
+  )
+  .fromTo(".hero__actions", 
+    { opacity: 0, scale: 0.95 }, 
+    { opacity: 1, scale: 1 }, 
+    "-=1.3"
+  )
+})
 </script>
 
 <style scoped>
@@ -61,18 +96,11 @@ const { scrollTo } = useScroll()
 }
 
 .hero__media {
-  background-image: var(--hero-image);
-  background-size: cover;
-  background-position: center;
-  transform: scale(1.02);
-  animation: heroMediaDrift 18s ease-in-out infinite alternate;
+  background: transparent !important;
 }
 
 .hero__bg-overlay {
-  background:
-    linear-gradient(90deg, rgba(16, 32, 58, 0.94) 0%, rgba(16, 32, 58, 0.86) 38%, rgba(16, 32, 58, 0.5) 100%),
-    linear-gradient(180deg, rgba(77, 121, 184, 0.12), transparent 45%),
-    radial-gradient(circle at 85% 24%, rgba(220, 232, 247, 0.18), transparent 24%);
+  background: transparent !important;
 }
 
 .hero__shell {
@@ -99,8 +127,7 @@ const { scrollTo } = useScroll()
 .hero__title,
 .hero__actions {
   opacity: 0;
-  transform: translate3d(0, 34px, 0);
-  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  /* Animación eliminada a favor de GSAP */
 }
 
 .hero__sidebar {
@@ -167,31 +194,24 @@ const { scrollTo } = useScroll()
   box-shadow: 0 18px 40px rgba(32, 59, 99, 0.22);
 }
 
-.hero__scroll {
-  position: absolute;
-  bottom: 28px;
-  left: 50%;
-  transform: translateX(-50%);
+.hero__subtitle {
+  font-size: clamp(1rem, 1.2vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.82);
+  max-width: 600px;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+.hero__reveal-sidebar,
+.hero__reveal-title,
+.hero__reveal-subtitle {
+  overflow: hidden;
+  width: 100%;
+}
+
+.hero__reveal-sidebar {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  opacity: 0;
-  animation: heroScrollIn 0.9s ease forwards 1s;
-}
-
-.hero__scroll-line {
-  width: 1px;
-  height: 44px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.72));
-  animation: heroScrollPulse 1.8s ease-in-out infinite;
-}
-
-.hero__scroll-text {
-  color: rgba(255, 255, 255, 0.48);
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
+  justify-content: center;
 }
 
 [dir="rtl"] .hero__content {
@@ -221,30 +241,6 @@ const { scrollTo } = useScroll()
   }
 }
 
-@keyframes heroScrollIn {
-  from {
-    opacity: 0;
-    transform: translate3d(-50%, 12px, 0);
-  }
-
-  to {
-    opacity: 1;
-    transform: translate3d(-50%, 0, 0);
-  }
-}
-
-@keyframes heroScrollPulse {
-  0%,
-  100% {
-    transform: scaleY(1);
-    opacity: 0.7;
-  }
-
-  50% {
-    transform: scaleY(0.7);
-    opacity: 1;
-  }
-}
 
 @media (max-width: 900px) {
   .hero {
@@ -294,10 +290,6 @@ const { scrollTo } = useScroll()
   .hero__actions {
     flex-direction: column;
     align-items: flex-start;
-  }
-
-  .hero__scroll {
-    bottom: 18px;
   }
 }
 </style>

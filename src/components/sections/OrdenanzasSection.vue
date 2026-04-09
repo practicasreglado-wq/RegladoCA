@@ -1,5 +1,5 @@
 <template>
-  <section class="section section--light">
+  <section class="section section--transparent" id="ordenanzas">
     <div class="container ord__grid">
       <div class="ord__text">
         <span class="section__label">{{ t('ordenanzas.label') }}</span>
@@ -10,7 +10,7 @@
           <li v-for="item in items" :key="item">{{ item }}</li>
         </ul>
 
-        <p>{{ t('ordenanzas.text') }}</p>
+        <p class="ord__description">{{ t('ordenanzas.text') }}</p>
         <RouterLink v-if="showCta" to="/contacto" class="btn btn--contact">{{ t('ordenanzas.cta') }}</RouterLink>
       </div>
 
@@ -35,6 +35,10 @@ const items = computed(() => tm('ordenanzas.items'))
 </script>
 
 <style scoped>
+.section--transparent {
+  background: transparent;
+}
+
 .ord__grid {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
@@ -50,8 +54,8 @@ const items = computed(() => tm('ordenanzas.items'))
 
 .ord__list li {
   padding: 10px 0 10px 22px;
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text-muted);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.92rem;
   position: relative;
 }
@@ -67,11 +71,15 @@ const items = computed(() => tm('ordenanzas.items'))
   background: var(--color-accent);
 }
 
-.ord__text p {
-  color: var(--color-text-muted);
+.ord__description {
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.95rem;
   margin-bottom: 24px;
   line-height: 1.85;
+}
+
+.ord__text .section__title {
+  color: var(--color-white);
 }
 
 .ord__visual img {

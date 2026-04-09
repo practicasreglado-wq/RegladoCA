@@ -1,0 +1,45 @@
+/* Estilos para compatibilidad con el fondo de Canvas (Efecto Apple) */
+
+.has-canvas-bg .hero__media,
+.has-canvas-bg .hero__bg-overlay {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.has-canvas-bg .hero {
+  background: transparent !important;
+}
+
+.has-canvas-bg .section--light,
+.has-canvas-bg .section--white,
+.has-canvas-bg .banner,
+.has-canvas-bg .stats,
+.has-canvas-bg section {
+  background-color: transparent !important;
+}
+
+/* El contenido debe ser legible sobre los vídeos oscuros */
+.has-canvas-bg .section__title,
+.has-canvas-bg .section__subtitle,
+.has-canvas-bg p,
+.has-canvas-bg h2 {
+  color: var(--color-white) !important;
+}
+
+.has-canvas-bg .banner__title,
+.has-canvas-bg .banner__text,
+.has-canvas-bg .banner__label {
+  color: var(--color-white) !important;
+}
+
+.has-canvas-bg .section__label {
+  color: var(--color-accent-light) !important;
+}
+
+/* Ajustes de espaciado si es necesario para dar aire al vídeo */
+.has-canvas-bg section {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
