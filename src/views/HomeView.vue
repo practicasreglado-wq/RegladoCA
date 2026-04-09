@@ -1,9 +1,10 @@
 <template>
-  <div>
+  <div class="has-canvas-bg">
+    <CanvasVideoBackground />
     <TheNavbar />
     <main>
       <!-- Inicio -->
-      <div id="inicio">
+      <div id="inicio" class="dark-transition-bg">
         <HeroSection />
         <ServicesSection :show-cta="false" />
         <OrdenanzasSection :show-cta="false" />
@@ -64,13 +65,17 @@ import JuridicaContent     from '@/components/sections/JuridicaContent.vue'
 import TecnicaContent      from '@/components/sections/TecnicaContent.vue'
 import EconomicaContent    from '@/components/sections/EconomicaContent.vue'
 import ContactoContent     from '@/components/sections/ContactoContent.vue'
+import CanvasVideoBackground from '@/components/CanvasVideoBackground.vue'
 
 const { t } = useI18n()
 </script>
 
 <style scoped>
-/* Ensure each section has clear boundaries if needed, 
-   though the components themselves carry their original padding */
+#inicio {
+  background-color: transparent; /* Quitamos !important para permitir la animación de GSAP */
+  transition: background-color 0.8s ease;
+}
+
 section {
   position: relative;
 }

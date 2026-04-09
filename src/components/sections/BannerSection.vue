@@ -18,7 +18,7 @@ const { t } = useI18n()
 <style scoped>
 .banner {
   padding: var(--section-py) 0;
-  background: var(--color-white);
+  background: transparent;
 }
 
 .banner__content {
@@ -38,13 +38,13 @@ const { t } = useI18n()
 .banner__title {
   font-family: var(--font-heading);
   font-size: clamp(1.7rem, 3vw, 2.5rem);
-  color: var(--color-navy);
+  color: var(--color-white);
   line-height: 1.28;
   margin-bottom: 20px;
 }
 
 .banner__text {
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.96rem;
   line-height: 1.9;
 }
