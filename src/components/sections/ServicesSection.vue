@@ -59,7 +59,7 @@
       </div>
     </div>
 
-    <!-- Fase 3: Banner Informativo (Capa independiente) -->
+    <!-- Fase 3: Banner Informativo IAE (Capa independiente) -->
     <div class="container services__banner-overlay" id="banner-fase3">
       <div class="banner-dynamic">
         <span class="banner-dynamic__label">{{ t('banner.label') }}</span>
@@ -70,11 +70,30 @@
         </div>
       </div>
     </div>
+
+    <!-- Fase 4: Ordenanzas y Regularizaciones (A lo último de todo) -->
+    <div class="container services__ordenanzas-overlay" id="banner-fase4">
+      <div class="banner-dynamic">
+        <span class="banner-dynamic__label">{{ t('ordenanzas.label') }}</span>
+        <h2 class="banner-dynamic__title">{{ t('ordenanzas.title') }}</h2>
+        <span class="divider divider--center"></span>
+        <div class="banner-dynamic__grid">
+          <div class="banner-dynamic__text">
+            <p>{{ t('ordenanzas.text') }}</p>
+          </div>
+          <ul class="banner-dynamic__list">
+            <li v-for="item in tm('ordenanzas.items')" :key="item">
+              <span class="dot"></span> {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </section>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
@@ -163,18 +182,18 @@ onMounted(() => {
     }
   })
 
-  // 2. TIMELINE - Triple Swap Cinematic Animation
+  // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
   const masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
-      end: "+=4800", // Extendido para las 3 fases: Tarjetas -> Identidad -> Banner
+      end: "+=2800", // Reducción agresiva para máxima agilidad
       pin: true,
       scrub: 1,
       anticipatePin: 1,
       onUpdate: (self) => {
         // Trigger de los contadores cuando el overlay de identidad es visible
-        if (self.progress > 0.45 && self.progress < 0.75) {
+        if (self.progress > 0.20 && self.progress < 0.40) {
           animateNumbers()
         }
       }
@@ -183,10 +202,10 @@ onMounted(() => {
 
   const cards = gsap.utils.toArray(".service-card")
 
-  // FASE 1: Títulos y Tarjetas (0s -> 3s)
+  // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
   masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
     { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+    { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" }
   )
 
   cards.forEach((card, index) => {
@@ -196,62 +215,87 @@ onMounted(() => {
       rotateX: -15,
       duration: 1.2,
       ease: "power2.out"
-    }, `-=${index === 0 ? 0.3 : 0.8}`)
+    }, `-=${index === 0 ? 0.4 : 0.8}`)
   })
   
-  // FASE 2: Transición de "Intercambio"
-  const transStart = 3.5;
+  // TRANSICIÓN 1 -> 2 (t=2.0 -> t=3.2)
+  const t1to2 = 2.0;
   
-  // Salida de las Tarjetas
-  masterTl.to(".services__grid-wrapper", { 
-    opacity: 0, 
-    y: -100, 
-    filter: "blur(14px)", 
-    duration: 1.2
-  }, transStart)
-  .to(".services-header", { 
-    opacity: 0, 
-    y: -80, 
-    duration: 1 
-  }, transStart + 0.1)
-  
-  // Entrada de Identidad y Datos (Etapa 2)
-  .fromTo(".services__identity-overlay", 
+  // Entrada Fase 2 (Anticipada)
+  masterTl.fromTo(".services__identity-overlay", 
     { opacity: 0, y: 50, visibility: "hidden" }, 
-    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.5, ease: "power2.out" },
-    transStart + 0.2
+    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.2, ease: "power2.out" },
+    t1to2
   )
   .fromTo(".identity__text .section__label, .identity__text .section__title, .identity__text .divider, .identity__text p, .identity__visual, .identity__stats",
     { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
-    transStart + 0.4
+    { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" },
+    t1to2 + 0.2
   )
 
+  // Salida Fase 1
+  .to(".services__grid-wrapper", { 
+    opacity: 0, y: -100, filter: "blur(14px)", duration: 1.0
+  }, t1to2 + 0.1)
+  .to(".services-header", { 
+    opacity: 0, y: -80, duration: 0.8 
+  }, t1to2 + 0.2)
 
-  // FASE 3: Transición al Banner (Etapa 3)
-  const transEndStart = 6.5;
+  // FASE 2 STILL (Lectura rápida hasta t=4.2)
 
-  // Salida de Identidad
-  masterTl.to(".services__identity-overlay", {
-    opacity: 0,
-    y: -40,
-    filter: "blur(12px)",
-    duration: 1.2,
-    zIndex: 1, 
-    visibility: "hidden"
-  }, transEndStart)
 
-  // Entrada del Banner Dinámico
-  .fromTo(".services__banner-overlay",
+  // TRANSICIÓN 2 -> 3 (t=4.2 -> t=5.4)
+  const t2to3 = 4.2;
+
+  // Entrada Fase 3
+  masterTl.fromTo(".services__banner-overlay",
     { opacity: 0, y: 60, visibility: "visible", zIndex: 1 },
-    { opacity: 1, y: 0, zIndex: 12, duration: 1.8, ease: "power2.out" },
-    transEndStart + 0.5
+    { opacity: 1, y: 0, zIndex: 12, duration: 1.2, ease: "power2.out" },
+    t2to3
   )
   .fromTo(".banner-dynamic__label, .banner-dynamic__title, .divider--center, .banner-dynamic__text p",
     { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, stagger: 0.15, duration: 1.2, ease: "power2.out" },
-    transEndStart + 0.8
+    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
+    t2to3 + 0.2
   )
+
+  // Salida Fase 2
+  .to(".services__identity-overlay", {
+    opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
+  }, t2to3 + 0.1);
+
+  // FASE 3 STILL (Lectura rápida hasta t=6.4)
+
+
+  // TRANSICIÓN 3 -> 4 (t=6.4 -> t=7.6)
+  const t3to4 = 6.4;
+
+  // Entrada Fase 4
+  masterTl.fromTo(".services__ordenanzas-overlay",
+    { opacity: 0, y: 60, visibility: "visible", zIndex: 1 },
+    { opacity: 1, y: 0, zIndex: 13, duration: 1.2, ease: "power2.out" },
+    t3to4
+  )
+  .fromTo(".services__ordenanzas-overlay .banner-dynamic__label, .services__ordenanzas-overlay .banner-dynamic__title, .services__ordenanzas-overlay .divider--center, .services__ordenanzas-overlay .banner-dynamic__grid",
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
+    t3to4 + 0.2
+  )
+
+  // Salida Fase 3
+  .to(".services__banner-overlay", {
+    opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
+  }, t3to4 + 0.1)
+  
+  // Limpieza final y salida definitiva (t=8.6 -> t=9.5)
+  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 8.6);
+
+})
+
+onBeforeUnmount(() => {
+  ScrollTrigger.getAll().forEach(st => {
+    if (st.trigger === ".section-servicios-trigger") st.kill();
+  });
 })
 
 let numbersAnimated = false
@@ -585,5 +629,67 @@ function animateNumbers() {
 
 .divider--center {
   margin: 24px auto 32px;
+}
+
+/* Estilos específicos para la Fase 4 */
+.services__ordenanzas-overlay {
+  position: absolute;
+  top: 54%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1100px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  text-align: center;
+}
+
+.banner-dynamic__grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.banner-dynamic__list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 30px;
+}
+
+.banner-dynamic__list li {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.92rem;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.banner-dynamic__list .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--color-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 900px) {
+  .banner-dynamic__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    text-align: center;
+  }
+  
+  .banner-dynamic__list {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+    text-align: left;
+  }
 }
 </style>

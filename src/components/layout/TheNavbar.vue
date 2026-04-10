@@ -123,32 +123,36 @@ const darkSelectors = [
 ]
 
 function onScroll() {
-  const navbarHeight = 80 // Height of the fixed navbar
-  const scrollPos = window.scrollY + (navbarHeight / 2) // Check the midpoint of the navbar
+  const scrollPos = window.scrollY
+  const navbarHeight = 80
+  const checkPoint = scrollPos + (navbarHeight / 2)
 
-  // Default to true (white background) if not at the very top
-  let shouldBeTransparent = window.scrollY < 20
+  // Por defecto, blanco si hemos bajado más de 20px
+  let isOverDark = false
 
-  if (!shouldBeTransparent) {
-    // Check if we are overlapping any dark section
+  // Siempre es transparente/claro al inicio absoluto del scroll
+  if (scrollPos < 20) {
+    isOverDark = true
+  } else {
+    // Verificamos colisión con secciones oscuras
     for (const selector of darkSelectors) {
       const elements = document.querySelectorAll(selector)
       for (const el of elements) {
         const rect = el.getBoundingClientRect()
-        const top = rect.top + window.scrollY
-        const bottom = rect.bottom + window.scrollY
+        const top = rect.top + scrollPos
+        const bottom = rect.bottom + scrollPos
         
-        // If the navbar scroll position is within the element's vertical bounds
-        if (scrollPos >= top && scrollPos <= bottom) {
-          shouldBeTransparent = true
+        // Margen extra para suavizar la transición
+        if (checkPoint >= top - 2 && checkPoint <= bottom + 2) {
+          isOverDark = true
           break
         }
       }
-      if (shouldBeTransparent) break
+      if (isOverDark) break
     }
   }
 
-  isScrolled.value = !shouldBeTransparent
+  isScrolled.value = !isOverDark
 }
 
 onMounted(() => {

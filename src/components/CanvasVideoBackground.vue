@@ -143,8 +143,9 @@ onMounted(async () => {
     ease: 'none',
     scrollTrigger: {
       trigger: '.section-servicios-trigger',
-      start: 'center top',
-      end: 'bottom top',
+      start: 'top top',
+      endTrigger: '#sobre-nosotros',
+      end: 'top top',
       scrub: true,
       onUpdate: (self) => {
         opacity.value = 1 - self.progress
