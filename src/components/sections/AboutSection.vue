@@ -1,5 +1,12 @@
 <template>
-  <section class="section section--light" id="nosotros">
+  <section 
+    class="section" 
+    :class="{ 
+      'section--light': theme === 'light',
+      'about--dark': theme === 'dark'
+    }" 
+    id="nosotros"
+  >
     <div class="container about__grid">
       <div class="about__media">
         <img :src="aboutImage" alt="Asesoria corporativa Reglado" />
@@ -8,7 +15,7 @@
       <div class="about__text">
         <span class="section__label">{{ labelText }}</span>
         <h2 class="section__title">{{ titleText }}</h2>
-        <span class="divider"></span>
+        <span class="divider" :class="{ 'divider--white': theme === 'dark' }"></span>
 
         <div v-if="showTags" class="about__tags">
           <span v-for="tag in tags" :key="tag" class="about__tag">{{ tag }}</span>
@@ -33,7 +40,8 @@ const props = defineProps({
   title: { type: String, default: '' },
   paragraphs: { type: Array, default: () => [] },
   showTags: { type: Boolean, default: true },
-  showCta: { type: Boolean, default: true }
+  showCta: { type: Boolean, default: true },
+  theme: { type: String, default: 'light' }
 })
 
 const tags = computed(() => tm('about.tags'))
@@ -88,6 +96,35 @@ const titleText = computed(() => props.title || t('about.title'))
   font-size: 0.95rem;
   margin-bottom: 16px;
   line-height: 1.85;
+}
+
+/* Dark Theme Adjustments */
+.about--dark {
+  background: transparent;
+}
+
+.about--dark .section__label {
+  color: var(--color-accent-light);
+}
+
+.about--dark .section__title {
+  color: var(--color-white);
+}
+
+.about--dark .about__text p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.about--dark .about__tag {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+  backdrop-filter: blur(8px);
+}
+
+.about--dark .divider--white {
+  background: var(--color-white);
+  opacity: 0.8;
 }
 
 .about__text .btn {

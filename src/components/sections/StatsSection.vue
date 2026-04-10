@@ -107,7 +107,7 @@ onBeforeUnmount(() => {
 <style scoped>
 .stats {
   background: transparent;
-  padding: 72px 0;
+  padding: 0 0 var(--section-py) 0;
 }
 
 .stats__grid {

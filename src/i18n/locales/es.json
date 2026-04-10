@@ -91,8 +91,10 @@
   },
   "banner": {
     "label": "Inspecciones Tributarias",
-    "title": "Gestión de la bonificación del 95% en el IAE de las cooperativas.",
-    "text": "La Ley 20/1990, de Régimen Fiscal de Cooperativas, establece una bonificación del 95% de la cuota del IAE disponiendo que los ayuntamientos comuniquen anualmente la relación de cooperativas que hayan disfrutado de estas bonificaciones."
+    "title": "Gestión de la bonificación del 95% en el IAE de las cooperativas",
+    "paragraphs": [
+      "La Ley 20/1990, de Régimen Fiscal de Cooperativas, establece una bonificación del 95% de la cuota de Impuesto de Actividades Económicas (IAE) disponiendo que los ayuntamientos “comunicarán anualmente a la Dirección General de Coordinación con las Haciendas Territoriales del Ministerio de Economía y Hacienda la relación de cooperativas que hayan disfrutado efectivamente de estas bonificaciones y el importe total del gasto fiscal soportado”."
+    ]
   },
   "about": {
     "tags": ["Experiencia", "Confianza", "Principios"],

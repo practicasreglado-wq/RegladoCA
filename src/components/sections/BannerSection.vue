@@ -4,7 +4,7 @@
       <span class="banner__label">{{ t('banner.label') }}</span>
       <h2 class="banner__title">{{ t('banner.title') }}</h2>
       <span class="divider"></span>
-      <p class="banner__text">{{ t('banner.text') }}</p>
+      <p v-for="p in tm('banner.paragraphs')" :key="p" class="banner__text">{{ p }}</p>
     </div>
   </section>
 </template>
@@ -12,7 +12,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 </script>
 
 <style scoped>
@@ -47,5 +47,10 @@ const { t } = useI18n()
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.96rem;
   line-height: 1.9;
+  margin-bottom: 16px;
+}
+
+.banner__text:last-of-type {
+  margin-bottom: 0;
 }
 </style>
