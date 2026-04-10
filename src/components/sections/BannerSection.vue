@@ -27,7 +27,7 @@ const { t, tm } = useI18n()
 
 .banner__label {
   display: inline-block;
-  color: var(--color-accent);
+  color: var(--color-accent-light);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;

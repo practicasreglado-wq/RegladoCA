@@ -99,7 +99,7 @@ const { t, tm } = useI18n()
 <style scoped>
 
 .tecnica-section { padding: 120px 0; overflow: hidden; }
-.tecnica-section--alt { background: #fcfdfe; }
+.tecnica-section--alt { background: var(--color-bg-light); }
 .tecnica-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -125,7 +125,7 @@ const { t, tm } = useI18n()
   padding-left: 28px;
   font-size: 0.98rem;
   line-height: 1.75;
-  color: #4b5563;
+  color: var(--color-text);
 }
 .tecnica-list li::before {
   content: "";

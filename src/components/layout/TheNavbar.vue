@@ -118,7 +118,8 @@ const darkSelectors = [
   '.tecnica-banner',
   '.economica-hero',
   '.economica-banner',
-  '.banner-section'
+  '.banner-section',
+  '.about-immersive-scene'
 ]
 
 function onScroll() {
@@ -293,7 +294,7 @@ onUnmounted(() => {
   display: block;
   padding: 12px 20px;
   font-size: 0.85rem;
-  color: var(--color-text);
+  color: #10203a !important;
   border-bottom: 1px solid var(--color-border);
   transition: background var(--transition), color var(--transition);
 }
@@ -303,8 +304,8 @@ onUnmounted(() => {
 }
 
 .dropdown__panel a:hover {
-  background: var(--color-bg-light);
-  color: var(--color-accent);
+  background: var(--color-navy);
+  color: var(--color-white) !important;
 }
 
 .lang-switcher {

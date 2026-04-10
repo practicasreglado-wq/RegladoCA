@@ -54,7 +54,7 @@ console.log('------------------------------------------------------');
  * -q:v 75: Calidad del 75%, ideal para carga web sin pérdida visual perceptible.
  * "frame_%04d.webp": Formato de salida numerado compatible con CanvasVideoBackground.vue.
  */
-const command = `"${ffmpeg}" -i "${inputPath}" -vf "scale='min(1920,iw)':-2,fps=30" -vcodec libwebp -lossless 0 -q:v 75 "${join(outputDir, 'frame_%04d.webp')}"`;
+const command = `"${ffmpeg}" -i "${inputPath}" -vf "scale='min(1920,iw)':-2,fps=30" -pix_fmt yuv420p -vcodec libwebp -lossless 0 -q:v 95 "${join(outputDir, 'frame_%04d.webp')}"`;
 
 // Ejecución del comando de sistema
 exec(command, (error, stdout, stderr) => {

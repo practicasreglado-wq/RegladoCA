@@ -1,12 +1,14 @@
 /* Estilos para compatibilidad con el fondo de Canvas (Efecto Apple) */
 
 .has-canvas-bg .hero__media,
-.has-canvas-bg .hero__bg-overlay {
+.has-canvas-bg .hero__bg-overlay,
+.has-canvas-bg .about-hero::before {
   opacity: 0 !important;
   visibility: hidden !important;
 }
 
-.has-canvas-bg .hero {
+.has-canvas-bg .hero,
+.has-canvas-bg .page-hero {
   background: transparent !important;
 }
 
@@ -14,15 +16,24 @@
 .has-canvas-bg .section--white,
 .has-canvas-bg .banner,
 .has-canvas-bg .stats,
+.has-canvas-bg .about-law,
+.has-canvas-bg .about-presence,
+.has-canvas-bg .about-values,
 .has-canvas-bg section {
   background-color: transparent !important;
+  background: transparent !important;
 }
 
 /* El contenido debe ser legible sobre los vídeos oscuros */
 .has-canvas-bg .section__title,
 .has-canvas-bg .section__subtitle,
 .has-canvas-bg p,
-.has-canvas-bg h2 {
+.has-canvas-bg li,
+.has-canvas-bg h1,
+.has-canvas-bg h2,
+.has-canvas-bg h3,
+.has-canvas-bg .ord__list li,
+.has-canvas-bg .ord__description {
   color: var(--color-white) !important;
 }
 
@@ -32,7 +43,8 @@
   color: var(--color-white) !important;
 }
 
-.has-canvas-bg .section__label {
+.has-canvas-bg .section__label,
+.has-canvas-bg .hero__eyebrow {
   color: var(--color-accent-light) !important;
 }
 

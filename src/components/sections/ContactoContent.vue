@@ -230,7 +230,7 @@ function handleSubmit() {
 .contact__info-title {
   font-family: var(--font-heading);
   font-size: 1.4rem;
-  color: var(--color-navy);
+  color: var(--color-accent-light);
   margin-bottom: 4px;
 }
 
@@ -270,7 +270,7 @@ function handleSubmit() {
 .form-group label {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--color-navy);
+  color: var(--color-accent-light);
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -284,9 +284,16 @@ function handleSubmit() {
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--color-text);
-  background: var(--color-white);
+  background: var(--color-bg-light);
   transition: border-color var(--transition), box-shadow var(--transition);
   outline: none;
+}
+
+.form-group input::placeholder,
+.form-group select::placeholder,
+.form-group textarea::placeholder {
+  color: var(--color-text-muted);
+  opacity: 1;
 }
 
 .form-group input:focus,

@@ -289,7 +289,7 @@ function animateNumbers() {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: transparent; 
+  background-color: var(--color-bg-main); 
 }
 
 .services-header {
@@ -506,16 +506,16 @@ function animateNumbers() {
   display: grid;
   place-items: center;
   border-radius: 14px;
-  background: var(--color-bg-section);
-  font-size: 1.6rem;
-  margin-bottom: 20px;
-  line-height: 1;
+  background: #cbd5e1 !important;
+  color: #10203a;
+  margin-bottom: 24px;
+  transition: transform 0.3s ease;
 }
 
 .service-card__icon :deep(svg) {
   width: 28px;
   height: 28px;
-  color: var(--color-accent);
+  opacity: 1;
 }
 
 .service-card__title {

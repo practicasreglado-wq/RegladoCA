@@ -4,11 +4,11 @@
    ============================================ */
 
 :root {
-  --color-navy: #203b63;
+  --color-navy: #10203a;
   --color-navy-deep: #10203a;
-  --color-navy-mid: #315784;
+  --color-navy-mid: #10203a;
   --color-accent: #4d79b8;
-  --color-accent-dark: #2f5f9f;
+  --color-accent-dark: #123f7a;
   --color-accent-light: #dce8f7;
 
   /* Compatibility aliases for existing components */
@@ -17,11 +17,12 @@
   --color-gold-light: var(--color-accent-light);
 
   --color-white: #ffffff;
-  --color-bg-light: #f5f8fc;
-  --color-bg-section: #edf3fb;
-  --color-text: #213044;
-  --color-text-muted: #617086;
-  --color-border: #d6e0ee;
+  --color-bg-main: #10203a;
+  --color-bg-light: #10203a;
+  --color-bg-section: #10203a;
+  --color-text: #f5f8fc;
+  --color-text-muted: #bccada;
+  --color-border: rgba(255, 255, 255, 0.1);
 
   --font-heading: 'Georgia', 'Times New Roman', serif;
   --font-body: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
@@ -55,7 +56,7 @@ html {
 body {
   font-family: var(--font-body);
   color: var(--color-text);
-  background: var(--color-white);
+  background: var(--color-bg-main);
   line-height: 1.72;
   -webkit-font-smoothing: antialiased;
 }
@@ -66,13 +67,13 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-bg-light);
+  background: var(--color-white);
 }
 
 ::-webkit-scrollbar-thumb {
   background: var(--color-navy-deep);
   border-radius: 5px;
-  border: 2px solid var(--color-bg-light);
+  border: 2px solid var(--color-white);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -88,7 +89,7 @@ body {
 /* Standard scrollbar for Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-navy-deep) var(--color-bg-light);
+  scrollbar-color: var(--color-navy-deep) var(--color-white);
 }
 
 [lang="ar"],
@@ -138,11 +139,11 @@ button {
 }
 
 .section--light {
-  background: var(--color-bg-light);
+  background: var(--color-bg-main);
 }
 
 .section--white {
-  background: var(--color-white);
+  background: var(--color-bg-main);
 }
 
 .text-center {
@@ -154,7 +155,7 @@ button {
 }
 
 .text-navy {
-  color: var(--color-navy);
+  color: var(--color-white);
 }
 
 .text-muted {
@@ -163,7 +164,7 @@ button {
 
 .section__label {
   display: inline-block;
-  color: var(--color-accent);
+  color: var(--color-accent-light);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -174,7 +175,7 @@ button {
 .section__title {
   font-family: var(--font-heading);
   font-size: clamp(1.8rem, 3vw, 2.6rem);
-  color: var(--color-navy);
+  color: var(--color-white);
   line-height: 1.2;
   margin-bottom: 16px;
 }
@@ -245,14 +246,14 @@ button {
 
 .btn--outline {
   background: transparent;
-  color: var(--color-navy);
-  border-color: rgba(32, 59, 99, 0.3);
+  color: var(--color-white);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .btn--outline:hover {
-  background: var(--color-navy);
+  background: var(--color-accent);
   color: var(--color-white);
-  border-color: var(--color-navy);
+  border-color: var(--color-accent);
 }
 
 .btn--outline-white {
@@ -316,7 +317,7 @@ button {
 }
 
 .logo--dark .logo__name {
-  color: var(--color-navy);
+  color: var(--color-white);
 }
 
 .logo--dark .logo__tagline {
@@ -370,14 +371,15 @@ button {
   background-size: cover;
   background-position: center;
   z-index: 0;
-  opacity: 0.7; /* Blend the image with the solid background */
+  opacity: 0.7;
+  /* Blend the image with the solid background */
 }
 
 .page-hero::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 20, 42, 0.88) 0%, rgba(10, 20, 42, 0.72) 100%);
+  background: linear-gradient(180deg, rgba(16, 32, 58, 0.6) 0%, rgba(16, 32, 58, 0.72) 100%);
   z-index: 1;
 }
 

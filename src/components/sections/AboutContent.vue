@@ -1,85 +1,101 @@
 <template>
   <div class="about-content">
-    <div class="page-hero" :style="{ '--hero-bg': `url(${aboutBg})` }">
-      <div class="container">
-        <p class="page-hero__label">{{ t('nav.about_label', 'Reglado Consultores') }}</p>
-        <h1 class="page-hero__title">{{ t('nav.about') }}</h1>
-        <p class="page-hero__subtitle">{{ t('about_page.hero.title') }}</p>
+    <section ref="sceneRef" class="about-immersive-scene">
+      <!-- FIXED BACKGROUND -->
+      <div ref="bgContainer" class="scene-background">
+        <video
+          ref="heroVideo"
+          muted
+          loop
+          playsinline
+          class="scene-video"
+        >
+          <source src="/video/nosotros3.mp4" type="video/mp4" />
+        </video>
+        <div ref="overlayRef" class="scene-overlay"></div>
       </div>
-    </div>
 
-    <AboutSection :title="' '" :show-cta="false" />
+      <!-- SEQUENTIAL CONTENT LAYERS -->
+      <div class="scene-content">
+        <!-- Layer 1: Global Hero -->
+        <div ref="layer1" class="scene-layer scene-layer--hero">
+          <div class="container text-center">
+            <p class="page-hero__label">{{ t('nav.about_label', 'Reglado Consultores') }}</p>
+            <h1 class="page-hero__title">{{ t('nav.about') }}</h1>
+            <p class="page-hero__subtitle">{{ t('about_page.hero.title') }}</p>
+          </div>
+        </div>
 
-    <section class="about-values">
-      <div class="container about-values__header">
-        <h2 class="section__title" v-html="t('about_page.truth_header.title').replace('Y La', '<br />Y La')">
-        </h2>
-        <span class="divider divider--center"></span>
-      </div>
-      <div class="container about-values__grid">
-        <article v-for="item in tm('about_page.values')" :key="item.title" class="about-value-card">
-          <h2>{{ item.title }}</h2>
-          <p>{{ item.text }}</p>
-        </article>
-      </div>
-    </section>
+        <!-- Layer 2: Especialistas -->
+        <div ref="layer2" class="scene-layer">
+          <AboutSection :title="' '" :show-cta="false" :image="aboutBg" :reverse="true" />
+        </div>
 
-    <section ref="metricsSection" class="about-law" :class="{ 'about-law--visible': metricsVisible }">
-      <div class="container about-law__grid">
-        <div class="about-law__content">
-          <span class="section__label">{{ t('about_page.law_section.label') }}</span>
-          <h2 class="section__title">{{ t('about_page.law_section.title') }}</h2>
-          <span class="divider"></span>
+        <!-- Layer 3: Valores -->
+        <div ref="layer3" class="scene-layer">
+          <section class="about-values no-bg">
+            <div class="container about-values__header">
+              <h2 class="section__title" v-html="t('about_page.truth_header.title').replace('Y La', '<br />Y La')"></h2>
+              <span class="divider divider--center"></span>
+            </div>
+            <div class="container about-values__grid">
+              <article v-for="item in tm('about_page.values')" :key="item.title" class="about-value-card">
+                <h2>{{ item.title }}</h2>
+                <p>{{ item.text }}</p>
+              </article>
+            </div>
+          </section>
+        </div>
 
-          <div class="about-law__metrics">
-            <div v-for="item in tm('about_page.metrics')" :key="item.label" class="about-law__metric">
-              <div class="about-law__metric-head">
-                <span>{{ item.label }}</span>
-                <span class="about-law__metric-value">{{ item.value }}%</span>
+        <!-- Layer 4: Métricas / Temis -->
+        <div ref="layer4" class="scene-layer">
+          <section class="about-law no-bg">
+            <div class="container about-law__grid">
+              <div class="about-law__content">
+                <span class="section__label">{{ t('about_page.law_section.label') }}</span>
+                <h2 class="section__title">{{ t('about_page.law_section.title') }}</h2>
+                <span class="divider"></span>
+                <div class="about-law__metrics">
+                  <div v-for="item in tm('about_page.metrics')" :key="item.label" class="about-law__metric">
+                    <div class="about-law__metric-head">
+                      <span>{{ item.label }}</span>
+                      <span class="about-law__metric-value">{{ item.value }}%</span>
+                    </div>
+                    <div class="about-law__bar">
+                      <span class="about-law__bar-fill" :data-width="`${item.value}%`" style="width: 0%"></span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="about-law__bar">
-                <span class="about-law__bar-fill" :style="{ '--target-width': `${item.value}%` }"></span>
+              <div class="about-law__visual">
+                <ScrollScrubber name="Temis" :frame-count="240" :progress="temisProgress" />
               </div>
             </div>
-          </div>
+          </section>
         </div>
 
-        <div class="about-law__visual">
-          <img :src="ladyJustice" alt="Figura de la justicia" />
-        </div>
-      </div>
-    </section>
-
-    <section class="about-presence">
-      <div class="container about-presence__grid">
-        <div class="about-presence__content">
-          <span class="section__label">{{ t('about_page.presence.label') }}</span>
-          <h2 class="section__title">{{ t('about_page.presence.title') }}</h2>
-          <span class="divider"></span>
-
-          <p>{{ t('about_page.presence.description') }}</p>
-
-          <div class="about-presence__highlights">
-            <article
-              v-for="item in tm('about_page.presence.highlights')"
-              :key="item.title"
-              class="about-presence__highlight"
-            >
-              <h3>{{ item.title }}</h3>
-              <p>{{ item.text }}</p>
-            </article>
-          </div>
-        </div>
-
-        <div class="about-presence__map-card">
-          <div class="about-presence__map-frame" aria-hidden="true">
-            <div class="about-presence__map-grid"></div>
-            <div class="about-presence__map-pin about-presence__map-pin--one"></div>
-            <div class="about-presence__map-pin about-presence__map-pin--two"></div>
-            <div class="about-presence__map-pin about-presence__map-pin--three"></div>
-            <div class="about-presence__map-pin about-presence__map-pin--four"></div>
-            <div class="about-presence__map-placeholder"></div>
-          </div>
+        <!-- Layer 5: Presencia -->
+        <div ref="layer5" class="scene-layer">
+           <section class="about-presence no-bg">
+            <div class="container about-presence__grid">
+              <div class="about-presence__content">
+                <span class="section__label">{{ t('about_page.presence.label') }}</span>
+                <h2 class="section__title">{{ t('about_page.presence.title') }}</h2>
+                <span class="divider"></span>
+                <p>{{ t('about_page.presence.description') }}</p>
+              </div>
+              <div class="about-presence__map-card">
+                <div class="about-presence__map-frame">
+                  <div class="about-presence__map-grid"></div>
+                  <div class="about-presence__map-pin about-presence__map-pin--one"></div>
+                  <div class="about-presence__map-pin about-presence__map-pin--two"></div>
+                  <div class="about-presence__map-pin about-presence__map-pin--three"></div>
+                  <div class="about-presence__map-pin about-presence__map-pin--four"></div>
+                  <div class="about-presence__map-placeholder"></div>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </section>
@@ -89,29 +105,103 @@
 <script setup>
 import { onBeforeUnmount, onMounted, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AboutSection from '@/components/sections/AboutSection.vue'
 import aboutBg from '@media/image-section-82-min.jpg'
-import ladyJustice from '@media/image-section-86-min.png'
+import ScrollScrubber from '@/components/ScrollScrubber.vue'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const { t, tm } = useI18n()
 const metricsVisible = ref(false)
-const metricsSection = ref(null)
-let observer
+const heroVideo = ref(null)
+const sceneRef = ref(null)
+const bgContainer = ref(null)
+const overlayRef = ref(null)
+const layer1 = ref(null)
+const layer2 = ref(null)
+const layer3 = ref(null)
+const layer4 = ref(null)
+const layer5 = ref(null)
+const temisProgress = ref(0)
 
 onMounted(() => {
-  observer = new IntersectionObserver(
-    (entries) => {
-      const [entry] = entries
-      if (entry?.isIntersecting) {
-        metricsVisible.value = true
-        observer?.disconnect()
+  if (sceneRef.value && heroVideo.value) {
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sceneRef.value,
+        start: "top top",
+        end: "+=5500",
+        pin: true,
+        scrub: 1,
+        onEnter: () => heroVideo.value?.play(),
+        onEnterBack: () => heroVideo.value?.play(),
+        onLeave: () => heroVideo.value?.pause(),
+        onLeaveBack: () => heroVideo.value?.pause()
       }
-    },
-    { threshold: 0.35 }
-  )
+    });
 
-  if (metricsSection.value) {
-    observer.observe(metricsSection.value)
+    // 1. Estado inicial de texto visible y expansión
+    tl.set(layer1.value, { opacity: 1, scale: 1 });
+
+    tl.to(bgContainer.value, {
+      width: "100%",
+      height: "100vh",
+      borderRadius: "0px",
+      duration: 1
+    });
+
+    // 2. Oscurecimiento de overlay y fundido de L1 (Hero)
+    tl.to(overlayRef.value, { background: "rgba(16, 32, 58, 0.85)", duration: 0.5 }, "-=0.5")
+      .to(layer1.value, { opacity: 0, scale: 1.05, duration: 1, delay: 0.5 });
+
+    // 3. L2: Especialistas
+    tl.fromTo(layer2.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
+      .to(layer2.value, { opacity: 0, y: -30, duration: 1, delay: 0.8 });
+
+    // 4. L3: Valores
+    tl.fromTo(layer3.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
+      .to(layer3.value, { opacity: 0, y: -30, duration: 1, delay: 0.8 });
+
+    // 5. L4: Métricas (Temis y Barras sincronizadas)
+    tl.fromTo(layer4.value, { opacity: 0, y: 30 }, { 
+      opacity: 1, 
+      y: 0, 
+      duration: 1,
+      onStart: () => {
+        metricsVisible.value = true;
+        // Animación de parámetros "una vez" al entrar
+        gsap.fromTo(".about-law__bar-fill", 
+          { width: "0%" }, 
+          { 
+            width: (i, target) => target.getAttribute('data-width') || "80%", 
+            duration: 1.5, 
+            stagger: 0.1,
+            ease: "power2.out",
+            overwrite: "auto"
+          }
+        );
+        gsap.fromTo(".about-law__metric-value", 
+          { opacity: 0, y: 10 }, 
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            overwrite: "auto"
+          }
+        );
+      }
+    });
+    
+    // La estatua mantiene el giro con el scroll para mayor interactividad
+    tl.to(temisProgress, { value: 1, duration: 2, ease: "none" }, ">-0.5");
+
+    tl.to(layer4.value, { opacity: 0, y: -30, duration: 1, delay: 1 });
+
+    // 6. L5: Presencia
+    tl.fromTo(layer5.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 });
   }
 })
 
@@ -121,17 +211,97 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
-
-
-.about-law {
-  padding: 24px 0 72px;
-  background: var(--color-white);
+.about-immersive-scene {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-main);
 }
 
-.about-values {
-  padding: 80px 0 60px;
-  background: var(--color-white);
-  text-align: center;
+.scene-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.scene-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.scene-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(77, 121, 184, 0.4);
+  z-index: 2;
+}
+
+.scene-content {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.scene-layer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  padding: 120px 0 60px;
+}
+
+.scene-layer--hero {
+  opacity: 1;
+}
+
+.scene-layer :deep(.section),
+.scene-layer .no-bg {
+  background: transparent !important;
+  box-shadow: none !important;
+  color: white !important;
+  padding: 0 !important;
+  border: none !important;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.scene-layer :deep(.about__media) {
+  display: block !important;
+}
+
+.scene-layer :deep(.about__grid) {
+  grid-template-columns: 1fr 1fr !important;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-immersive-scene :deep(.section__title),
+.about-immersive-scene :deep(.section__label),
+.about-immersive-scene :deep(p) {
+  color: white !important;
+}
+
+.about-immersive-scene :deep(.divider) {
+  /* Restored original gradient */
+}
+
+/* Permitir clics cuando está visible */
+.scene-layer[style*="opacity: 1"] {
+  pointer-events: auto;
+}
+
+.no-bg {
+  background: transparent !important;
 }
 
 .about-values__header {
@@ -142,6 +312,7 @@ onBeforeUnmount(() => {
   margin-bottom: 0;
 }
 
+
 .about-values__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -151,41 +322,47 @@ onBeforeUnmount(() => {
 
 .about-value-card {
   height: 100%;
-  min-height: 320px;
-  padding: 38px 30px 30px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #5e8ecf 0%, #4e7fc0 100%);
-  color: var(--color-white);
-  box-shadow: 0 20px 40px rgba(16, 32, 58, 0.14);
+  min-height: 340px;
+  padding: 40px 32px;
+  border-radius: 20px;
+  background: var(--color-white) !important;
+  color: #314159 !important;
+  box-shadow: 0 20px 50px rgba(16, 32, 58, 0.12);
   display: flex;
   flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .about-value-card h2 {
   margin: 0 0 20px;
   font-family: var(--font-heading);
   font-size: 1.35rem;
-  font-weight: 400;
-  color: var(--color-white);
+  font-weight: 500;
+  color: #10203a !important;
   line-height: 1.25;
 }
 
 .about-value-card p {
   margin: 0;
-  color: rgba(255, 255, 255, 0.94);
-  font-size: 0.88rem;
-  line-height: 1.85;
+  color: #314c7a !important;
+  font-size: 0.94rem;
+  line-height: 1.7;
 }
 
 .about-law__grid {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 0.95fr);
-  gap: 34px;
-  align-items: stretch;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
+  align-items: center;
+  width: 100%;
 }
 
 .about-law__content {
-  padding: 26px 0 26px 6px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
 }
 
 .about-law__content .section__title {
@@ -209,45 +386,23 @@ onBeforeUnmount(() => {
   align-items: center;
   justify-content: space-between;
   gap: 18px;
-  color: var(--color-navy);
+  color: var(--color-white);
   font-size: 0.92rem;
 }
 
 .about-law__metric-value {
   opacity: 0;
   transform: translateY(10px);
-}
-
-.about-law--visible .about-law__metric:nth-child(1) .about-law__metric-value,
-.about-law--visible .about-law__metric:nth-child(1) .about-law__bar-fill {
-  animation-duration: 0.7s, 1.2s;
-  animation-delay: 0.15s;
-}
-
-.about-law--visible .about-law__metric:nth-child(2) .about-law__metric-value,
-.about-law--visible .about-law__metric:nth-child(2) .about-law__bar-fill {
-  animation-duration: 0.7s, 1.2s;
-  animation-delay: 0.3s;
-}
-
-.about-law--visible .about-law__metric:nth-child(3) .about-law__metric-value,
-.about-law--visible .about-law__metric:nth-child(3) .about-law__bar-fill {
-  animation-duration: 0.7s, 1.2s;
-  animation-delay: 0.45s;
-}
-
-.about-law--visible .about-law__metric:nth-child(4) .about-law__metric-value,
-.about-law--visible .about-law__metric:nth-child(4) .about-law__bar-fill {
-  animation-duration: 0.7s, 1.2s;
-  animation-delay: 0.6s;
+  color: white !important;
+  font-weight: 600;
 }
 
 .about-law__bar {
   position: relative;
   width: 100%;
-  height: 22px;
-  background: linear-gradient(90deg, rgba(77, 121, 184, 0.34), rgba(77, 121, 184, 0.22));
-  box-shadow: inset 0 0 0 1px rgba(32, 59, 99, 0.08);
+  height: 18px;
+  background: rgba(77, 121, 184, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
   border-radius: 999px;
   overflow: hidden;
 }
@@ -260,61 +415,23 @@ onBeforeUnmount(() => {
   width: 0;
 }
 
-.about-law--visible .about-law__metric-value {
-  animation-name: metricValueIn;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.about-law--visible .about-law__bar-fill {
-  animation-name: metricBarGrow;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-@keyframes metricBarGrow {
-  from {
-    width: 0;
-    opacity: 0.6;
-  }
-
-  to {
-    width: var(--target-width);
-    opacity: 1;
-  }
-}
-
-@keyframes metricValueIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .about-law__visual {
   display: flex;
   justify-content: center;
-  align-items: flex-end;
+  align-items: center;
 }
 
-.about-law__visual img {
-  width: min(108%, 790px);
-  max-height: 620px;
-  height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+.about-law__visual :deep(.scroll-scrubber) {
+  width: 160%;
+  flex-shrink: 0;
+  margin-left: 0;
+  height: 900px;
+  max-height: none;
 }
 
 .about-presence {
   padding: 22px 0 90px;
-  background:
-    radial-gradient(circle at top left, rgba(94, 142, 207, 0.1), transparent 34%),
-    linear-gradient(180deg, #f7f9fc 0%, #eef3f9 100%);
+  background: var(--color-bg-main);
 }
 
 .about-presence__grid {
@@ -327,16 +444,33 @@ onBeforeUnmount(() => {
 .about-presence__content,
 .about-presence__map-card {
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: 0 24px 60px rgba(16, 32, 58, 0.1);
-  backdrop-filter: blur(12px);
+  background: var(--color-white) !important;
+  box-shadow: 0 30px 70px rgba(16, 32, 58, 0.12);
+}
+
+.about-presence__content .section__title {
+  color: #10203a !important;
+}
+
+.about-presence__content p {
+  color: #314c7a !important;
+}
+
+.about-presence__content .section__label {
+  color: var(--color-accent) !important;
 }
 
 .about-presence__content {
   padding: 42px;
+  backdrop-filter: blur(12px);
+}
+
+.about-presence__content .section__label {
+  color: var(--color-accent);
 }
 
 .about-presence__content .section__title {
+  color: #10203a;
   margin-bottom: 0;
   max-width: 14ch;
 }
@@ -344,7 +478,7 @@ onBeforeUnmount(() => {
 .about-presence__content > p {
   margin: 0 0 30px;
   max-width: 64ch;
-  color: rgba(16, 32, 58, 0.82);
+  color: #314159;
   line-height: 1.85;
 }
 
@@ -366,13 +500,13 @@ onBeforeUnmount(() => {
   font-family: var(--font-heading);
   font-size: 1.2rem;
   font-weight: 400;
-  color: var(--color-navy);
+  color: #10203a;
   line-height: 1.3;
 }
 
 .about-presence__highlight p {
   margin: 0;
-  color: rgba(16, 32, 58, 0.78);
+  color: #314159;
   font-size: 0.94rem;
   line-height: 1.7;
 }
