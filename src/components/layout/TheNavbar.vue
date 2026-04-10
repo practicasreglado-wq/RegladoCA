@@ -118,7 +118,8 @@ const darkSelectors = [
   '.tecnica-banner',
   '.economica-hero',
   '.economica-banner',
-  '.banner-section'
+  '.banner-section',
+  '.about-immersive-scene'
 ]
 
 function onScroll() {

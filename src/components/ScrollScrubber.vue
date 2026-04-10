@@ -19,7 +19,8 @@ const props = defineProps({
   frameCount: { type: Number, required: true },
   startFrame: { type: Number, default: 1 },
   endFrame: { type: Number, default: null },
-  trigger: { type: String, default: '.about-law' }
+  trigger: { type: String, default: '.about-law' },
+  progress: { type: Number, default: null } 
 });
 
 const canvasRef = ref(null);
@@ -28,6 +29,8 @@ const isReady = ref(false);
 const images = [];
 const playhead = { frame: props.startFrame };
 let lastDrawnFrame = -1;
+
+const LUMA_THRESHOLD = 20; // Umbral ajustado para preservar detalles metálicos
 
 const preloadImages = async () => {
   const promises = [];
@@ -39,17 +42,12 @@ const preloadImages = async () => {
       img.onerror = () => resolve();
     });
     img.src = `/frames/${props.name}/frame_${String(i).padStart(4, '0')}.webp`;
-    images[i] = img; // maintain index alignment
+    images[i] = img;
     promises.push(promise);
   }
-  // Cargamos los primeros 20 frames rápido para el render inicial
   await Promise.all(promises.slice(0, 40));
   isReady.value = true;
-  
-  // Refrescar triggers para asegurar que GSAP reconoce la altura y posición actual
-  setTimeout(() => {
-    ScrollTrigger.refresh();
-  }, 100);
+  setTimeout(() => { ScrollTrigger.refresh(); }, 100);
 };
 
 const render = () => {
@@ -59,13 +57,10 @@ const render = () => {
   const img = images[frame];
   if (!img.complete) return;
 
-  const ctx = canvasRef.value.getContext('2d', { alpha: true });
-  ctx.imageSmoothingEnabled = true;
-  ctx.imageSmoothingQuality = 'high';
-
   const canvas = canvasRef.value;
+  const ctx = canvas.getContext('2d', { alpha: true });
+  ctx.imageSmoothingEnabled = true;
 
-  // Ajuste de aspecto (contain)
   const canvasAspect = canvas.width / canvas.height;
   const imgAspect = img.width / img.height;
   
@@ -85,6 +80,21 @@ const render = () => {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+  
+  // LUMA KEYING
+  try {
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i] < LUMA_THRESHOLD && data[i+1] < LUMA_THRESHOLD && data[i+2] < LUMA_THRESHOLD) {
+        data[i+3] = 0; 
+      }
+    }
+    ctx.putImageData(imageData, 0, 0);
+  } catch (e) {
+    console.warn('Luma key failed', e);
+  }
+
   lastDrawnFrame = frame;
 };
 
@@ -92,10 +102,8 @@ const resize = () => {
   if (!canvasRef.value || !containerRef.value) return;
   const rect = containerRef.value.getBoundingClientRect();
   const dpr = window.devicePixelRatio || 1;
-  
   canvasRef.value.width = rect.width * dpr;
   canvasRef.value.height = rect.height * dpr;
-  
   render();
 };
 
@@ -104,19 +112,28 @@ onMounted(async () => {
   window.addEventListener('resize', resize);
   resize();
 
-  const targetFrame = props.endFrame !== null ? props.endFrame : props.frameCount;
+  if (props.progress === null) {
+    const targetFrame = props.endFrame !== null ? props.endFrame : props.frameCount;
+    gsap.to(playhead, {
+      frame: targetFrame,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.value,
+        start: "center bottom",
+        end: "bottom top",
+        scrub: true,
+        onUpdate: render
+      }
+    });
+  }
+});
 
-  gsap.to(playhead, {
-    frame: targetFrame,
-    ease: "none",
-    scrollTrigger: {
-      trigger: canvasRef.value,
-      start: "center bottom",
-      end: "bottom top",
-      scrub: true,
-      onUpdate: render
-    }
-  });
+watch(() => props.progress, (newProgress) => {
+  if (newProgress !== null) {
+    const totalFrames = (props.endFrame !== null ? props.endFrame : props.frameCount) - props.startFrame;
+    playhead.frame = props.startFrame + (totalFrames * newProgress);
+    render();
+  }
 });
 
 onUnmounted(() => {
@@ -138,10 +155,9 @@ onUnmounted(() => {
 .scrubber-canvas {
   width: 100% !important;
   height: auto !important;
-  max-height: 200%;
+  max-height: 150%;
   object-fit: contain;
-  mix-blend-mode: screen; /* Para quitar el fondo negro del video original */
-  filter: brightness(1.3) contrast(1.2) saturate(0.5);
+  filter: brightness(1.1) contrast(1.2);
   display: block;
 }
 

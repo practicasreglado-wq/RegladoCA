@@ -1,8 +1,8 @@
 <template>
   <section class="section section--light" id="nosotros">
-    <div class="container about__grid">
+    <div class="container about__grid" :class="{ 'about__grid--reverse': reverse }">
       <div class="about__media">
-        <img :src="aboutImage" alt="Asesoria corporativa Reglado" />
+        <img :src="image || aboutImage" alt="Asesoria corporativa Reglado" />
       </div>
 
       <div class="about__text">
@@ -33,7 +33,9 @@ const props = defineProps({
   title: { type: String, default: '' },
   paragraphs: { type: Array, default: () => [] },
   showTags: { type: Boolean, default: true },
-  showCta: { type: Boolean, default: true }
+  showCta: { type: Boolean, default: true },
+  image: { type: String, default: '' },
+  reverse: { type: Boolean, default: false }
 })
 
 const tags = computed(() => tm('about.tags'))
@@ -54,12 +56,25 @@ const titleText = computed(() => props.title || t('about.title'))
   align-items: center;
 }
 
+.about__grid--reverse .about__media {
+  order: 2;
+}
+
+.about__grid--reverse .about__text {
+  order: 1;
+}
+
+.about__media {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
 .about__media img {
   width: 100%;
   min-height: 500px;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: var(--shadow);
+  display: block;
 }
 
 .about__tags {
