@@ -1,35 +1,80 @@
 <template>
   <section class="section section--light section-servicios-trigger">
-    <div class="container text-center">
+    <div class="container text-center services-header">
       <span class="section__label">{{ t('services.label') }}</span>
       <div class="section__reveal-container">
-        <h2 class="section__title">{{ t('services.title') }}</h2>
+        <h2 class="section__title services-main-title">{{ t('services.title') }}</h2>
       </div>
       <div class="section__reveal-container">
-        <p class="section__subtitle">{{ t('services.subtitle') }}</p>
+        <p class="section__subtitle services-main-subtitle">{{ t('services.subtitle') }}</p>
       </div>
       <a v-if="showCta" href="/#contacto" @click.prevent="scrollTo('contacto')" class="btn btn--contact">{{ t('services.cta') }}</a>
     </div>
 
-    <div class="container services__grid">
-      <a
-        v-for="(service, i) in services"
-        :key="i"
-        :href="service.route"
-        @click.prevent="handleServiceClick(service.route)"
-        class="service-card"
-      >
-        <div class="service-card__icon" v-html="getIcon(service.icon)"></div>
-        <h3 class="service-card__title">{{ service.title }}</h3>
-        <p class="service-card__desc">{{ service.description }}</p>
-        <span class="service-card__link">{{ t('services.more') }}</span>
-      </a>
+    <div class="container services__grid-wrapper">
+      <div class="services__grid">
+        <a
+          v-for="(service, i) in services"
+          :key="i"
+          :href="service.route"
+          @click.prevent="handleServiceClick(service.route)"
+          class="service-card"
+        >
+          <div class="service-card__icon" v-html="getIcon(service.icon)"></div>
+          <h3 class="service-card__title">{{ service.title }}</h3>
+          <p class="service-card__desc">{{ service.description }}</p>
+          <span class="service-card__link">{{ t('services.more') }}</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Fase 2: Identidad y Estadísticas -->
+    <div class="container services__identity-overlay" id="identidad">
+      <div class="identity__grid">
+        <div class="identity__text">
+          <span class="section__label">{{ t('home_page.about.label') }}</span>
+          <h2 class="section__title">{{ t('home_page.about.title') }}</h2>
+          <span class="divider"></span>
+          <p v-for="p in tm('home_page.about.paragraphs')" :key="p">{{ p }}</p>
+        </div>
+
+        <div class="identity__visual">
+          <video 
+            src="/video/h4.mp4?v=4" 
+            autoplay 
+            muted 
+            loop 
+            playsinline 
+            class="identity__video"
+          ></video>
+        </div>
+      </div>
+
+      <!-- Estadísticas integradas (Restauradas debajo del grid completo) -->
+      <div class="identity__stats">
+        <div v-for="stat in parsedStats" :key="stat.label" class="identity-stat">
+          <div class="identity-stat__number" :data-target="stat.numeric" :data-suffix="stat.suffix">{{ stat.prefix }}0{{ stat.suffix }}</div>
+          <div class="identity-stat__label">{{ stat.label }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fase 3: Banner Informativo (Capa independiente) -->
+    <div class="container services__banner-overlay" id="banner-fase3">
+      <div class="banner-dynamic">
+        <span class="banner-dynamic__label">{{ t('banner.label') }}</span>
+        <h2 class="banner-dynamic__title">{{ t('banner.title') }}</h2>
+        <span class="divider divider--center"></span>
+        <div class="banner-dynamic__text">
+          <p v-for="p in tm('banner.paragraphs')" :key="p">{{ p }}</p>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
@@ -83,80 +128,159 @@ const services = computed(() =>
   }))
 )
 
+// Datos para las estadísticas
+const rawStats = computed(() => tm('stats'))
+const parsedStats = computed(() =>
+  rawStats.value.map((item) => {
+    const raw = String(item.value)
+    const compact = raw.toUpperCase().includes('K')
+    const suffix = raw.includes('%') ? '%' : ''
+    const numericBase = Number(raw.replace(/[^\d]/g, '')) || 0
+    const numeric = compact ? numericBase * 1000 : numericBase
+    const prefix = '+'
+
+    return {
+      ...item,
+      numeric,
+      compact,
+      suffix,
+      prefix
+    }
+  })
+)
+
+
+
 onMounted(() => {
-  // 1. Transición de fondo: Empieza mucho más tarde (cuando la sección está bien entrada)
+  // 1. Transición de fondo
   gsap.to("#inicio", {
     backgroundColor: "#10203a",
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
-      start: "top 5%", // Empieza casi al llegar arriba
-      end: "bottom top", 
+      start: "top 20%",
+      end: "top top",
       scrub: true
     }
   })
 
-  // 2. Secuencia de REVELADO: Título (Desde arriba) -> Subtítulo (Desde abajo)
-  const tlReveal = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".section-servicios-trigger",
-      start: "top 90%",
-      toggleActions: "play none none none"
-    }
-  })
-
-  tlReveal.fromTo(".section__title", 
-    { 
-      y: "-110%", 
-      opacity: 0,
-      filter: "blur(10px)"
-    },
-    {
-      y: "0%",
-      opacity: 1,
-      filter: "blur(0px)",
-      duration: 2.5, // Duración aumentada para mayor dramatismo
-      ease: "expo.out"
-    }
-  )
-  .fromTo(".section__subtitle", 
-    { 
-      y: "110%", 
-      opacity: 0,
-      filter: "blur(10px)"
-    },
-    {
-      y: "0%",
-      opacity: 1,
-      filter: "blur(0px)",
-      duration: 2.5,
-      ease: "expo.out"
-    },
-    "-=2.1" // "Un instante después" (solapamiento casi total pero con inicio retrasado)
-  )
-
-  // 3. Timeline para el anclado y las tarjetas (empieza en top top)
-  const tl = gsap.timeline({
+  // 2. TIMELINE - Triple Swap Cinematic Animation
+  const masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
-      end: "+=2200", 
+      end: "+=4800", // Extendido para las 3 fases: Tarjetas -> Identidad -> Banner
       pin: true,
       scrub: 1,
-      anticipatePin: 1
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        // Trigger de los contadores cuando el overlay de identidad es visible
+        if (self.progress > 0.45 && self.progress < 0.75) {
+          animateNumbers()
+        }
+      }
     }
   })
 
-  // Solo las tarjetas viven en el anclado
   const cards = gsap.utils.toArray(".service-card")
+
+  // FASE 1: Títulos y Tarjetas (0s -> 3s)
+  masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
+    { y: 50, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1, ease: "power2.out" }
+  )
+
   cards.forEach((card, index) => {
-    tl.from(card, {
+    masterTl.from(card, {
       y: 100,
       opacity: 0,
-      duration: 1,
+      rotateX: -15,
+      duration: 1.2,
       ease: "power2.out"
-    }, index * 0.8) 
+    }, `-=${index === 0 ? 0.3 : 0.8}`)
   })
+  
+  // FASE 2: Transición de "Intercambio"
+  const transStart = 3.5;
+  
+  // Salida de las Tarjetas
+  masterTl.to(".services__grid-wrapper", { 
+    opacity: 0, 
+    y: -100, 
+    filter: "blur(14px)", 
+    duration: 1.2
+  }, transStart)
+  .to(".services-header", { 
+    opacity: 0, 
+    y: -80, 
+    duration: 1 
+  }, transStart + 0.1)
+  
+  // Entrada de Identidad y Datos (Etapa 2)
+  .fromTo(".services__identity-overlay", 
+    { opacity: 0, y: 50, visibility: "hidden" }, 
+    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.5, ease: "power2.out" },
+    transStart + 0.2
+  )
+  .fromTo(".identity__text .section__label, .identity__text .section__title, .identity__text .divider, .identity__text p, .identity__visual, .identity__stats",
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
+    transStart + 0.4
+  )
+
+
+  // FASE 3: Transición al Banner (Etapa 3)
+  const transEndStart = 6.5;
+
+  // Salida de Identidad
+  masterTl.to(".services__identity-overlay", {
+    opacity: 0,
+    y: -40,
+    filter: "blur(12px)",
+    duration: 1.2,
+    zIndex: 1, 
+    visibility: "hidden"
+  }, transEndStart)
+
+  // Entrada del Banner Dinámico
+  .fromTo(".services__banner-overlay",
+    { opacity: 0, y: 60, visibility: "visible", zIndex: 1 },
+    { opacity: 1, y: 0, zIndex: 12, duration: 1.8, ease: "power2.out" },
+    transEndStart + 0.5
+  )
+  .fromTo(".banner-dynamic__label, .banner-dynamic__title, .divider--center, .banner-dynamic__text p",
+    { opacity: 0, y: 20 },
+    { opacity: 1, y: 0, stagger: 0.15, duration: 1.2, ease: "power2.out" },
+    transEndStart + 0.8
+  )
 })
+
+let numbersAnimated = false
+function animateNumbers() {
+  if (numbersAnimated) return
+  numbersAnimated = true
+  
+  const elements = document.querySelectorAll('.identity-stat__number')
+  elements.forEach(el => {
+    const target = parseInt(el.getAttribute('data-target'))
+    const suffix = el.getAttribute('data-suffix')
+    const prefix = target >= 1000 ? '+' : '+'
+    
+    const obj = { val: 0 }
+    gsap.to(obj, {
+      val: target,
+      duration: 2.5,
+      ease: "power2.out",
+      onUpdate: () => {
+        let displayVal = Math.floor(obj.val)
+        if (target >= 1000) {
+          displayVal = displayVal >= 1000 ? '1K' : displayVal
+        }
+        el.innerText = `${prefix}${displayVal}${suffix}`
+      }
+    })
+  })
+}
+
 </script>
 
 <style scoped>
@@ -168,6 +292,10 @@ onMounted(() => {
   background-color: var(--color-bg-main); 
 }
 
+.services-header {
+  padding-top: 50px; /* Bajamos los títulos según petición */
+}
+
 .section__reveal-container {
   overflow: hidden;
   display: block;
@@ -175,14 +303,15 @@ onMounted(() => {
 }
 
 .section__title, .section__subtitle {
-  opacity: 0; /* Asegurar que no hay flash antes de GSAP */
+  opacity: 0; 
+  transform: translateY(30px);
 }
 
 .services__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
-  margin-top: 56px;
+  margin-top: 25px; /* Subimos aún más las tarjetas según petición */
 }
 
 @media (max-width: 1024px) {
@@ -197,10 +326,140 @@ onMounted(() => {
   }
 }
 
+.services__grid-wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* Estilos de la nueva sección de Identidad y Estadísticas */
+.services__identity-overlay {
+  position: absolute;
+  top: 56%; /* Bajado del 50% al 56% según feedback para que se sienta centrado */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Aún más compacto */
+}
+
+.identity__stats {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 45px auto 0; /* Ajustado para mantener separación sin exceder la altura de la pantalla */
+  width: 100%;
+  gap: 20px;
+}
+
+.identity-stat {
+  flex: 1;
+  text-align: center;
+  padding: 24px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  min-width: 180px;
+}
+
+.identity-stat:hover {
+  transform: translateY(-5px);
+  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.identity-stat__number {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  color: var(--color-accent-light);
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.identity-stat__label {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.identity__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr; /* Volvemos a dar importancia al texto para no estirar tanto el alto */
+  gap: 60px;
+  align-items: center;
+}
+
+.identity__text {
+  text-align: left;
+}
+
+.identity__text .section__title {
+  color: #ffffff;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin-bottom: 20px;
+  opacity: 0; /* Asegurar que GSAP tome el control */
+}
+
+.identity__text p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  opacity: 0;
+}
+
+.identity__video {
+  width: 100%;
+  height: 450px; /* Tamaño equilibrado que no desplaza el centro visual hacia abajo */
+  object-fit: cover;
+  display: block;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+}
+
+.divider {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--color-accent);
+  margin: 16px 0 24px;
+}
+
+@media (max-width: 1024px) {
+  .identity__stats {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 900px) {
+  .identity__grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .services__identity-overlay {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    padding: 60px 0;
+  }
+}
+
 .service-card {
   display: flex;
   flex-direction: column;
-  background: #ffffff !important; /* Forzado blanco */
+  background: #ffffff !important;
   border: 1px solid rgba(32, 59, 99, 0.1);
   padding: 34px 28px;
   border-radius: var(--radius-lg);
@@ -209,7 +468,7 @@ onMounted(() => {
               border-color 0.3s ease,
               box-shadow 0.3s ease;
   text-decoration: none;
-  color: var(--color-navy) !important; /* Forzado azul oscuro */
+  color: var(--color-navy) !important;
   height: 100%; 
   min-height: 400px; 
   position: relative;
@@ -262,14 +521,14 @@ onMounted(() => {
 .service-card__title {
   font-family: var(--font-heading);
   font-size: 1.18rem;
-  color: #1a335a !important; /* Azul más intenso */
+  color: #1a335a !important;
   margin-bottom: 12px;
   line-height: 1.3;
 }
 
 .service-card__desc {
   font-size: 0.92rem;
-  color: #315784 !important; /* Azul intermedio forzado */
+  color: #315784 !important;
   line-height: 1.8;
   margin-bottom: 20px;
 }
@@ -284,7 +543,47 @@ onMounted(() => {
   transition: color var(--transition);
 }
 
-.service-card:hover .service-card__link {
-  color: var(--color-accent-dark);
+/* Estilos del Banner Dinámico Integrado */
+.services__banner-overlay {
+  position: absolute;
+  top: 54%; /* Bajamos también el banner un poco más para que sea coherente con la fase anterior */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 900px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 1;
+  text-align: center;
+}
+
+.banner-dynamic__label {
+  display: inline-block;
+  color: var(--color-accent);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.banner-dynamic__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  color: #ffffff;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
+.banner-dynamic__text p {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.divider--center {
+  margin: 24px auto 32px;
 }
 </style>

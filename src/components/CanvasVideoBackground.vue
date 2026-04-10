@@ -8,149 +8,155 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ref, onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger)
 
 const props = defineProps({
   video: {
     type: Object,
     default: () => ({ name: 'video2', frameCount: 763 })
   }
-});
+})
 
-const canvasRef = ref(null);
-const opacity = ref(1);
-const isReady = ref(false);
+const canvasRef = ref(null)
+const opacity = ref(1)
+const isReady = ref(false)
 
-const images = [];
-const playhead = { frame: 0 };
-let lastDrawnFrame = -1;
+const images = []
+const playhead = { frame: 0 }
 
-// Caches para optimización
-let ctx = null;
-const drawParams = { w: 0, h: 0, x: 0, y: 0 };
+let lastDrawnFrame = -1
+let ctx = null
+const drawParams = { w: 0, h: 0, x: 0, y: 0 }
 
-// Precarga de imágenes inteligente
 const preloadSequence = async (video, imagesArray) => {
-  const loadPromises = [];
-  const TOTAL_PRIORITY = 30; // Primeros frames críticos
-  
+  const loadPromises = []
+  const TOTAL_PRIORITY = 30
+
   for (let i = 1; i <= video.frameCount; i++) {
-    const img = new Image();
+    const img = new Image()
     const promise = new Promise((resolve) => {
-      img.onload = () => resolve(true);
-      img.onerror = () => resolve(false);
-    });
-    
+      img.onload = () => resolve(true)
+      img.onerror = () => resolve(false)
+    })
+
     if (i <= TOTAL_PRIORITY) {
-      img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`;
-      loadPromises.push(promise);
+      img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`
+      loadPromises.push(promise)
     } else {
       setTimeout(() => {
-        if (!img.src) img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`;
-      }, 1000 + (i * 2)); 
+        if (!img.src) img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`
+      }, 1000 + (i * 2))
     }
-    
-    imagesArray.push(img);
+
+    imagesArray.push(img)
   }
-  
-  await Promise.all(loadPromises);
-};
 
-const render = (canvas, images, frame) => {
-  if (!canvas || !images[frame]) return;
-  if (frame === lastDrawnFrame) return;
-
-  const img = images[frame];
-  if (!img.complete) return;
-
-  lastDrawnFrame = frame;
-  
-  if (!ctx) return;
-  ctx.drawImage(img, drawParams.x, drawParams.y, drawParams.w, drawParams.h);
-};
+  await Promise.all(loadPromises)
+}
 
 const updateDrawParams = (canvas, img, params) => {
-  if (!canvas || !img) return;
-  
-  const canvasAspect = canvas.width / canvas.height;
-  const imgAspect = img.width / img.height;
-  
+  if (!canvas || !img || !img.width || !img.height) return
+
+  const canvasAspect = canvas.width / canvas.height
+  const imgAspect = img.width / img.height
+
   if (canvasAspect > imgAspect) {
-    params.w = canvas.width;
-    params.h = canvas.width / imgAspect;
-    params.x = 0;
-    params.y = (canvas.height - params.h) / 2;
+    params.w = canvas.width
+    params.h = canvas.width / imgAspect
+    params.x = 0
+    params.y = (canvas.height - params.h) / 2
   } else {
-    params.w = canvas.height * imgAspect;
-    params.h = canvas.height;
-    params.x = (canvas.width - params.w) / 2;
-    params.y = 0;
+    params.w = canvas.height * imgAspect
+    params.h = canvas.height
+    params.x = (canvas.width - params.w) / 2
+    params.y = 0
   }
-};
+}
+
+const render = (canvas, images, frame) => {
+  if (!canvas || !images[frame] || !ctx) return
+  if (frame === lastDrawnFrame) return
+
+  const img = images[frame]
+  if (!img.complete || !img.width || !img.height) return
+
+  updateDrawParams(canvas, img, drawParams)
+
+  lastDrawnFrame = frame
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(img, drawParams.x, drawParams.y, drawParams.w, drawParams.h)
+}
 
 const resizeCanvas = () => {
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
-  const w = window.innerWidth;
-  const h = window.innerHeight;
-  
+  const dpr = Math.min(window.devicePixelRatio || 1, 2)
+  const w = window.innerWidth
+  const h = window.innerHeight
+
   if (canvasRef.value) {
-    canvasRef.value.width = w * dpr;
-    canvasRef.value.height = h * dpr;
-    ctx = canvasRef.value.getContext('2d', { alpha: false });
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'medium';
-    
-    if (images.length > 0) {
-      updateDrawParams(canvasRef.value, images[0], drawParams);
+    canvasRef.value.width = w * dpr
+    canvasRef.value.height = h * dpr
+    canvasRef.value.style.width = `${w}px`
+    canvasRef.value.style.height = `${h}px`
+
+    ctx = canvasRef.value.getContext('2d', { alpha: false })
+    if (ctx) {
+      ctx.imageSmoothingEnabled = true
+      ctx.imageSmoothingQuality = 'medium'
     }
-    render(canvasRef.value, images, Math.round(playhead.frame));
+
+    if (images.length > 0 && images[0]?.complete) {
+      updateDrawParams(canvasRef.value, images[0], drawParams)
+    }
+
+    lastDrawnFrame = -1
+    render(canvasRef.value, images, Math.round(playhead.frame))
   }
-};
+}
 
 onMounted(async () => {
-  await preloadSequence(props.video, images);
-  isReady.value = true;
-  
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
-  render(canvasRef.value, images, 0);
+  await preloadSequence(props.video, images)
+  isReady.value = true
 
-  // Animación VIDEO (Intro -> Servicios)
+  window.addEventListener('resize', resizeCanvas)
+  resizeCanvas()
+  render(canvasRef.value, images, 0)
+
   gsap.to(playhead, {
     frame: props.video.frameCount - 1,
-    ease: "none",
+    ease: 'none',
     scrollTrigger: {
-      trigger: ".hero",
-      start: "top top",
-      endTrigger: "#sobre-nosotros",
-      end: "bottom bottom",
-      scrub: 1.8,
+      trigger: '.hero',
+      start: 'top top',
+      endTrigger: '#sobre-nosotros',
+      end: 'top top',
+      scrub: 1,
       onUpdate: () => render(canvasRef.value, images, Math.round(playhead.frame))
     }
-  });
+  })
 
-  // Transición Fade Out Video (Mantenemos hasta servicios)
   gsap.to(opacity, {
     value: 0,
-    ease: "none",
+    ease: 'none',
     scrollTrigger: {
-      trigger: ".section-servicios-trigger",
-      start: "top center",
-      end: "top top",
+      trigger: '.section-servicios-trigger',
+      start: 'center top',
+      end: 'bottom top',
       scrub: true,
-      onUpdate: (self) => { opacity.value = 1 - self.progress }
+      onUpdate: (self) => {
+        opacity.value = 1 - self.progress
+      }
     }
-  });
-});
+  })
+})
 
 onUnmounted(() => {
-  window.removeEventListener('resize', resizeCanvas);
-  ScrollTrigger.getAll().forEach(t => t.kill());
-});
+  window.removeEventListener('resize', resizeCanvas)
+  ScrollTrigger.getAll().forEach((t) => t.kill())
+})
 </script>
 
 <style scoped>
@@ -161,7 +167,7 @@ onUnmounted(() => {
   width: 100vw;
   height: 100vh;
   z-index: -1;
-  background-color: #10203a; /* Azul marino profundo corporativo */
+  background-color: #10203a;
   pointer-events: none;
   transition: background-color 0.5s ease;
 }
@@ -178,7 +184,7 @@ onUnmounted(() => {
   height: 100%;
   display: block;
   will-change: opacity, transform;
-  mix-blend-mode: screen; /* Elimina el fondo negro de los frames */
+  mix-blend-mode: screen;
 }
 
 .canvas-loader {
@@ -199,6 +205,8 @@ onUnmounted(() => {
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

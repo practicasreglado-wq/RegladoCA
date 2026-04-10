@@ -1,5 +1,12 @@
 <template>
-  <section class="section section--light" id="nosotros">
+  <section
+    class="section"
+    :class="{
+      'section--light': theme === 'light',
+      'about--dark': theme === 'dark'
+    }"
+    id="nosotros"
+  >
     <div class="container about__grid" :class="{ 'about__grid--reverse': reverse }">
       <div class="about__media">
         <img :src="image || aboutImage" alt="Asesoria corporativa Reglado" />
@@ -8,14 +15,16 @@
       <div class="about__text">
         <span class="section__label">{{ labelText }}</span>
         <h2 class="section__title">{{ titleText }}</h2>
-        <span class="divider"></span>
+        <span class="divider" :class="{ 'divider--white': theme === 'dark' }"></span>
 
         <div v-if="showTags" class="about__tags">
           <span v-for="tag in tags" :key="tag" class="about__tag">{{ tag }}</span>
         </div>
 
         <p v-for="paragraph in resolvedParagraphs" :key="paragraph">{{ paragraph }}</p>
-        <RouterLink v-if="showCta" to="/contacto" class="btn btn--primary btn--contact">{{ t('about.cta') }}</RouterLink>
+        <RouterLink v-if="showCta" to="/contacto" class="btn btn--primary btn--contact">
+          {{ t('about.cta') }}
+        </RouterLink>
       </div>
     </div>
   </section>
@@ -28,22 +37,26 @@ import { useI18n } from 'vue-i18n'
 import aboutImage from '../../../media/image-section-18-min-e1654644025371.jpg'
 
 const { t, tm } = useI18n()
+
 const props = defineProps({
   label: { type: String, default: '' },
   title: { type: String, default: '' },
   paragraphs: { type: Array, default: () => [] },
   showTags: { type: Boolean, default: true },
   showCta: { type: Boolean, default: true },
+  theme: { type: String, default: 'light' },
   image: { type: String, default: '' },
   reverse: { type: Boolean, default: false }
 })
 
 const tags = computed(() => tm('about.tags'))
+
 const resolvedParagraphs = computed(() => {
   if (props.paragraphs.length) return props.paragraphs
   const content = tm('about.paragraphs')
   return Array.isArray(content) && content.length ? content : [t('about.p1'), t('about.p2')]
 })
+
 const labelText = computed(() => props.label || t('about.label'))
 const titleText = computed(() => props.title || t('about.title'))
 </script>
@@ -103,6 +116,34 @@ const titleText = computed(() => props.title || t('about.title'))
   font-size: 0.95rem;
   margin-bottom: 16px;
   line-height: 1.85;
+}
+
+.about--dark {
+  background: transparent;
+}
+
+.about--dark .section__label {
+  color: var(--color-accent-light);
+}
+
+.about--dark .section__title {
+  color: var(--color-white);
+}
+
+.about--dark .about__text p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.about--dark .about__tag {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--color-white);
+  backdrop-filter: blur(8px);
+}
+
+.about--dark .divider--white {
+  background: var(--color-white);
+  opacity: 0.8;
 }
 
 .about__text .btn {

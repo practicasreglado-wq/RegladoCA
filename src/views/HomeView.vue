@@ -7,9 +7,6 @@
       <div id="inicio" class="dark-transition-bg">
         <HeroSection />
         <ServicesSection :show-cta="false" />
-        <OrdenanzasSection :show-cta="false" />
-        <BannerSection />
-        <StatsSection />
       </div>
 
       <!-- Sobre Nosotros -->
@@ -54,9 +51,8 @@ import TheNavbar       from '@/components/layout/TheNavbar.vue'
 import TheFooter       from '@/components/layout/TheFooter.vue'
 import HeroSection     from '@/components/sections/HeroSection.vue'
 import ServicesSection from '@/components/sections/ServicesSection.vue'
-import BannerSection   from '@/components/sections/BannerSection.vue'
+import AboutSection    from '@/components/sections/AboutSection.vue'
 import StatsSection    from '@/components/sections/StatsSection.vue'
-import OrdenanzasSection from '@/components/sections/OrdenanzasSection.vue'
 
 // New content components
 import AboutContent        from '@/components/sections/AboutContent.vue'
@@ -67,7 +63,7 @@ import EconomicaContent    from '@/components/sections/EconomicaContent.vue'
 import ContactoContent     from '@/components/sections/ContactoContent.vue'
 import CanvasVideoBackground from '@/components/CanvasVideoBackground.vue'
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 </script>
 
 <style scoped>
