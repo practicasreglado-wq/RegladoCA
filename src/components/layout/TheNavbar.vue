@@ -119,7 +119,8 @@ const darkSelectors = [
   '.economica-hero',
   '.economica-banner',
   '.banner-section',
-  '.about-immersive-scene'
+  '.about-immersive-scene',
+  '.expansion-card'
 ]
 
 function onScroll() {
@@ -138,6 +139,12 @@ function onScroll() {
     for (const selector of darkSelectors) {
       const elements = document.querySelectorAll(selector)
       for (const el of elements) {
+        // Ignorar si el elemento está oculto (p. ej. por animaciones GSAP autoAlpha)
+        const style = window.getComputedStyle(el);
+        if (style.visibility === 'hidden' || style.opacity === '0' || style.display === 'none') {
+          continue;
+        }
+
         const rect = el.getBoundingClientRect()
         const top = rect.top + scrollPos
         const bottom = rect.bottom + scrollPos
