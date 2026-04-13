@@ -94,7 +94,6 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
 import gsap from 'gsap'
@@ -104,6 +103,9 @@ gsap.registerPlugin(ScrollTrigger)
 
 const { t, tm } = useI18n()
 const { scrollTo } = useScroll()
+
+let backgroundTween = null
+let masterTl = null
 
 function handleServiceClick(route) {
     if (route.startsWith('/#')) {
@@ -168,11 +170,9 @@ const parsedStats = computed(() =>
   })
 )
 
-
-
 onMounted(() => {
   // 1. Transición de fondo
-  gsap.to("#inicio", {
+  backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
@@ -183,7 +183,7 @@ onMounted(() => {
   })
 
   // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
-  const masterTl = gsap.timeline({
+  masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
@@ -243,7 +243,6 @@ onMounted(() => {
 
   // FASE 2 STILL (Lectura rápida hasta t=4.2)
 
-
   // TRANSICIÓN 2 -> 3 (t=4.2 -> t=5.4)
   const t2to3 = 4.2;
 
@@ -265,7 +264,6 @@ onMounted(() => {
   }, t2to3 + 0.1);
 
   // FASE 3 STILL (Lectura rápida hasta t=6.4)
-
 
   // TRANSICIÓN 3 -> 4 (t=6.4 -> t=7.6)
   const t3to4 = 6.4;
@@ -289,13 +287,18 @@ onMounted(() => {
   
   // Limpieza final y salida definitiva (t=8.6 -> t=9.5)
   .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 8.6);
-
 })
 
 onBeforeUnmount(() => {
-  ScrollTrigger.getAll().forEach(st => {
-    if (st.trigger === ".section-servicios-trigger") st.kill();
-  });
+  backgroundTween?.scrollTrigger?.kill()
+  backgroundTween?.kill()
+
+  masterTl?.scrollTrigger?.kill()
+  masterTl?.kill()
+
+  gsap.set("#inicio", { clearProps: "backgroundColor" })
+
+  numbersAnimated = false
 })
 
 let numbersAnimated = false
@@ -324,7 +327,6 @@ function animateNumbers() {
     })
   })
 }
-
 </script>
 
 <style scoped>

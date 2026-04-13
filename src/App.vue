@@ -12,12 +12,6 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 onMounted(() => {
-  // Limpiar hash de la URL sin disparar scroll para evitar saltos en el refresh
-  if (window.location.hash) {
-    setTimeout(() => {
-      window.history.replaceState(null, null, window.location.pathname)
-    }, 100)
-  }
 
   const lenis = new Lenis()
 

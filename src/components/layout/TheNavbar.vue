@@ -69,8 +69,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { RouterLink, useRouter, useRoute } from 'vue-router'
+import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import symbolLight from '../../../media/REGLADO_Blanco_Symbol.png'
 import symbolDark from '../../../media/REGLADO_Oscuro_Symbol.png'
@@ -80,7 +80,6 @@ import { useScroll } from '../../composables/useScroll'
 
 const { t, locale } = useI18n()
 const { scrollTo, scrollToTop } = useScroll()
-const router = useRouter()
 const route = useRoute()
 
 const isScrolled = ref(false)
@@ -107,7 +106,6 @@ function handleScroll(anchor) {
   scrollTo(anchor)
 }
 
-// List of selectors for dark sections where the navbar should be transparent (light text)
 const darkSelectors = [
   '.hero',
   '.about-showcase',
@@ -127,34 +125,36 @@ function onScroll() {
   const scrollPos = window.scrollY
   const navbarHeight = 80
   const checkPoint = scrollPos + (navbarHeight / 2)
+  const isHome = route.path === '/'
 
-  // Por defecto, blanco si hemos bajado más de 20px
   let isOverDark = false
 
-  // Siempre es transparente/claro al inicio absoluto del scroll
-  if (scrollPos < 20) {
+  if (isHome && scrollPos < 20) {
     isOverDark = true
   } else {
-    // Verificamos colisión con secciones oscuras
     for (const selector of darkSelectors) {
       const elements = document.querySelectorAll(selector)
+
       for (const el of elements) {
-        // Ignorar si el elemento está oculto (p. ej. por animaciones GSAP autoAlpha)
-        const style = window.getComputedStyle(el);
-        if (style.visibility === 'hidden' || style.opacity === '0' || style.display === 'none') {
-          continue;
+        const style = window.getComputedStyle(el)
+        if (
+          style.visibility === 'hidden' ||
+          style.opacity === '0' ||
+          style.display === 'none'
+        ) {
+          continue
         }
 
         const rect = el.getBoundingClientRect()
         const top = rect.top + scrollPos
         const bottom = rect.bottom + scrollPos
-        
-        // Margen extra para suavizar la transición
+
         if (checkPoint >= top - 2 && checkPoint <= bottom + 2) {
           isOverDark = true
           break
         }
       }
+
       if (isOverDark) break
     }
   }
@@ -162,10 +162,17 @@ function onScroll() {
   isScrolled.value = !isOverDark
 }
 
+watch(() => route.path, () => {
+  requestAnimationFrame(() => {
+    onScroll()
+  })
+})
+
 onMounted(() => {
   window.addEventListener('resize', onScroll, { passive: true })
   window.addEventListener('scroll', onScroll, { passive: true })
-  onScroll() // Initial check
+  onScroll()
+
   const saved = localStorage.getItem('locale') || 'es'
   document.documentElement.setAttribute('dir', saved === 'ar' ? 'rtl' : 'ltr')
   document.documentElement.setAttribute('lang', saved)

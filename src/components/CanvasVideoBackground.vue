@@ -32,6 +32,9 @@ let lastDrawnFrame = -1
 let ctx = null
 const drawParams = { w: 0, h: 0, x: 0, y: 0 }
 
+let playheadTween = null
+let opacityTween = null
+
 const preloadSequence = async (video, imagesArray) => {
   const loadPromises = []
   const TOTAL_PRIORITY = 30
@@ -125,7 +128,7 @@ onMounted(async () => {
   resizeCanvas()
   render(canvasRef.value, images, 0)
 
-  gsap.to(playhead, {
+  playheadTween = gsap.to(playhead, {
     frame: props.video.frameCount - 1,
     ease: 'none',
     scrollTrigger: {
@@ -138,7 +141,7 @@ onMounted(async () => {
     }
   })
 
-  gsap.to(opacity, {
+  opacityTween = gsap.to(opacity, {
     value: 0,
     ease: 'none',
     scrollTrigger: {
@@ -156,7 +159,12 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeCanvas)
-  ScrollTrigger.getAll().forEach((t) => t.kill())
+
+  playheadTween?.scrollTrigger?.kill()
+  playheadTween?.kill()
+
+  opacityTween?.scrollTrigger?.kill()
+  opacityTween?.kill()
 })
 </script>
 
