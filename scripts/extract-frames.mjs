@@ -44,11 +44,9 @@ function extractFrames(videoFile) {
     console.log(`\n⏳ Procesando vídeo: ${videoFile}...`);
     console.log(`   Destino: ${outputDir}`);
 
-    // Comando FFmpeg: 
-    // -r 30 : 30 frames por segundo
-    // -vf scale=1920:-1 : escala a 1920px de ancho y auto el alto
-    // -q:v 80 : calidad de webp (0-100)
-    const cmd = `ffmpeg -i "${inputPath}" -vf "scale='min(1920,iw)':-1" -r 30 -vcodec libwebp -q:v 80 "${outputPattern}"`;
+    // Comando FFmpeg usando el binario estático de node_modules
+    const ffmpegPath = path.resolve(__dirname, '../node_modules/ffmpeg-static/ffmpeg.exe');
+    const cmd = `"${ffmpegPath}" -i "${inputPath}" -vf "scale='min(1920,iw)':-1" -r 30 -vcodec libwebp -q:v 80 "${outputPattern}"`;
 
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
