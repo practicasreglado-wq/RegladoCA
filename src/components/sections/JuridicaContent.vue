@@ -9,7 +9,6 @@
       </div>
     </div>
 
-
     <section class="juridica-section">
       <div class="container juridica-grid">
         <div class="juridica-content">
@@ -78,6 +77,10 @@ const { t, tm } = useI18n()
 </script>
 
 <style scoped>
+.juridica-content-wrapper {
+  position: relative;
+  overflow: hidden;
+}
 
 .juridica-section { padding: 120px 0; overflow: hidden; }
 .juridica-section--alt { background: var(--color-bg-light); }

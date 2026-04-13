@@ -479,6 +479,19 @@
         "p4": "Los técnicos de REGLADO A&C realizarán el estudio de la matrícula y el padrón del Impuesto de Actividades Económicas (IAE) que nos permitirá identificar las cooperativas con actividad en el término municipal, y elaborar un plan de asistencia técnica con el objetivo de que les sean abonadas tanto las cantidades correspondientes al presente ejercicio, como las de los ejercicios no prescritos."
       }
     },
+    "regularizaciones": {
+      "title": "Inspecciones y Regularizaciones Tributarias",
+      "text": "RedacciÃ³n y revisiÃ³n de ordenanzas fiscales y elaboraciÃ³n de informes complementarios. Ponemos a disposiciÃ³n del Ayuntamiento nuestra experiencia para revisar sus Ordenanzas fiscales, con un triple objetivo: facilitar los trÃ¡mites a los contribuyentes, aumentar la recaudaciÃ³n y dar las pautas para comprobar la correcta tributaciÃ³n de los hechos imponibles realizados en el municipio.",
+      "items": [
+        "Ordenanzas de IAE",
+        "Ordenanzas de Tasa 1,5",
+        "Ordenanzas de IBI",
+        "Ordenanzas de ICIO",
+        "Ordenanzas de Licencias UrbanÃ­sticas",
+        "Ordenanzas de Canon UrbanÃ­stico",
+        "Tasas"
+      ]
+    },
     "section2": {
       "label": "Profesionales a su servicio",
       "title": "Redacción y revisión de ordenanzas fiscales y elaboración de informes complementarios.",

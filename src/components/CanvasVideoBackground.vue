@@ -1,9 +1,15 @@
 <template>
   <div class="canvas-container" :class="{ 'is-loading': !isReady }">
-    <div v-if="!isReady" class="canvas-loader">
+    <div
+      class="canvas-fallback"
+      :class="{ 'canvas-fallback--hidden': !showFallback || isReady }"
+      :style="{ backgroundImage: `url(${fallbackImage})` }"
+      aria-hidden="true"
+    ></div>
+    <div v-if="!isReady && !useStaticFallback" class="canvas-loader">
       <div class="loader-spinner"></div>
     </div>
-    <canvas ref="canvasRef" class="canvas-bg" :style="{ opacity: opacity }"></canvas>
+    <canvas ref="canvasRef" class="canvas-bg" :style="{ opacity: useStaticFallback ? 0 : opacity }"></canvas>
   </div>
 </template>
 
@@ -11,6 +17,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import fallbackImage from '@/assets/images/f1.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,6 +31,8 @@ const props = defineProps({
 const canvasRef = ref(null)
 const opacity = ref(1)
 const isReady = ref(false)
+const showFallback = ref(false)
+const useStaticFallback = ref(false)
 
 const images = []
 const playhead = { frame: 0 }
@@ -31,6 +40,16 @@ const playhead = { frame: 0 }
 let lastDrawnFrame = -1
 let ctx = null
 const drawParams = { w: 0, h: 0, x: 0, y: 0 }
+
+const shouldUseStaticFallback = () => {
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+  const saveData = navigator.connection?.saveData
+  const slowConnection = ['slow-2g', '2g'].includes(navigator.connection?.effectiveType || '')
+  const lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4
+  const lowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4
+
+  return Boolean(reducedMotion || saveData || slowConnection || lowMemory || lowCpu)
+}
 
 const preloadSequence = async (video, imagesArray) => {
   const loadPromises = []
@@ -118,6 +137,13 @@ const resizeCanvas = () => {
 }
 
 onMounted(async () => {
+  useStaticFallback.value = shouldUseStaticFallback()
+  showFallback.value = useStaticFallback.value
+
+  if (useStaticFallback.value) {
+    return
+  }
+
   await preloadSequence(props.video, images)
   isReady.value = true
 
@@ -186,6 +212,20 @@ onUnmounted(() => {
   display: block;
   will-change: opacity, transform;
   mix-blend-mode: screen;
+}
+
+.canvas-fallback {
+  position: absolute;
+  inset: 0;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 1;
+  transition: opacity 0.45s ease;
+}
+
+.canvas-fallback--hidden {
+  opacity: 0;
 }
 
 .canvas-loader {

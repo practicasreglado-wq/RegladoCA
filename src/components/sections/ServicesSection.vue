@@ -100,6 +100,7 @@ gsap.registerPlugin(ScrollTrigger)
 const identityCanvasRef = ref(null)
 const identityImages = []
 const identityPlayhead = { frame: 0 }
+const H4_FRAME_COUNT = 79
 
 const { t, tm } = useI18n()
 const { scrollTo } = useScroll()
@@ -171,7 +172,7 @@ const parsedStats = computed(() =>
 
 // Lógica de precarga para el Canvas de h4 (61 frames)
 const preloadIdentityFrames = () => {
-  for (let i = 1; i <= 61; i++) {
+  for (let i = 1; i <= H4_FRAME_COUNT; i++) {
     const img = new Image()
     img.src = `/frames/h4/frame_${String(i).padStart(4, '0')}.webp`
     if (i === 1) {
@@ -287,7 +288,7 @@ onMounted(() => {
 
   // Sincronización del VIDEO h4 (Frames) - Se completa antes de pasar a Fase 3
   masterTl.to(identityPlayhead, {
-    frame: 60,
+    frame: H4_FRAME_COUNT - 1,
     duration: 5.0, // Gran espacio para asegurar el scroll total sin prisas
     ease: "none",
     onUpdate: () => renderIdentityFrame(Math.round(identityPlayhead.frame))
