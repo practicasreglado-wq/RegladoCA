@@ -1,6 +1,5 @@
 <template>
   <div ref="sceneWrapper" class="inspecciones-parallax-wrapper">
-    <!-- MOBILE FALLBACK: Standard vertical list -->
     <div class="mobile-only-content">
       <div class="page-hero" :style="{ '--hero-bg': `url(${iaeImage})` }">
         <div class="container">
@@ -11,77 +10,77 @@
       <section class="section section--dark">
         <div class="container service-page__content">
           <div v-for="(block, idx) in allBlocks" :key="'mob-' + idx" class="mobile-block">
-             <span v-if="block.isLabel" class="section__label">{{ t(block.label) }}</span>
-             <h2 v-if="block.isLabel" class="section__title">{{ t(block.title) }}</h2>
-             <span v-if="block.isLabel" class="divider"></span>
-             
-             <section v-if="!block.isLabel" class="inspection-block">
-                <div class="inspection-block__content">
-                  <h3 v-if="block.titleKey">{{ t(block.titleKey) }}</h3>
-                  <h4 v-if="block.subtitleKey">{{ t(block.subtitleKey) }}</h4>
-                  <p v-for="(p, pIdx) in block.paragraphs" :key="pIdx">{{ t(p) }}</p>
-                </div>
-                <div class="inspection-block__media">
-                  <img :src="block.image" :alt="t(block.titleKey || 'inspecciones')" />
-                </div>
-             </section>
+            <span v-if="block.isLabel" class="section__label">{{ t(block.label) }}</span>
+            <h2 v-if="block.isLabel" class="section__title">{{ t(block.title) }}</h2>
+            <span v-if="block.isLabel" class="divider"></span>
+
+            <section v-if="!block.isLabel" class="inspection-block">
+              <div class="inspection-block__content">
+                <h3 v-if="block.titleKey">{{ t(block.titleKey) }}</h3>
+                <h4 v-if="block.subtitleKey">{{ t(block.subtitleKey) }}</h4>
+                <p v-for="(p, pIdx) in block.paragraphs" :key="pIdx">{{ t(p) }}</p>
+              </div>
+              <div class="inspection-block__media">
+                <img :src="block.image" :alt="t(block.titleKey || 'inspecciones')" />
+              </div>
+            </section>
           </div>
         </div>
       </section>
     </div>
 
-    <!-- DESKTOP IMMERSIVE SCENE -->
     <div class="desktop-immersive-scene">
-      <!-- PHASE 1: Expansion Card -->
-      <div ref="expansionCard" class="expansion-card">
-        <video 
-          ref="expansionVideo"
-          class="expansion-card__video"
-          src="/video/InspeccionesTributarias.mp4"
-          muted
-          loop
-          playsinline
-        ></video>
-        <div class="expansion-card__overlay"></div>
-        
-        <div class="expansion-card__inner">
-          <div ref="heroVertical" class="intro-box intro-box--vertical">
-             <p class="intro-label">{{ t('nav.services') }}</p>
-             <h1 class="intro-title">{{ t('nav.services_list.inspecciones') }}</h1>
-          </div>
-          <div ref="heroHorizontal" class="intro-box intro-box--horizontal">
-             <p class="intro-label">{{ t('nav.services') }}</p>
-             <h1 class="intro-title">{{ t('nav.services_list.inspecciones') }}</h1>
-          </div>
-        </div>
-      </div>
+      <div ref="horizontalViewport" class="slides-horizontal-viewport">
+        <div ref="horizontalTrack" class="slides-horizontal-track">
+          <section ref="expansionPanel" class="expansion-panel">
+              <div ref="expansionCard" class="expansion-card">
+              <video
+                ref="expansionVideo"
+                class="expansion-card__video"
+                src="/video/InspeccionesTributarias.mp4"
+                muted
+                loop
+                playsinline
+              ></video>
+              <div class="expansion-card__overlay"></div>
 
-      <!-- PHASE 2: Vertical Sequential Slides (Stacked) -->
-      <div class="slides-stack-container">
-        <div 
-          v-for="(slide, index) in slides" 
-          :key="index" 
-          :ref="el => slideRefs[index] = el"
-          class="content-slide-vertical"
-        >
-          <div class="slide-inner-box">
-            <div class="inspection-block-premium" :class="{ 'inspection-block-premium--reverse': index % 2 !== 0 }">
-              <div class="inspection-block-premium__content">
-                <span class="slide-label" v-if="slide.sectionLabel">{{ t(slide.sectionLabel) }}</span>
-                <h3 class="slide-main-title">{{ t(slide.titleKey) }}</h3>
-                <h4 v-if="slide.subtitleKey">{{ t(slide.subtitleKey) }}</h4>
-                <div class="slide-text">
-                  <p v-for="(p, pIdx) in slide.paragraphs" :key="pIdx">{{ t(p) }}</p>
+              <div class="expansion-card__inner">
+                <div ref="heroVertical" class="intro-box intro-box--vertical">
+                  <p class="intro-label">{{ t('nav.services') }}</p>
+                  <h1 class="intro-title">{{ t('nav.services_list.inspecciones') }}</h1>
                 </div>
-              </div>
-
-              <div class="inspection-block-premium__media">
-                <div class="frame-premium">
-                  <img :src="slide.image" :alt="t(slide.titleKey)" />
+                <div ref="heroHorizontal" class="intro-box intro-box--horizontal">
+                  <p class="intro-label">{{ t('nav.services') }}</p>
+                  <h1 ref="heroHorizontalTitle" class="intro-title">{{ t('nav.services_list.inspecciones') }}</h1>
                 </div>
               </div>
             </div>
-          </div>
+          </section>
+
+          <article
+            v-for="(slide, index) in slides"
+            :key="index"
+            class="content-slide-horizontal"
+          >
+            <div class="slide-inner-box">
+              <div class="inspection-block-premium" :class="{ 'inspection-block-premium--reverse': index % 2 !== 0 }">
+                <div class="inspection-block-premium__content">
+                  <span class="slide-label" v-if="slide.sectionLabel">{{ t(slide.sectionLabel) }}</span>
+                  <h3 class="slide-main-title">{{ t(slide.titleKey) }}</h3>
+                  <h4 v-if="slide.subtitleKey">{{ t(slide.subtitleKey) }}</h4>
+                  <div class="slide-text">
+                    <p v-for="(p, pIdx) in slide.paragraphs" :key="pIdx">{{ t(p) }}</p>
+                  </div>
+                </div>
+
+                <div class="inspection-block-premium__media">
+                  <div class="frame-premium">
+                    <img :src="slide.image" :alt="t(slide.titleKey)" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
       </div>
     </div>
@@ -89,12 +88,11 @@
 </template>
 
 <script setup>
-import { onMounted, ref, onBeforeUnmount } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-// Assets
 import coopImage from '@media/Gestión-de-la-bonificación-del-95-en-el-IAE-de-cooperativas.jpg'
 import iaeImage from '@media/IAE-Impuesto-de-Actividades-Económicas.jpg'
 import ibiImage from '@media/IBI.-Gestión-de-la-Bonificación-del-50-en-el-IBI-de-Colegios-Concertados.jpg'
@@ -104,14 +102,36 @@ import canonImage from '@media/CANON-URBANÍSTICO.jpg'
 import tasaImage from '@media/Tasa-1.5.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
+
 const { t } = useI18n()
 
 const sceneWrapper = ref(null)
+const horizontalViewport = ref(null)
+const horizontalTrack = ref(null)
+const expansionPanel = ref(null)
 const expansionCard = ref(null)
 const expansionVideo = ref(null)
-const heroVertical = ref(null)
 const heroHorizontal = ref(null)
-const slideRefs = ref([])
+const heroVertical = ref(null)
+const heroHorizontalTitle = ref(null)
+
+let resizeObserver = null
+
+function syncHeroOrientation() {
+  const panelEl = expansionPanel.value
+  const horizontalEl = heroHorizontal.value
+  const verticalEl = heroVertical.value
+  const titleEl = heroHorizontalTitle.value
+
+  if (!panelEl || !horizontalEl || !verticalEl || !titleEl) return
+
+  const panelWidth = panelEl.getBoundingClientRect().width
+  const titleWidth = titleEl.scrollWidth
+  const shouldUseVertical = panelWidth < titleWidth + 96
+
+  gsap.set(horizontalEl, { autoAlpha: shouldUseVertical ? 0 : 1 })
+  gsap.set(verticalEl, { autoAlpha: shouldUseVertical ? 1 : 0 })
+}
 
 const slides = [
   {
@@ -187,91 +207,109 @@ const allBlocks = [
 ]
 
 let mainTimeline = null
+let mediaContext = null
+const collapsePhaseEnd = 1.6
+
+function syncExpansionVideoPlayback() {
+  const videoEl = expansionVideo.value
+  if (!videoEl || !mainTimeline) return
+
+  const currentTime = mainTimeline.time()
+  const isInCollapsePhase = currentTime > 0.01 && currentTime < collapsePhaseEnd - 0.01
+
+  if (isInCollapsePhase) {
+    videoEl.play?.()
+  } else {
+    videoEl.pause?.()
+  }
+}
 
 onMounted(() => {
-  const mm = gsap.matchMedia()
+  mediaContext = gsap.matchMedia()
 
-  mm.add("(min-width: 1025px)", () => {
-    // Scroll total: Fase 1 + Slides
-    const scrollFactor = slides.length + 1; 
+  mediaContext.add('(min-width: 1025px)', () => {
+    const viewportWidth = () => horizontalViewport.value?.offsetWidth || window.innerWidth
+    const collapsedPanelWidth = () => Math.max(Math.round(viewportWidth() * 0.22), 220)
+    const remainingSlidesDistance = () => Math.max((slides.length - 1) * viewportWidth(), 0)
+    const totalTravel = () => collapsedPanelWidth() + remainingSlidesDistance()
+
+    gsap.set(sceneWrapper.value, { '--expansion-width': `${viewportWidth()}px` })
+    gsap.set(horizontalTrack.value, { x: 0 })
+    gsap.set(heroHorizontal.value, { autoAlpha: 1 })
+    gsap.set(heroVertical.value, { autoAlpha: 0 })
+    expansionVideo.value?.pause()
+    if (expansionVideo.value) expansionVideo.value.currentTime = 0
+
+    resizeObserver = new ResizeObserver(() => {
+      syncHeroOrientation()
+    })
+    resizeObserver.observe(expansionPanel.value)
+    syncHeroOrientation()
+    syncExpansionVideoPlayback()
 
     mainTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: sceneWrapper.value,
-        start: "top top",
-        end: `+=${scrollFactor * 100}%`,
+        start: 'top top',
+        end: () => `+=${viewportWidth() + totalTravel()}`,
         pin: true,
-        scrub: 1.2
+        scrub: 1.15,
+        invalidateOnRefresh: true,
+        onUpdate: () => syncExpansionVideoPlayback(),
+        onLeave: () => expansionVideo.value?.pause(),
+        onLeaveBack: () => expansionVideo.value?.pause()
       }
-    });
+    })
 
-    // ----- FASE 1: Expansión -----
-    const overlay = expansionCard.value.querySelector('.expansion-card__overlay');
-    
-    // Expansion Tween
-    mainTimeline.fromTo(expansionCard.value, 
-      { width: "22%", left: "0%", autoAlpha: 1 },
-      { 
-        width: "100%", 
-        duration: 1.5, 
-        ease: "power2.inOut",
-        onStart: () => { if (expansionVideo.value) expansionVideo.value.play(); },
-        onReverseComplete: () => { if (expansionVideo.value) expansionVideo.value.pause(); }
-      }
-    );
+    const overlay = expansionCard.value.querySelector('.expansion-card__overlay')
 
-    // Sync overlay darkening with expansion
-    mainTimeline.to(overlay, { background: "rgba(16, 32, 58, 0.65)", duration: 1.5 }, 0);
+    mainTimeline.to(sceneWrapper.value, {
+      '--expansion-width': () => `${collapsedPanelWidth()}px`,
+      duration: 1.6,
+      ease: 'power2.inOut'
+    }, 0)
 
-    // Initial states for scrub stability
-    mainTimeline.set(heroHorizontal.value, { autoAlpha: 0, zIndex: 1 }, 0);
-    mainTimeline.set(heroVertical.value, { autoAlpha: 1, zIndex: 2 }, 0);
+    mainTimeline.to(overlay, {
+      background: 'rgba(16, 32, 58, 0.66)',
+      duration: 1.6
+    }, 0)
 
-    // Tightened Cross-fade centered around 50% (0.75s)
-    mainTimeline.to(heroVertical.value, { autoAlpha: 0, duration: 0.2 }, 0.65);
-    mainTimeline.fromTo(heroHorizontal.value, 
-      { autoAlpha: 0, scale: 0.96, zIndex: 1 },
-      { autoAlpha: 1, scale: 1, zIndex: 3, duration: 0.2 },
-      0.75
-    );
+    mainTimeline.to(heroHorizontal.value, {
+      autoAlpha: 0,
+      y: -24,
+      duration: 0.45
+    }, 0.9)
 
-    // Fade out for next phase
-    mainTimeline.to([heroVertical.value, heroHorizontal.value], { autoAlpha: 0, y: -40, duration: 0.8 }, 1.35);
-    mainTimeline.to(expansionCard.value, { 
-      autoAlpha: 0, 
-      duration: 0.6,
-      onStart: () => { if (expansionVideo.value) expansionVideo.value.pause(); },
-      onReverseComplete: () => { if (expansionVideo.value) expansionVideo.value.play(); }
-    }, 1.55);
+    mainTimeline.to(horizontalTrack.value, {
+      x: () => -collapsedPanelWidth(),
+      duration: 1,
+      ease: 'power2.inOut'
+    }, 1.35)
 
-    // ----- FASE 2: Revelado Vertical Secuencial -----
-    slides.forEach((_, i) => {
-      mainTimeline.fromTo(slideRefs.value[i],
-        { autoAlpha: 0, y: 50 },
-        { autoAlpha: 1, y: 0, duration: 1, ease: 'power2.out' }
-      );
-      
-      if (i < slides.length - 1) {
-        mainTimeline.to(slideRefs.value[i], {
-          autoAlpha: 0,
-          y: -50,
-          duration: 1,
-          delay: 0.2, // Tiempo de lectura
-          ease: 'power2.in'
-        });
-      }
-    });
+    mainTimeline.to(horizontalTrack.value, {
+      x: () => -totalTravel(),
+      duration: slides.length - 1,
+      ease: 'none'
+    }, 2.35)
 
     return () => {
-      mainTimeline?.scrollTrigger?.kill();
-      mainTimeline?.kill();
+      resizeObserver?.disconnect()
+      resizeObserver = null
+      mainTimeline?.scrollTrigger?.kill()
+      mainTimeline?.kill()
+      mainTimeline = null
     }
   })
 })
 
 onBeforeUnmount(() => {
-  mainTimeline?.scrollTrigger?.kill();
-  mainTimeline?.kill();
+  resizeObserver?.disconnect()
+  resizeObserver = null
+  mainTimeline?.scrollTrigger?.kill()
+  mainTimeline?.kill()
+  mediaContext?.revert()
+  mainTimeline = null
+  mediaContext = null
 })
 </script>
 
@@ -281,6 +319,7 @@ onBeforeUnmount(() => {
   background-color: var(--color-bg-main);
   overflow: hidden;
   width: 100%;
+  --expansion-width: 100vw;
 }
 
 .desktop-immersive-scene { display: none; }
@@ -291,7 +330,6 @@ onBeforeUnmount(() => {
   padding: 60px 0;
 }
 
-/* DISEÑO PREMIUM CONTENIDO */
 .inspection-block-premium {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -344,28 +382,48 @@ onBeforeUnmount(() => {
 
 @media (min-width: 1025px) {
   .mobile-only-content { display: none; }
+
   .desktop-immersive-scene {
     display: block;
     height: 100vh;
     width: 100%;
     position: relative;
     background: var(--color-bg-main);
+    overflow: hidden;
   }
 
-  /* Fase 1 Card */
+  .slides-horizontal-viewport {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .slides-horizontal-track {
+    display: flex;
+    height: 100%;
+    will-change: transform;
+  }
+
+  .expansion-panel {
+    flex: 0 0 var(--expansion-width);
+    width: var(--expansion-width);
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    z-index: 6;
+    min-width: 0;
+    max-width: var(--expansion-width);
+    will-change: width;
+  }
+
   .expansion-card {
-    position: absolute;
-    top: 0;
+    position: relative;
+    width: 100%;
     height: 100%;
     background: var(--color-bg-main);
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    pointer-events: none;
     overflow: hidden;
-    border-radius: 0 !important;
-    container-type: inline-size; /* Enable container queries for dynamic text orientation */
+    container-type: inline-size;
+    z-index: 2;
   }
 
   .expansion-card__video {
@@ -374,14 +432,14 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: -2;
+    z-index: 0;
   }
 
   .expansion-card__overlay {
     position: absolute;
     inset: 0;
-    background: rgba(77, 121, 184, 0.4); /* Matched with AboutContent.vue lighter blue */
-    z-index: -1;
+    background: rgba(77, 121, 184, 0.4);
+    z-index: 1;
   }
 
   .expansion-card__inner {
@@ -389,43 +447,42 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 100%;
     display: grid;
-    grid-template-areas: "hero";
     place-items: center;
     z-index: 2;
+    overflow: hidden;
   }
 
   .intro-box {
-    grid-area: hero;
+    grid-area: 1 / 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
     width: 100%;
     height: 100%;
+    text-align: center;
+    padding: 32px 40px;
+    overflow: hidden;
   }
 
   .intro-box--vertical {
     writing-mode: vertical-rl;
     transform: rotate(180deg);
     white-space: nowrap;
+    place-self: center;
+    width: auto;
+    opacity: 0;
+    visibility: hidden;
+    padding: 28px 12px;
   }
 
   .intro-box--horizontal {
-    writing-mode: horizontal-tb;
-    transform: none;
-    white-space: normal;
-    text-align: center;
-    padding: 20px 40px;
-    max-width: 900px;
-    margin: 0 auto;
-    opacity: 0;
-    visibility: hidden;
+    white-space: nowrap;
+    place-self: center;
   }
 
   .intro-label {
-    margin: 0;
-    margin-bottom: 24px;
+    margin: 0 0 24px;
     color: var(--color-accent-light) !important;
     font-size: 0.75rem !important;
     font-weight: 700 !important;
@@ -435,36 +492,61 @@ onBeforeUnmount(() => {
 
   .intro-title {
     font-family: var(--font-heading) !important;
-    font-size: clamp(2.2rem, 5vw, 3.2rem) !important;
+    font-size: clamp(2rem, 8cqw, 4.5rem) !important;
     font-weight: 400 !important;
-    line-height: 1.1;
+    line-height: 1.05;
     color: var(--color-white) !important;
     text-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
+    max-width: none;
   }
 
-  /* Fase 2: Stack Vertical */
-  .slides-stack-container {
-    position: relative;
-    width: 100%;
+  .intro-box--vertical .intro-title {
+    font-size: clamp(1.9rem, 5.2cqw, 3rem) !important;
+    line-height: 0.92;
+    letter-spacing: 0.06em;
+  }
+
+  .intro-box--vertical .intro-label {
+    margin-bottom: 14px;
+    font-size: 0.68rem !important;
+  }
+
+  .content-slide-horizontal {
+    flex: 0 0 100vw;
+    width: 100vw;
     height: 100%;
-    z-index: 50;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8vw;
+    background: var(--color-bg-main);
+  }
+
+  .slide-inner-box {
+    width: 100%;
+    max-width: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .inspection-block-premium {
     width: 100%;
-    max-width: 1500px; /* Maximum reach for wide screens */
+    max-width: 1500px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 1.5fr 1fr; /* Text-heavy ratio (60/40) */
-    gap: 40px; /* Tighter gap to maximize content space */
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 56px;
     align-items: center;
-    padding: 140px 40px 60px; /* Secure distance from navbar */
+    padding: 130px 0 60px;
   }
 
   .inspection-block-premium--reverse {
-    grid-template-columns: 1fr 1.5fr; /* Inverse ratio to keep text wider on the right */
+    grid-template-columns: 0.9fr 1.1fr;
   }
 
   .inspection-block-premium--reverse .inspection-block-premium__content { order: 2; }
@@ -472,31 +554,10 @@ onBeforeUnmount(() => {
 
   .frame-premium {
     width: 100%;
-    max-width: 600px; /* Controlled size for images */
-    aspect-ratio: 1/1;
-    border-radius: 40px;
-    overflow: hidden;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+    max-width: 600px;
+    aspect-ratio: 1 / 1;
+    height: auto;
     justify-self: center;
-  }
-
-  .content-slide-vertical {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 10%;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .slide-inner-box {
-    width: 100%;
-    max-width: 1400px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
 
   .slide-label {
