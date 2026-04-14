@@ -236,6 +236,27 @@ onMounted(() => {
     }
   })
 
+  // Control de marca de agua (logo.svg) sincronizado con el fin de los títulos
+  ScrollTrigger.create({
+    trigger: ".section-servicios-trigger",
+    start: "top -600", // Aparece después de que los títulos se han acomodado
+    onEnter: () => {
+      gsap.to(".section-servicios-trigger", { 
+        "--watermark-opacity": 0.16, 
+        "--watermark-visibility": "visible",
+        duration: 1.2, 
+        ease: "power2.out" 
+      })
+    },
+    onLeaveBack: () => {
+      // Desaparición instantánea al volver al video
+      gsap.set(".section-servicios-trigger", { 
+        "--watermark-opacity": 0,
+        "--watermark-visibility": "hidden"
+      })
+    }
+  })
+
   // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
   const masterTl = gsap.timeline({
     scrollTrigger: {
@@ -256,6 +277,12 @@ onMounted(() => {
   const cards = gsap.utils.toArray(".service-card")
 
   // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
+  masterTl.to(".section-servicios-trigger", {
+    "--watermark-rotation": "360deg",
+    duration: 18, // Cubre toda la línea de tiempo principal
+    ease: "none"
+  }, 0)
+
   masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
     { y: 50, opacity: 0 },
     { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }

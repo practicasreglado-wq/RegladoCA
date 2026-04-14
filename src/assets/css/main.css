@@ -166,9 +166,11 @@ button {
 .footer::after {
   content: '';
   position: absolute;
-  top: 28px;
-  right: 28px;
-  width: 160px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 480px;
+  max-width: 80%;
   aspect-ratio: 1;
   background-image: url('../images/logo.svg');
   background-repeat: no-repeat;
@@ -481,9 +483,10 @@ button {
   .economica-section::after,
   .economica-cards-section::after,
   .footer::after {
-    top: 18px;
-    right: 18px;
-    width: 108px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
     opacity: 0.12;
   }
 

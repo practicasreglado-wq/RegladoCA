@@ -1,5 +1,5 @@
 <template>
-  <div class="juridica-content-wrapper">
+  <div class="juridica-content-wrapper juridica-content-wrapper--with-3d">
     <!-- Page hero -->
     <div class="page-hero" :style="{ '--hero-bg': `url(${heroBg})` }">
       <div class="container">
@@ -8,6 +8,7 @@
         <p class="page-hero__subtitle">{{ t('juridica_page.hero.subtitle') }}</p>
       </div>
     </div>
+
 
     <section class="juridica-section">
       <div class="container juridica-grid">
@@ -77,10 +78,6 @@ const { t, tm } = useI18n()
 </script>
 
 <style scoped>
-.juridica-content-wrapper {
-  position: relative;
-  overflow: hidden;
-}
 
 .juridica-section { padding: 120px 0; overflow: hidden; }
 .juridica-section--alt { background: var(--color-bg-light); }
