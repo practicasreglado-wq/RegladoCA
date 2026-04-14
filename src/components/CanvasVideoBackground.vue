@@ -178,3 +178,66 @@ onUnmounted(() => {
   opacityTween?.kill()
 })
 </script>
+
+<template>
+  <div 
+    class="video-background-container" 
+    :style="{ opacity: opacity }"
+    v-show="!useStaticFallback || showFallback"
+  >
+    <canvas 
+      ref="canvasRef" 
+      class="video-canvas"
+      :class="{ 'is-ready': isReady }"
+    ></canvas>
+    <div class="video-overlay"></div>
+    
+    <div 
+      v-if="showFallback" 
+      class="fallback-image"
+      :style="{ backgroundImage: `url(${fallbackImage})` }"
+    ></div>
+  </div>
+</template>
+
+<style scoped>
+.video-background-container {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #0a0a0a;
+  overflow: hidden;
+  will-change: opacity;
+}
+
+.video-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.video-canvas.is-ready {
+  opacity: 1;
+}
+
+.video-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(77, 121, 184, 0.4);
+  z-index: 1;
+}
+
+.fallback-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+</style>

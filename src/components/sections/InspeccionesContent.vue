@@ -322,6 +322,9 @@ onMounted(() => {
   mediaContext = gsap.matchMedia()
 
   mediaContext.add('(min-width: 1025px)', () => {
+    const isRTL = document.documentElement.dir === 'rtl'
+    const xMult = isRTL ? 1 : -1
+
     const viewportWidth = () => horizontalViewport.value?.offsetWidth || window.innerWidth
     const collapsedPanelWidth = () => Math.max(Math.round(viewportWidth() * 0.22), 220)
     const remainingSlidesDistance = () => Math.max((slides.length - 1) * viewportWidth(), 0)
@@ -375,13 +378,13 @@ onMounted(() => {
     }, 0.9)
 
     mainTimeline.to(horizontalTrack.value, {
-      x: () => -collapsedPanelWidth(),
+      x: () => xMult * collapsedPanelWidth(),
       duration: 1,
       ease: 'power2.inOut'
     }, 1.35)
 
     mainTimeline.to(horizontalTrack.value, {
-      x: () => -totalTravel(),
+      x: () => xMult * totalTravel(),
       duration: slides.length - 1,
       ease: 'none'
     }, 2.35)
@@ -474,7 +477,7 @@ onBeforeUnmount(() => {
 
 .inspection-featured__list li {
   position: relative;
-  padding-left: 24px;
+  padding-inline-start: 24px;
   color: var(--color-text);
   line-height: 1.7;
 }
@@ -482,7 +485,7 @@ onBeforeUnmount(() => {
 .inspection-featured__list li::before {
   content: '';
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 11px;
   width: 6px;
   height: 6px;

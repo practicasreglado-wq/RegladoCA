@@ -509,7 +509,7 @@ function animateNumbers() {
 }
 
 .identity__text {
-  text-align: left;
+  text-align: start;
 }
 
 .identity__text .section__title {
@@ -716,7 +716,7 @@ function animateNumbers() {
   grid-template-columns: 1fr 1.2fr;
   gap: 60px;
   align-items: center;
-  text-align: left;
+  text-align: start;
   margin-top: 20px;
 }
 
@@ -755,7 +755,7 @@ function animateNumbers() {
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
-    text-align: left;
+    text-align: start;
   }
 }
 </style>
