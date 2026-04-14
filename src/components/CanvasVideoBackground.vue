@@ -1,16 +1,8 @@
-<template>
-  <div class="canvas-container" :class="{ 'is-loading': !isReady }">
-    <div v-if="!isReady" class="canvas-loader">
-      <div class="loader-spinner"></div>
-    </div>
-    <canvas ref="canvasRef" class="canvas-bg" :style="{ opacity: opacity }"></canvas>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import fallbackImage from '@/assets/images/f1.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -24,6 +16,8 @@ const props = defineProps({
 const canvasRef = ref(null)
 const opacity = ref(1)
 const isReady = ref(false)
+const showFallback = ref(false)
+const useStaticFallback = ref(false)
 
 const images = []
 const playhead = { frame: 0 }
@@ -34,6 +28,16 @@ const drawParams = { w: 0, h: 0, x: 0, y: 0 }
 
 let playheadTween = null
 let opacityTween = null
+
+const shouldUseStaticFallback = () => {
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
+  const saveData = navigator.connection?.saveData
+  const slowConnection = ['slow-2g', '2g'].includes(navigator.connection?.effectiveType || '')
+  const lowMemory = typeof navigator.deviceMemory === 'number' && navigator.deviceMemory <= 4
+  const lowCpu = typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency <= 4
+
+  return Boolean(reducedMotion || saveData || slowConnection || lowMemory || lowCpu)
+}
 
 const preloadSequence = async (video, imagesArray) => {
   const loadPromises = []
@@ -121,6 +125,13 @@ const resizeCanvas = () => {
 }
 
 onMounted(async () => {
+  useStaticFallback.value = shouldUseStaticFallback()
+  showFallback.value = useStaticFallback.value
+
+  if (useStaticFallback.value) {
+    return
+  }
+
   await preloadSequence(props.video, images)
   isReady.value = true
 
@@ -167,55 +178,3 @@ onUnmounted(() => {
   opacityTween?.kill()
 })
 </script>
-
-<style scoped>
-.canvas-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  background-color: #10203a;
-  pointer-events: none;
-  transition: background-color 0.5s ease;
-}
-
-.canvas-container.is-loading {
-  background-color: #0d1a2f;
-}
-
-.canvas-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  will-change: opacity, transform;
-  mix-blend-mode: screen;
-}
-
-.canvas-loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.loader-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4d79b8;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>

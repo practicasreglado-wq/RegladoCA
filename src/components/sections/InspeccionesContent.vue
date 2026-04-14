@@ -7,14 +7,32 @@
           <h1 class="page-hero__title">{{ t('nav.services_list.inspecciones') }}</h1>
         </div>
       </div>
+
       <section class="section section--dark">
         <div class="container service-page__content">
           <div v-for="(block, idx) in allBlocks" :key="'mob-' + idx" class="mobile-block">
-            <span v-if="block.isLabel" class="section__label">{{ t(block.label) }}</span>
-            <h2 v-if="block.isLabel" class="section__title">{{ t(block.title) }}</h2>
-            <span v-if="block.isLabel" class="divider"></span>
+            <template v-if="block.isLabel">
+              <span class="section__label">{{ t(block.label) }}</span>
+              <h2 class="section__title">{{ t(block.title) }}</h2>
+              <span class="divider"></span>
 
-            <section v-if="!block.isLabel" class="inspection-block">
+              <section
+                v-if="block.featured"
+                class="inspection-featured"
+              >
+                <div class="inspection-featured__content">
+                  <p>{{ t('inspecciones_page.regularizaciones.text') }}</p>
+                </div>
+
+                <ul class="inspection-featured__list">
+                  <li v-for="item in tm('inspecciones_page.regularizaciones.items')" :key="item">
+                    {{ item }}
+                  </li>
+                </ul>
+              </section>
+            </template>
+
+            <section v-else class="inspection-block">
               <div class="inspection-block__content">
                 <h3 v-if="block.titleKey">{{ t(block.titleKey) }}</h3>
                 <h4 v-if="block.subtitleKey">{{ t(block.subtitleKey) }}</h4>
@@ -33,7 +51,7 @@
       <div ref="horizontalViewport" class="slides-horizontal-viewport">
         <div ref="horizontalTrack" class="slides-horizontal-track">
           <section ref="expansionPanel" class="expansion-panel">
-              <div ref="expansionCard" class="expansion-card">
+            <div ref="expansionCard" class="expansion-card">
               <video
                 ref="expansionVideo"
                 class="expansion-card__video"
@@ -51,7 +69,9 @@
                 </div>
                 <div ref="heroHorizontal" class="intro-box intro-box--horizontal">
                   <p class="intro-label">{{ t('nav.services') }}</p>
-                  <h1 ref="heroHorizontalTitle" class="intro-title">{{ t('nav.services_list.inspecciones') }}</h1>
+                  <h1 ref="heroHorizontalTitle" class="intro-title">
+                    {{ t('nav.services_list.inspecciones') }}
+                  </h1>
                 </div>
               </div>
             </div>
@@ -63,7 +83,10 @@
             class="content-slide-horizontal"
           >
             <div class="slide-inner-box">
-              <div class="inspection-block-premium" :class="{ 'inspection-block-premium--reverse': index % 2 !== 0 }">
+              <div
+                class="inspection-block-premium"
+                :class="{ 'inspection-block-premium--reverse': index % 2 !== 0 }"
+              >
                 <div class="inspection-block-premium__content">
                   <span class="slide-label" v-if="slide.sectionLabel">{{ t(slide.sectionLabel) }}</span>
                   <h3 class="slide-main-title">{{ t(slide.titleKey) }}</h3>
@@ -86,7 +109,6 @@
     </div>
   </div>
 </template>
-
 <script setup>
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -103,7 +125,7 @@ import tasaImage from '@media/Tasa-1.5.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t } = useI18n()
+const { t, tm } = useI18n()
 
 const sceneWrapper = ref(null)
 const horizontalViewport = ref(null)
@@ -155,7 +177,10 @@ const slides = [
   {
     titleKey: 'inspecciones_page.section2.tasa_block.title',
     subtitleKey: 'inspecciones_page.section2.tasa_block.subtitle',
-    paragraphs: ['inspecciones_page.section2.tasa_block.text', 'inspecciones_page.section2.tasa_block.text2'],
+    paragraphs: [
+      'inspecciones_page.section2.tasa_block.text',
+      'inspecciones_page.section2.tasa_block.text2'
+    ],
     image: tasaImage
   },
   {
@@ -171,7 +196,10 @@ const slides = [
   {
     titleKey: 'inspecciones_page.section2.icio_block.title',
     subtitleKey: 'inspecciones_page.section2.icio_block.subtitle',
-    paragraphs: ['inspecciones_page.section2.icio_block.text', 'inspecciones_page.section2.icio_block.text2'],
+    paragraphs: [
+      'inspecciones_page.section2.icio_block.text',
+      'inspecciones_page.section2.icio_block.text2'
+    ],
     image: icioImage
   },
   {
@@ -194,16 +222,82 @@ const slides = [
 ]
 
 const allBlocks = [
-  { isLabel: true, label: 'inspecciones_page.section1.label', title: 'inspecciones_page.section1.title' },
-  { titleKey: 'inspecciones_page.section1.block.title', paragraphs: ['inspecciones_page.section1.block.p1', 'inspecciones_page.section1.block.p2', 'inspecciones_page.section1.block.p3', 'inspecciones_page.section1.block.p4'], image: coopImage },
-  { isLabel: true, label: 'inspecciones_page.section2.label', title: 'inspecciones_page.section2.title' },
-  { titleKey: 'inspecciones_page.section2.iae_block.title', subtitleKey: 'inspecciones_page.section2.iae_block.subtitle', paragraphs: ['inspecciones_page.section2.iae_block.text'], image: iaeImage },
-  { titleKey: 'inspecciones_page.section2.tasa_block.title', subtitleKey: 'inspecciones_page.section2.tasa_block.subtitle', paragraphs: ['inspecciones_page.section2.tasa_block.text', 'inspecciones_page.section2.tasa_block.text2'], image: tasaImage },
-  { titleKey: 'inspecciones_page.section2.ibi_block.title', subtitleKey: 'inspecciones_page.section2.ibi_block.subtitle', paragraphs: ['inspecciones_page.section2.ibi_block.text', 'inspecciones_page.section2.ibi_block.text2', 'inspecciones_page.section2.ibi_block.text3'], image: ibiImage },
-  { titleKey: 'inspecciones_page.section2.icio_block.title', subtitleKey: 'inspecciones_page.section2.icio_block.subtitle', paragraphs: ['inspecciones_page.section2.icio_block.text', 'inspecciones_page.section2.icio_block.text2'], image: icioImage },
-  { isLabel: true, label: 'inspecciones_page.section3.label', title: 'inspecciones_page.section3.title' },
-  { titleKey: 'inspecciones_page.section3.licencias_block.title', subtitleKey: 'inspecciones_page.section3.licencias_block.subtitle', paragraphs: ['inspecciones_page.section3.licencias_block.text2'], image: licenciasImage },
-  { titleKey: 'inspecciones_page.section3.canon_block.title', subtitleKey: 'inspecciones_page.section3.canon_block.subtitle', paragraphs: ['inspecciones_page.section3.canon_block.text', 'inspecciones_page.section3.canon_block.text2', 'inspecciones_page.section3.canon_block.text3'], image: canonImage }
+  {
+    isLabel: true,
+    label: 'inspecciones_page.section1.label',
+    title: 'inspecciones_page.section1.title'
+  },
+  {
+    titleKey: 'inspecciones_page.section1.block.title',
+    paragraphs: [
+      'inspecciones_page.section1.block.p1',
+      'inspecciones_page.section1.block.p2',
+      'inspecciones_page.section1.block.p3',
+      'inspecciones_page.section1.block.p4'
+    ],
+    image: coopImage
+  },
+  {
+    isLabel: true,
+    label: 'inspecciones_page.section2.label',
+    title: 'inspecciones_page.section2.title',
+    featured: true
+  },
+  {
+    titleKey: 'inspecciones_page.section2.iae_block.title',
+    subtitleKey: 'inspecciones_page.section2.iae_block.subtitle',
+    paragraphs: ['inspecciones_page.section2.iae_block.text'],
+    image: iaeImage
+  },
+  {
+    titleKey: 'inspecciones_page.section2.tasa_block.title',
+    subtitleKey: 'inspecciones_page.section2.tasa_block.subtitle',
+    paragraphs: [
+      'inspecciones_page.section2.tasa_block.text',
+      'inspecciones_page.section2.tasa_block.text2'
+    ],
+    image: tasaImage
+  },
+  {
+    titleKey: 'inspecciones_page.section2.ibi_block.title',
+    subtitleKey: 'inspecciones_page.section2.ibi_block.subtitle',
+    paragraphs: [
+      'inspecciones_page.section2.ibi_block.text',
+      'inspecciones_page.section2.ibi_block.text2',
+      'inspecciones_page.section2.ibi_block.text3'
+    ],
+    image: ibiImage
+  },
+  {
+    titleKey: 'inspecciones_page.section2.icio_block.title',
+    subtitleKey: 'inspecciones_page.section2.icio_block.subtitle',
+    paragraphs: [
+      'inspecciones_page.section2.icio_block.text',
+      'inspecciones_page.section2.icio_block.text2'
+    ],
+    image: icioImage
+  },
+  {
+    isLabel: true,
+    label: 'inspecciones_page.section3.label',
+    title: 'inspecciones_page.section3.title'
+  },
+  {
+    titleKey: 'inspecciones_page.section3.licencias_block.title',
+    subtitleKey: 'inspecciones_page.section3.licencias_block.subtitle',
+    paragraphs: ['inspecciones_page.section3.licencias_block.text2'],
+    image: licenciasImage
+  },
+  {
+    titleKey: 'inspecciones_page.section3.canon_block.title',
+    subtitleKey: 'inspecciones_page.section3.canon_block.subtitle',
+    paragraphs: [
+      'inspecciones_page.section3.canon_block.text',
+      'inspecciones_page.section3.canon_block.text2',
+      'inspecciones_page.section3.canon_block.text3'
+    ],
+    image: canonImage
+  }
 ]
 
 let mainTimeline = null
@@ -358,12 +452,50 @@ onBeforeUnmount(() => {
   object-fit: cover;
 }
 
+.inspection-featured {
+  margin: 10px 0 68px;
+  padding: 34px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 42px rgba(16, 32, 58, 0.12);
+}
+
+.inspection-featured__content p {
+  max-width: 68ch;
+}
+
+.inspection-featured__list {
+  margin-top: 26px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 24px;
+}
+
+.inspection-featured__list li {
+  position: relative;
+  padding-left: 24px;
+  color: var(--color-text);
+  line-height: 1.7;
+}
+
+.inspection-featured__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 11px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
 .inspection-block-premium__content h3 {
   font-family: var(--font-heading);
   font-size: 2.8rem;
   color: var(--color-white);
   line-height: 1.1;
-  margin-bottom: 16px;
+  margin: 0 0 16px;
 }
 
 .inspection-block-premium__content h4 {
@@ -579,6 +711,14 @@ onBeforeUnmount(() => {
   .inspection-block-premium {
     grid-template-columns: 1fr;
     gap: 30px;
+  }
+
+  .inspection-featured {
+    padding: 26px 22px;
+  }
+
+  .inspection-featured__list {
+    grid-template-columns: 1fr;
   }
 }
 </style>

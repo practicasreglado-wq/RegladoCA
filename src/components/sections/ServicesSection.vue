@@ -39,14 +39,10 @@
         </div>
 
         <div class="identity__visual">
-          <video 
-            src="/video/h4.mp4?v=4" 
-            autoplay 
-            muted 
-            loop 
-            playsinline 
-            class="identity__video"
-          ></video>
+          <canvas 
+            ref="identityCanvasRef"
+            class="identity__canvas"
+          ></canvas>
         </div>
       </div>
 
@@ -100,6 +96,10 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+const identityCanvasRef = ref(null)
+const identityImages = []
+const identityPlayhead = { frame: 0 }
+const H4_FRAME_COUNT = 79
 
 const { t, tm } = useI18n()
 const { scrollTo } = useScroll()
@@ -170,7 +170,63 @@ const parsedStats = computed(() =>
   })
 )
 
+
+
+// Lógica de precarga para el Canvas de h4 (61 frames)
+const preloadIdentityFrames = () => {
+  for (let i = 1; i <= H4_FRAME_COUNT; i++) {
+    const img = new Image()
+    img.src = `/frames/h4/frame_${String(i).padStart(4, '0')}.webp`
+    if (i === 1) {
+      img.onload = () => renderIdentityFrame(0)
+    }
+    identityImages.push(img)
+  }
+}
+
+const renderIdentityFrame = (index) => {
+  const canvas = identityCanvasRef.value
+  if (!canvas || !identityImages[index]) return
+  
+  const ctx = canvas.getContext('2d', { alpha: false })
+  const img = identityImages[index]
+  
+  if (!img.complete) return
+
+  const canvasAspect = canvas.width / canvas.height
+  const imgAspect = img.width / img.height
+  
+  let drawWidth, drawHeight, drawX, drawY
+  
+  if (canvasAspect > imgAspect) {
+    drawWidth = canvas.width
+    drawHeight = canvas.width / imgAspect
+    drawX = 0
+    drawY = (canvas.height - drawHeight) / 2
+  } else {
+    drawWidth = canvas.height * imgAspect
+    drawHeight = canvas.height
+    drawX = (canvas.width - drawWidth) / 2
+    drawY = 0
+  }
+  
+  ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+}
+
+const resizeIdentityCanvas = () => {
+  if (identityCanvasRef.value) {
+    const canvas = identityCanvasRef.value
+    canvas.width = canvas.offsetWidth * window.devicePixelRatio
+    canvas.height = canvas.offsetHeight * window.devicePixelRatio
+    renderIdentityFrame(Math.round(identityPlayhead.frame))
+  }
+}
+
 onMounted(() => {
+  preloadIdentityFrames()
+  window.addEventListener('resize', resizeIdentityCanvas)
+  setTimeout(resizeIdentityCanvas, 100)
+
   // 1. Transición de fondo
   backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
@@ -187,12 +243,11 @@ onMounted(() => {
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
-      end: "+=2800", // Reducción agresiva para máxima agilidad
+      end: "+=4500", // Aumentado para asegurar el scroll completo de frames
       pin: true,
       scrub: 1,
       anticipatePin: 1,
       onUpdate: (self) => {
-        // Trigger de los contadores cuando el overlay de identidad es visible
         if (self.progress > 0.20 && self.progress < 0.40) {
           animateNumbers()
         }
@@ -205,7 +260,7 @@ onMounted(() => {
   // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
   masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
     { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.2, ease: "power2.out" }
+    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }
   )
 
   cards.forEach((card, index) => {
@@ -218,20 +273,28 @@ onMounted(() => {
     }, `-=${index === 0 ? 0.4 : 0.8}`)
   })
   
-  // TRANSICIÓN 1 -> 2 (t=2.0 -> t=3.2)
-  const t1to2 = 2.0;
+  // TRANSICIÓN 1 -> 2 (t=3.0 -> t=4.5)
+  const t1to2 = 3.0;
   
-  // Entrada Fase 2 (Anticipada)
+  // Entrada Fase 2
   masterTl.fromTo(".services__identity-overlay", 
     { opacity: 0, y: 50, visibility: "hidden" }, 
-    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.2, ease: "power2.out" },
+    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.5, ease: "power2.out" },
     t1to2
   )
   .fromTo(".identity__text .section__label, .identity__text .section__title, .identity__text .divider, .identity__text p, .identity__visual, .identity__stats",
     { opacity: 0, y: 20 },
     { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" },
-    t1to2 + 0.2
+    t1to2 + 0.5
   )
+
+  // Sincronización del VIDEO h4 (Frames) - Se completa antes de pasar a Fase 3
+  masterTl.to(identityPlayhead, {
+    frame: H4_FRAME_COUNT - 1,
+    duration: 5.0, // Gran espacio para asegurar el scroll total sin prisas
+    ease: "none",
+    onUpdate: () => renderIdentityFrame(Math.round(identityPlayhead.frame))
+  }, t1to2 + 0.8)
 
   // Salida Fase 1
   .to(".services__grid-wrapper", { 
@@ -243,8 +306,9 @@ onMounted(() => {
 
   // FASE 2 STILL (Lectura rápida hasta t=4.2)
 
-  // TRANSICIÓN 2 -> 3 (t=4.2 -> t=5.4)
-  const t2to3 = 4.2;
+
+  // TRANSICIÓN 2 -> 3 (t=10.0 -> t=11.5)
+  const t2to3 = 10.0;
 
   // Entrada Fase 3
   masterTl.fromTo(".services__banner-overlay",
@@ -265,8 +329,9 @@ onMounted(() => {
 
   // FASE 3 STILL (Lectura rápida hasta t=6.4)
 
-  // TRANSICIÓN 3 -> 4 (t=6.4 -> t=7.6)
-  const t3to4 = 6.4;
+
+  // TRANSICIÓN 3 -> 4 (t=14.0 -> t=15.5)
+  const t3to4 = 14.0;
 
   // Entrada Fase 4
   masterTl.fromTo(".services__ordenanzas-overlay",
@@ -285,8 +350,8 @@ onMounted(() => {
     opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
   }, t3to4 + 0.1)
   
-  // Limpieza final y salida definitiva (t=8.6 -> t=9.5)
-  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 8.6);
+  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5);
+
 })
 
 onBeforeUnmount(() => {
@@ -462,10 +527,9 @@ function animateNumbers() {
   opacity: 0;
 }
 
-.identity__video {
+.identity__canvas {
   width: 100%;
   height: 450px; /* Tamaño equilibrado que no desplaza el centro visual hacia abajo */
-  object-fit: cover;
   display: block;
   border-radius: var(--radius-lg);
   box-shadow: 0 25px 60px rgba(0,0,0,0.4);
