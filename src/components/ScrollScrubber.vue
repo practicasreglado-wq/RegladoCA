@@ -131,7 +131,12 @@ onMounted(async () => {
 watch(() => props.progress, (newProgress) => {
   if (newProgress !== null) {
     const totalFrames = (props.endFrame !== null ? props.endFrame : props.frameCount) - props.startFrame;
-    playhead.frame = props.startFrame + (totalFrames * newProgress);
+    // Soporte para looping: si el progreso es > 1, vuelve a empezar (modulo)
+    const loopedProgress = newProgress % 1;
+    // Si el progreso es negativo (scroll back), manejamos el módulo para que sea positivo
+    const normalizedProgress = loopedProgress < 0 ? 1 + loopedProgress : loopedProgress;
+    
+    playhead.frame = props.startFrame + (totalFrames * normalizedProgress);
     render();
   }
 });

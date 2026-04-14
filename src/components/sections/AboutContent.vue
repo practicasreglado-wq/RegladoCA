@@ -132,9 +132,38 @@ onMounted(() => {
       scrollTrigger: {
         trigger: sceneRef.value,
         start: "top top",
-        end: "+=5500",
+        end: "+=3800",
         pin: true,
         scrub: 1,
+        snap: {
+          snapTo: (value, self) => {
+            const labels = tl.labels;
+            // Aseguramos que el 0 y el 1 (inicio y fin) entren en el cálculo del snap
+            const values = [0, ...Object.values(labels).map(l => l / tl.duration()), 1];
+            const uniqueValues = [...new Set(values)].sort((a, b) => a - b);
+            
+            // Encontrar el segmento actual [i, i+1]
+            let i = 0;
+            while (i < uniqueValues.length - 1 && value >= uniqueValues[i+1] - 0.001) i++;
+            
+            const start = uniqueValues[i];
+            const end = uniqueValues[i+1];
+            if (end === undefined) return start;
+            
+            const dist = end - start;
+            if (dist <= 0) return start;
+            const progressInSegment = (value - start) / dist;
+            
+            // Umbral asimétrico avanzado:
+            // - Para avanzar (bajar): Pedimos un 40% de intención (más deliberado).
+            // - Para regresar (subir): Solo un 15% de retroceso dispara el snap (muy sensible para evitar puntos muertos).
+            const threshold = self.direction > 0 ? 0.4 : 0.85;
+            return progressInSegment > threshold ? end : start;
+          },
+          duration: { min: 0.3, max: 0.6 },
+          delay: 0.1,
+          ease: "power2.inOut"
+        },
         onEnter: () => heroVideo.value?.play(),
         onEnterBack: () => heroVideo.value?.play(),
         onLeave: () => heroVideo.value?.pause(),
@@ -142,66 +171,76 @@ onMounted(() => {
       }
     });
 
-    // 1. Estado inicial de texto visible y expansión
+    // 1. Estado inicial y expansión (ahora forzamos el estado encogido al inicio)
     tl.set(layer1.value, { opacity: 1, scale: 1 });
 
-    tl.to(bgContainer.value, {
-      width: "100%",
-      height: "100vh",
-      borderRadius: "0px",
-      duration: 1
-    });
+    tl.fromTo(bgContainer.value, 
+      { width: "100%", height: "480px", borderRadius: "0px" },
+      { 
+        width: "100%", 
+        height: "100vh", 
+        borderRadius: "0px", 
+        duration: 1.5,
+        ease: "power2.inOut"
+      }
+    ).addLabel("L1");
 
-    // 2. Oscurecimiento de overlay y fundido de L1 (Hero)
-    tl.to(overlayRef.value, { background: "rgba(16, 32, 58, 0.85)", duration: 0.5 }, "-=0.5")
+    // 2. Oscurecimiento sutil y fundido de L1 (Hero)
+    tl.to(overlayRef.value, { background: "rgba(16, 32, 58, 0.65)", duration: 0.5 }, "-=0.5")
       .to(layer1.value, { opacity: 0, scale: 1.05, duration: 1, delay: 0.5 });
 
     // 3. L2: Especialistas
     tl.fromTo(layer2.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
-      .to(layer2.value, { opacity: 0, y: -30, duration: 1, delay: 0.8 });
+      .addLabel("L2")
+      .to(layer2.value, { opacity: 0, y: -30, duration: 1, delay: 0.4 });
 
     // 4. L3: Valores
     tl.fromTo(layer3.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
-      .to(layer3.value, { opacity: 0, y: -30, duration: 1, delay: 0.8 });
+      .addLabel("L3")
+      .to(layer3.value, { opacity: 0, y: -30, duration: 1, delay: 0.4 });
 
     // 5. L4: Métricas (Temis y Barras sincronizadas)
     tl.fromTo(layer4.value, { opacity: 0, y: 30 }, { 
-      opacity: 1, 
-      y: 0, 
-      duration: 1,
-      onStart: () => {
-        metricsVisible.value = true;
-        // Animación de parámetros "una vez" al entrar
-        gsap.fromTo(".about-law__bar-fill", 
-          { width: "0%" }, 
-          { 
-            width: (i, target) => target.getAttribute('data-width') || "80%", 
-            duration: 1.5, 
-            stagger: 0.1,
-            ease: "power2.out",
-            overwrite: "auto"
-          }
-        );
-        gsap.fromTo(".about-law__metric-value", 
-          { opacity: 0, y: 10 }, 
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.8,
-            stagger: 0.1,
-            overwrite: "auto"
-          }
-        );
-      }
-    });
+        opacity: 1, 
+        y: 0, 
+        duration: 1,
+        onStart: () => {
+          metricsVisible.value = true;
+          // Animación de parámetros "una vez" al entrar
+          gsap.fromTo(".about-law__bar-fill", 
+            { width: "0%" }, 
+            { 
+              width: (i, target) => target.getAttribute('data-width') || "80%", 
+              duration: 1.5, 
+              stagger: 0.1,
+              ease: "power2.out",
+              overwrite: "auto"
+            }
+          );
+          gsap.fromTo(".about-law__metric-value", 
+            { opacity: 0, y: 10 }, 
+            {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              stagger: 0.1,
+              overwrite: "auto"
+            }
+          );
+        }
+      })
+      .addLabel("L4");
     
-    // La estatua mantiene el giro con el scroll para mayor interactividad
-    tl.to(temisProgress, { value: 1, duration: 2, ease: "none" }, ">-0.5");
+    // La estatua inicia su giro EXACTAMENTE en la etiqueta L4 para que esté de frente al aterrizar
+    tl.to(temisProgress, { value: 1, duration: 2, ease: "none" }, "L4");
 
-    tl.to(layer4.value, { opacity: 0, y: -30, duration: 1, delay: 1 });
+    tl.to(layer4.value, { opacity: 0, y: -30, duration: 1, delay: 0.4 });
 
     // 6. L5: Presencia
-    tl.fromTo(layer5.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 });
+    tl.fromTo(layer5.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
+      .addLabel("L5");
+
+
   }
 })
 

@@ -13,8 +13,11 @@ export function useScroll() {
       const el = document.getElementById(anchor)
       if (el) {
         el.scrollIntoView({ behavior: 'smooth' })
-        // Update URL hash without jumping
-        window.history.pushState(null, null, `#${anchor}`)
+
+        // Limpiar el hash después del scroll para evitar saltos al recargar
+        setTimeout(() => {
+          window.history.replaceState(null, null, window.location.pathname)
+        }, 700)
       }
     } else {
       router.push({ path: '/', hash: `#${anchor}` })
@@ -27,9 +30,10 @@ export function useScroll() {
   const scrollToTop = () => {
     if (route.path === '/') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
-      // Clear hash from URL completely
+
+      // Limpiar cualquier hash existente
       if (window.location.hash) {
-        window.history.pushState(null, document.title, window.location.pathname + window.location.search);
+        window.history.replaceState(null, null, window.location.pathname)
       }
     } else {
       router.push('/')
