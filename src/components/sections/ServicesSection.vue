@@ -90,7 +90,6 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
 import gsap from 'gsap'
@@ -104,6 +103,9 @@ const H4_FRAME_COUNT = 79
 
 const { t, tm } = useI18n()
 const { scrollTo } = useScroll()
+
+let backgroundTween = null
+let masterTl = null
 
 function handleServiceClick(route) {
     if (route.startsWith('/#')) {
@@ -226,7 +228,7 @@ onMounted(() => {
   setTimeout(resizeIdentityCanvas, 100)
 
   // 1. Transición de fondo
-  gsap.to("#inicio", {
+  backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
@@ -237,7 +239,7 @@ onMounted(() => {
   })
 
   // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
-  const masterTl = gsap.timeline({
+  masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
@@ -348,15 +350,20 @@ onMounted(() => {
     opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
   }, t3to4 + 0.1)
   
-  // Limpieza final y salida definitiva (t=8.6 -> t=9.5)
   .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5);
 
 })
 
 onBeforeUnmount(() => {
-  ScrollTrigger.getAll().forEach(st => {
-    if (st.trigger === ".section-servicios-trigger") st.kill();
-  });
+  backgroundTween?.scrollTrigger?.kill()
+  backgroundTween?.kill()
+
+  masterTl?.scrollTrigger?.kill()
+  masterTl?.kill()
+
+  gsap.set("#inicio", { clearProps: "backgroundColor" })
+
+  numbersAnimated = false
 })
 
 let numbersAnimated = false
@@ -385,7 +392,6 @@ function animateNumbers() {
     })
   })
 }
-
 </script>
 
 <style scoped>

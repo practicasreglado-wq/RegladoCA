@@ -1,18 +1,3 @@
-<template>
-  <div class="canvas-container" :class="{ 'is-loading': !isReady }">
-    <div
-      class="canvas-fallback"
-      :class="{ 'canvas-fallback--hidden': !showFallback || isReady }"
-      :style="{ backgroundImage: `url(${fallbackImage})` }"
-      aria-hidden="true"
-    ></div>
-    <div v-if="!isReady && !useStaticFallback" class="canvas-loader">
-      <div class="loader-spinner"></div>
-    </div>
-    <canvas ref="canvasRef" class="canvas-bg" :style="{ opacity: useStaticFallback ? 0 : opacity }"></canvas>
-  </div>
-</template>
-
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
@@ -40,6 +25,9 @@ const playhead = { frame: 0 }
 let lastDrawnFrame = -1
 let ctx = null
 const drawParams = { w: 0, h: 0, x: 0, y: 0 }
+
+let playheadTween = null
+let opacityTween = null
 
 const shouldUseStaticFallback = () => {
   const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches
@@ -151,7 +139,7 @@ onMounted(async () => {
   resizeCanvas()
   render(canvasRef.value, images, 0)
 
-  gsap.to(playhead, {
+  playheadTween = gsap.to(playhead, {
     frame: props.video.frameCount - 1,
     ease: 'none',
     scrollTrigger: {
@@ -164,7 +152,7 @@ onMounted(async () => {
     }
   })
 
-  gsap.to(opacity, {
+  opacityTween = gsap.to(opacity, {
     value: 0,
     ease: 'none',
     scrollTrigger: {
@@ -182,72 +170,11 @@ onMounted(async () => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', resizeCanvas)
-  ScrollTrigger.getAll().forEach((t) => t.kill())
+
+  playheadTween?.scrollTrigger?.kill()
+  playheadTween?.kill()
+
+  opacityTween?.scrollTrigger?.kill()
+  opacityTween?.kill()
 })
 </script>
-
-<style scoped>
-.canvas-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -1;
-  background-color: #10203a;
-  pointer-events: none;
-  transition: background-color 0.5s ease;
-}
-
-.canvas-container.is-loading {
-  background-color: #0d1a2f;
-}
-
-.canvas-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  will-change: opacity, transform;
-  mix-blend-mode: screen;
-}
-
-.canvas-fallback {
-  position: absolute;
-  inset: 0;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  opacity: 1;
-  transition: opacity 0.45s ease;
-}
-
-.canvas-fallback--hidden {
-  opacity: 0;
-}
-
-.canvas-loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-}
-
-.loader-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #4d79b8;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-</style>
