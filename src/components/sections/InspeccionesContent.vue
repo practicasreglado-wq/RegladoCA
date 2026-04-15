@@ -302,6 +302,7 @@ const allBlocks = [
 
 let mainTimeline = null
 let mediaContext = null
+let scrollDirection = 1
 const collapsePhaseEnd = 1.6
 
 function syncExpansionVideoPlayback() {
@@ -352,9 +353,43 @@ onMounted(() => {
         pin: true,
         scrub: 1.15,
         invalidateOnRefresh: true,
-        onUpdate: () => syncExpansionVideoPlayback(),
+        onUpdate: (self) => {
+          scrollDirection = self.direction
+          syncExpansionVideoPlayback()
+        },
         onLeave: () => expansionVideo.value?.pause(),
-        onLeaveBack: () => expansionVideo.value?.pause()
+        onLeaveBack: () => expansionVideo.value?.pause(),
+        snap: {
+          snapTo: (progress) => {
+            const totalDur = 2.35 + (slides.length - 1)
+            const pts = [0]
+            for (let i = 0; i < slides.length; i++) {
+              pts.push((2.35 + i) / totalDur)
+            }
+
+            // Find which segment the progress is in
+            let i = 0
+            while (i < pts.length - 1 && progress > pts[i + 1]) {
+              i++
+            }
+
+            if (i >= pts.length - 1) return pts[pts.length - 1]
+
+            const p1 = pts[i]
+            const p2 = pts[i + 1]
+            const segmentProgress = (progress - p1) / (p2 - p1)
+
+            // 30% threshold logic (Bidirectional)
+            if (scrollDirection > 0) {
+              return segmentProgress > 0.3 ? p2 : p1
+            } else {
+              return segmentProgress < 0.7 ? p1 : p2
+            }
+          },
+          duration: { min: 0.4, max: 0.8 },
+          delay: 0.1,
+          ease: 'power2.inOut'
+        }
       }
     })
 
