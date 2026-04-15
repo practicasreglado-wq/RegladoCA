@@ -110,7 +110,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -125,7 +125,7 @@ import tasaImage from '@media/Tasa-1.5.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 
 const sceneWrapper = ref(null)
 const horizontalViewport = ref(null)
@@ -305,6 +305,16 @@ let mediaContext = null
 let scrollDirection = 1
 const collapsePhaseEnd = 1.6
 
+function cleanupDesktopScene() {
+  resizeObserver?.disconnect()
+  resizeObserver = null
+  mainTimeline?.scrollTrigger?.kill()
+  mainTimeline?.kill()
+  mainTimeline = null
+  mediaContext?.revert()
+  mediaContext = null
+}
+
 function syncExpansionVideoPlayback() {
   const videoEl = expansionVideo.value
   if (!videoEl || !mainTimeline) return
@@ -319,7 +329,8 @@ function syncExpansionVideoPlayback() {
   }
 }
 
-onMounted(() => {
+function initDesktopScene() {
+  cleanupDesktopScene()
   mediaContext = gsap.matchMedia()
 
   mediaContext.add('(min-width: 1025px)', () => {
@@ -432,16 +443,20 @@ onMounted(() => {
       mainTimeline = null
     }
   })
+}
+
+onMounted(() => {
+  initDesktopScene()
+})
+
+watch(locale, async () => {
+  await nextTick()
+  initDesktopScene()
+  ScrollTrigger.refresh()
 })
 
 onBeforeUnmount(() => {
-  resizeObserver?.disconnect()
-  resizeObserver = null
-  mainTimeline?.scrollTrigger?.kill()
-  mainTimeline?.kill()
-  mediaContext?.revert()
-  mainTimeline = null
-  mediaContext = null
+  cleanupDesktopScene()
 })
 </script>
 

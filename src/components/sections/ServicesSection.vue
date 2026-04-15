@@ -35,7 +35,7 @@
           <span class="section__label">{{ t('home_page.about.label') }}</span>
           <h2 class="section__title">{{ t('home_page.about.title') }}</h2>
           <span class="divider"></span>
-          <p v-for="p in tm('home_page.about.paragraphs')" :key="p">{{ p }}</p>
+          <p v-for="(p, index) in tm('home_page.about.paragraphs')" :key="index">{{ p }}</p>
         </div>
 
         <div class="identity__visual">
@@ -48,8 +48,8 @@
 
       <!-- Estadísticas integradas (Restauradas debajo del grid completo) -->
       <div class="identity__stats">
-        <div v-for="stat in parsedStats" :key="stat.label" class="identity-stat">
-          <div class="identity-stat__number" :data-target="stat.numeric" :data-suffix="stat.suffix">{{ stat.prefix }}0{{ stat.suffix }}</div>
+        <div v-for="(stat, index) in parsedStats" :key="index" class="identity-stat">
+          <div class="identity-stat__number" :data-target="stat.numeric" :data-suffix="stat.suffix">{{ displayedIdentityStats[index] }}</div>
           <div class="identity-stat__label">{{ stat.label }}</div>
         </div>
       </div>
@@ -62,7 +62,7 @@
         <h2 class="banner-dynamic__title">{{ t('banner.title') }}</h2>
         <span class="divider divider--center"></span>
         <div class="banner-dynamic__text">
-          <p v-for="p in tm('banner.paragraphs')" :key="p">{{ p }}</p>
+          <p v-for="(p, index) in tm('banner.paragraphs')" :key="index">{{ p }}</p>
         </div>
       </div>
     </div>
@@ -78,7 +78,7 @@
             <p>{{ t('ordenanzas.text') }}</p>
           </div>
           <ul class="banner-dynamic__list">
-            <li v-for="item in tm('ordenanzas.items')" :key="item">
+            <li v-for="(item, index) in tm('ordenanzas.items')" :key="index">
               <span class="dot"></span> {{ item }}
             </li>
           </ul>
@@ -89,7 +89,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
 import gsap from 'gsap'
@@ -101,7 +101,7 @@ const identityImages = []
 const identityPlayhead = { frame: 0 }
 const H4_FRAME_COUNT = 79
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 const { scrollTo } = useScroll()
 
 let backgroundTween = null
@@ -170,6 +170,24 @@ const parsedStats = computed(() =>
   })
 )
 
+const displayedIdentityStats = ref([])
+
+function formatStatDisplay(stat, numericValue) {
+  let displayVal = Math.floor(numericValue)
+
+  if (stat.compact) {
+    displayVal = displayVal >= 1000 ? '1K' : displayVal
+  }
+
+  return `${stat.prefix}${displayVal}${stat.suffix}`
+}
+
+function resetIdentityStats() {
+  displayedIdentityStats.value = parsedStats.value.map((stat) => `${stat.prefix}0${stat.suffix}`)
+}
+
+resetIdentityStats()
+
 
 
 // Lógica de precarga para el Canvas de h4 (61 frames)
@@ -223,6 +241,7 @@ const resizeIdentityCanvas = () => {
 }
 
 onMounted(() => {
+  resetIdentityStats()
   preloadIdentityFrames()
   window.addEventListener('resize', resizeIdentityCanvas)
   setTimeout(resizeIdentityCanvas, 100)
@@ -354,6 +373,27 @@ onMounted(() => {
 
 })
 
+watch(locale, async () => {
+  numbersAnimated = false
+  resetIdentityStats()
+
+  await nextTick()
+
+  const identityOverlay = document.querySelector('.services__identity-overlay')
+  if (!identityOverlay) return
+
+  const style = window.getComputedStyle(identityOverlay)
+  const isIdentityVisible = style.visibility !== 'hidden' && style.opacity !== '0'
+
+  if (isIdentityVisible) {
+    gsap.set(
+      '.identity__text .section__label, .identity__text .section__title, .identity__text .divider, .identity__text p, .identity__visual, .identity__stats',
+      { opacity: 1, y: 0 }
+    )
+    animateNumbers()
+  }
+})
+
 onBeforeUnmount(() => {
   backgroundTween?.scrollTrigger?.kill()
   backgroundTween?.kill()
@@ -370,24 +410,15 @@ let numbersAnimated = false
 function animateNumbers() {
   if (numbersAnimated) return
   numbersAnimated = true
-  
-  const elements = document.querySelectorAll('.identity-stat__number')
-  elements.forEach(el => {
-    const target = parseInt(el.getAttribute('data-target'))
-    const suffix = el.getAttribute('data-suffix')
-    const prefix = target >= 1000 ? '+' : '+'
-    
+
+  parsedStats.value.forEach((stat, index) => {
     const obj = { val: 0 }
     gsap.to(obj, {
-      val: target,
+      val: stat.numeric,
       duration: 2.5,
       ease: "power2.out",
       onUpdate: () => {
-        let displayVal = Math.floor(obj.val)
-        if (target >= 1000) {
-          displayVal = displayVal >= 1000 ? '1K' : displayVal
-        }
-        el.innerText = `${prefix}${displayVal}${suffix}`
+        displayedIdentityStats.value[index] = formatStatDisplay(stat, obj.val)
       }
     })
   })

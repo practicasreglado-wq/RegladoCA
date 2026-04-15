@@ -39,7 +39,7 @@
               <span class="divider divider--center"></span>
             </div>
             <div class="container about-values__grid">
-              <article v-for="item in tm('about_page.values')" :key="item.title" class="about-value-card">
+              <article v-for="(item, index) in tm('about_page.values')" :key="index" class="about-value-card">
                 <h2>{{ item.title }}</h2>
                 <p>{{ item.text }}</p>
               </article>
@@ -56,7 +56,7 @@
                 <h2 class="section__title">{{ t('about_page.law_section.title') }}</h2>
                 <span class="divider"></span>
                 <div class="about-law__metrics">
-                  <div v-for="item in tm('about_page.metrics')" :key="item.label" class="about-law__metric">
+                  <div v-for="(item, index) in tm('about_page.metrics')" :key="index" class="about-law__metric">
                     <div class="about-law__metric-head">
                       <span>{{ item.label }}</span>
                       <span class="about-law__metric-value">{{ item.value }}%</span>
@@ -103,7 +103,7 @@
 </template>
 
 <script setup>
-import { onBeforeUnmount, onMounted, ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -113,7 +113,7 @@ import ScrollScrubber from '@/components/ScrollScrubber.vue'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 const metricsVisible = ref(false)
 const heroVideo = ref(null)
 const sceneRef = ref(null)
@@ -125,6 +125,31 @@ const layer3 = ref(null)
 const layer4 = ref(null)
 const layer5 = ref(null)
 const temisProgress = ref(0)
+let sceneTimeline = null
+
+function animateLawMetrics() {
+  gsap.killTweensOf(".about-law__bar-fill")
+  gsap.killTweensOf(".about-law__metric-value")
+
+  gsap.set(".about-law__bar-fill", { width: "0%" })
+  gsap.set(".about-law__metric-value", { opacity: 0, y: 10 })
+
+  gsap.to(".about-law__bar-fill", {
+    width: (i, target) => target.getAttribute('data-width') || "80%",
+    duration: 1.5,
+    stagger: 0.1,
+    ease: "power2.out",
+    overwrite: "auto"
+  })
+
+  gsap.to(".about-law__metric-value", {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    stagger: 0.1,
+    overwrite: "auto"
+  })
+}
 
 onMounted(() => {
   if (sceneRef.value && heroVideo.value) {
@@ -240,12 +265,29 @@ onMounted(() => {
     tl.fromTo(layer5.value, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 1 })
       .addLabel("L5");
 
+    sceneTimeline = tl
+  }
+})
 
+watch(locale, async () => {
+  await nextTick()
+
+  const metricsLayer = layer4.value
+  if (!metricsLayer) return
+
+  const isVisible = window.getComputedStyle(metricsLayer).opacity !== '0'
+
+  if (isVisible) {
+    animateLawMetrics()
+  } else {
+    gsap.set(".about-law__bar-fill", { width: "0%" })
+    gsap.set(".about-law__metric-value", { opacity: 0, y: 10 })
   }
 })
 
 onBeforeUnmount(() => {
-  observer?.disconnect()
+  sceneTimeline?.scrollTrigger?.kill()
+  sceneTimeline?.kill()
 })
 </script>
 

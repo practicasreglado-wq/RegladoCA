@@ -34,10 +34,12 @@
       "message": "The message must be at least 10 characters long."
     },
     "submit": "Send message",
+    "sending": "Sending...",
     "success": "✓ Message sent"
   },
   "nav": {
     "about": "About us",
+    "about_label": "Reglado Consultores",
     "services": "What we do",
     "subvenciones": "European Grants",
     "contrataciones": "Procurement",
@@ -60,6 +62,7 @@
     "eyebrow": "Professionals in Law, Economics and Engineering",
     "title": "We conduct tax inspections for local governments and increase their revenues",
     "title_highlight": "without harming citizens.",
+    "subtitle": "All our services are carried out by specialists in their field.",
     "cta": "Contact us"
   },
   "services": {
@@ -94,26 +97,42 @@
   "banner": {
     "label": "Tax Inspections",
     "title": "Management of the 95% IAE bonus for cooperatives.",
-    "text": "Law 20/1990 on the Tax Regime of Cooperatives establishes a 95% reduction on the Business Activities Tax (IAE), requiring local councils to annually report the list of cooperatives that have benefited from these reductions."
+    "paragraphs": [
+      "Law 20/1990 on the Tax Regime of Cooperatives establishes a 95% reduction in the Business Activities Tax (IAE) quota, providing that local councils \"shall annually report to the General Directorate for Coordination with Territorial Treasuries of the Ministry of Economy and Finance the list of cooperatives that have effectively benefited from these reductions and the total amount of tax expenditure borne.\""
+    ]
   },
   "about": {
-    "tags": ["Experience", "Trust", "Principles"],
+    "tags": [
+      "Experience",
+      "Trust",
+      "Principles"
+    ],
     "label": "Specialists",
     "title": "Professionals in law, economics and engineering",
     "paragraphs": [
-      "Reglado Consultores is formed by a group of professionals in law, economics and engineering with extensive experience in the consultancy sector, law practice and collaboration in providing comprehensive services to public administrations.",
-      "Our technicians have high professional qualifications that, combined with knowledge of the local world and more specifically of municipal taxes and regulated sectors, allow us to detect fraud pockets, optimizing the resources of local councils and increasing their revenue.",
-      "All our staff are immersed in a permanent training plan that allows total updating according to the abundant case law doctrine, as well as the communication of various news to the staff of the local councils.",
-      "Our labor policy is based on trust and the effort of our workers, promoting reconciliation between personal and work life, as well as achieving 100% of the working day in teleworking mode.",
-      "Therefore, all our actions are mainly oriented towards guaranteeing employment quality and seeking working conditions and an environment in which employees feel comfortable, valued and satisfied."
+      "Reglado Consultores brings together professionals in law, economics and engineering with extensive experience in consultancy and comprehensive services for public administrations.",
+      "We combine strong technical expertise with deep local knowledge to detect irregularities, optimize municipal resources and improve revenue collection.",
+      "We are committed to continuous training and a work environment built on trust, work-life balance and service quality."
     ],
     "cta": "Contact us"
   },
   "stats": [
-    { "value": "1K", "label": "Cases disputed" },
-    { "value": "98%", "label": "Cases won" },
-    { "value": "15", "label": "Years of experience" },
-    { "value": "30", "label": "Professionals" }
+    {
+      "value": "1K",
+      "label": "Cases disputed"
+    },
+    {
+      "value": "98%",
+      "label": "Cases won"
+    },
+    {
+      "value": "15",
+      "label": "Years of experience"
+    },
+    {
+      "value": "30",
+      "label": "Professionals"
+    }
   ],
   "ordenanzas": {
     "label": "Tax Inspections & Regularisations",
@@ -283,10 +302,22 @@
       ]
     },
     "metrics": [
-      { "label": "Experience", "value": 97 },
-      { "label": "Commitment", "value": 100 },
-      { "label": "Principles", "value": 100 },
-      { "label": "Success", "value": 99 }
+      {
+        "label": "Experience",
+        "value": 97
+      },
+      {
+        "label": "Commitment",
+        "value": 100
+      },
+      {
+        "label": "Principles",
+        "value": 100
+      },
+      {
+        "label": "Success",
+        "value": 99
+      }
     ]
   },
   "juridica_page": {
@@ -477,6 +508,19 @@
         "p3": "Since 2018, local governments must manage the request for such compensation electronically.",
         "p4": "REGLADO A&C technicians will carry out a study of the IAE register and tax roll, which will allow us to identify cooperatives operating within the municipal area, and prepare a technical assistance plan with the aim of ensuring they are paid the amounts corresponding to both the current fiscal year and non-prescribed years."
       }
+    },
+    "regularizaciones": {
+      "title": "Tax Inspections and Regularizations",
+      "text": "Drafting and review of tax ordinances and preparation of complementary reports. We place our experience at the disposal of the City Council to review its tax ordinances, with three objectives: simplify procedures for taxpayers, increase revenue, and provide guidelines for verifying the correct taxation of taxable events carried out within the municipality.",
+      "items": [
+        "IAE Ordinances",
+        "1.5% Fee Ordinances",
+        "IBI Ordinances",
+        "ICIO Ordinances",
+        "Urban Planning License Ordinances",
+        "Urban Development Levy Ordinances",
+        "Fees"
+      ]
     },
     "section2": {
       "label": "Professionals at your service",
