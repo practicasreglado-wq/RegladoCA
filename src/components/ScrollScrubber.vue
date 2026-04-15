@@ -30,7 +30,7 @@ const images = [];
 const playhead = { frame: props.startFrame };
 let lastDrawnFrame = -1;
 
-const LUMA_THRESHOLD = 20; // Umbral ajustado para preservar detalles metálicos
+// Chroma key configuration can be added here if needed in the future
 
 const preloadImages = async () => {
   const promises = [];
@@ -58,7 +58,7 @@ const render = () => {
   if (!img.complete) return;
 
   const canvas = canvasRef.value;
-  const ctx = canvas.getContext('2d', { alpha: true });
+  const ctx = canvas.getContext('2d', { alpha: true, willReadFrequently: true });
   ctx.imageSmoothingEnabled = true;
 
   const canvasAspect = canvas.width / canvas.height;
@@ -81,18 +81,38 @@ const render = () => {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
   
-  // LUMA KEYING
+  // CHROMA KEYING (GREEN SCREEN)
   try {
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const data = imageData.data;
+    
     for (let i = 0; i < data.length; i += 4) {
-      if (data[i] < LUMA_THRESHOLD && data[i+1] < LUMA_THRESHOLD && data[i+2] < LUMA_THRESHOLD) {
-        data[i+3] = 0; 
+      const r = data[i];
+      const g = data[i+1];
+      const b = data[i+2];
+
+      // 1. De-spill (Descontaminación): 
+      // Matamos cualquier tinte verde residual en los bordes o detalles finos (como cadenitas)
+      // convirtiendo el verde excesivo en un tono neutro/bronce compatible.
+      if (g > r && g > b) {
+        data[i+1] = (r + b) / 2; 
+      }
+
+      // 2. Transparencia:
+      // Sensibilidad aumentada para el fondo puro
+      if (g > 50 && g > r * 1.03 && g > b * 1.03) {
+        data[i+3] = 0; // Transparencia completa
+      }
+      // Suavizado de bordes:
+      // Si el verde sigue siendo dominante tras el de-spill, bajamos la opacidad.
+      else if (g > r && g > b) {
+        const factor = (g - Math.max(r, b)) / 50; 
+        data[i+3] *= Math.max(0, 1 - factor);
       }
     }
     ctx.putImageData(imageData, 0, 0);
   } catch (e) {
-    console.warn('Luma key failed', e);
+    console.warn('Chroma key failed', e);
   }
 
   lastDrawnFrame = frame;

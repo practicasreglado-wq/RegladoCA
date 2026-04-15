@@ -148,8 +148,12 @@ function onScroll() {
         const rect = el.getBoundingClientRect()
         const top = rect.top + scrollPos
         const bottom = rect.bottom + scrollPos
+        const centerX = window.innerWidth / 2
 
-        if (checkPoint >= top - 2 && checkPoint <= bottom + 2) {
+        if (
+          checkPoint >= top - 2 && checkPoint <= bottom + 2 &&
+          rect.left <= centerX && rect.right >= centerX
+        ) {
           isOverDark = true
           break
         }

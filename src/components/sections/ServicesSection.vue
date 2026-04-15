@@ -2,13 +2,27 @@
   <section class="section section--light section-servicios-trigger">
     <div class="container text-center services-header">
       <span class="section__label">{{ t('services.label') }}</span>
+
       <div class="section__reveal-container">
-        <h2 class="section__title services-main-title">{{ t('services.title') }}</h2>
+        <h2 class="section__title services-main-title">
+          {{ t('services.title') }}
+        </h2>
       </div>
+
       <div class="section__reveal-container">
-        <p class="section__subtitle services-main-subtitle">{{ t('services.subtitle') }}</p>
+        <p class="section__subtitle services-main-subtitle">
+          {{ t('services.subtitle') }}
+        </p>
       </div>
-      <a v-if="showCta" href="/#contacto" @click.prevent="scrollTo('contacto')" class="btn btn--contact">{{ t('services.cta') }}</a>
+
+      <a
+        v-if="showCta"
+        href="/#contacto"
+        @click.prevent="scrollTo('contacto')"
+        class="btn btn--contact"
+      >
+        {{ t('services.cta') }}
+      </a>
     </div>
 
     <div class="container services__grid-wrapper">
@@ -20,65 +34,112 @@
           @click.prevent="handleServiceClick(service.route)"
           class="service-card"
         >
-          <div class="service-card__icon" v-html="getIcon(service.icon)"></div>
+          <div
+            class="service-card__icon"
+            v-html="getIcon(service.icon)"
+          ></div>
           <h3 class="service-card__title">{{ service.title }}</h3>
           <p class="service-card__desc">{{ service.description }}</p>
-          <span class="service-card__link">{{ t('services.more') }}</span>
+          <span class="service-card__link">
+            {{ t('services.more') }}
+          </span>
         </a>
       </div>
     </div>
 
-    <!-- Fase 2: Identidad y Estadísticas -->
+    <!-- FASE 2 -->
     <div class="container services__identity-overlay" id="identidad">
       <div class="identity__grid">
         <div class="identity__text">
-          <span class="section__label">{{ t('home_page.about.label') }}</span>
-          <h2 class="section__title">{{ t('home_page.about.title') }}</h2>
+          <span class="section__label">
+            {{ t('home_page.about.label') }}
+          </span>
+
+          <h2 class="section__title">
+            {{ t('home_page.about.title') }}
+          </h2>
+
           <span class="divider"></span>
-          <p v-for="p in tm('home_page.about.paragraphs')" :key="p">{{ p }}</p>
+
+          <p
+            v-for="(p, index) in tm('home_page.about.paragraphs')"
+            :key="index"
+          >
+            {{ p }}
+          </p>
         </div>
 
         <div class="identity__visual">
-          <canvas 
+          <canvas
             ref="identityCanvasRef"
             class="identity__canvas"
           ></canvas>
         </div>
       </div>
 
-      <!-- Estadísticas integradas (Restauradas debajo del grid completo) -->
       <div class="identity__stats">
-        <div v-for="stat in parsedStats" :key="stat.label" class="identity-stat">
-          <div class="identity-stat__number" :data-target="stat.numeric" :data-suffix="stat.suffix">{{ stat.prefix }}0{{ stat.suffix }}</div>
-          <div class="identity-stat__label">{{ stat.label }}</div>
+        <div
+          v-for="(stat, index) in parsedStats"
+          :key="index"
+          class="identity-stat"
+        >
+          <div class="identity-stat__number">
+            {{ displayedIdentityStats[index] }}
+          </div>
+          <div class="identity-stat__label">
+            {{ stat.label }}
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Fase 3: Banner Informativo IAE (Capa independiente) -->
+    <!-- FASE 3 -->
     <div class="container services__banner-overlay" id="banner-fase3">
       <div class="banner-dynamic">
-        <span class="banner-dynamic__label">{{ t('banner.label') }}</span>
-        <h2 class="banner-dynamic__title">{{ t('banner.title') }}</h2>
+        <span class="banner-dynamic__label">
+          {{ t('banner.label') }}
+        </span>
+
+        <h2 class="banner-dynamic__title">
+          {{ t('banner.title') }}
+        </h2>
+
         <span class="divider divider--center"></span>
+
         <div class="banner-dynamic__text">
-          <p v-for="p in tm('banner.paragraphs')" :key="p">{{ p }}</p>
+          <p
+            v-for="(p, index) in tm('banner.paragraphs')"
+            :key="index"
+          >
+            {{ p }}
+          </p>
         </div>
       </div>
     </div>
 
-    <!-- Fase 4: Ordenanzas y Regularizaciones (A lo último de todo) -->
+    <!-- FASE 4 -->
     <div class="container services__ordenanzas-overlay" id="banner-fase4">
       <div class="banner-dynamic">
-        <span class="banner-dynamic__label">{{ t('ordenanzas.label') }}</span>
-        <h2 class="banner-dynamic__title">{{ t('ordenanzas.title') }}</h2>
+        <span class="banner-dynamic__label">
+          {{ t('ordenanzas.label') }}
+        </span>
+
+        <h2 class="banner-dynamic__title">
+          {{ t('ordenanzas.title') }}
+        </h2>
+
         <span class="divider divider--center"></span>
+
         <div class="banner-dynamic__grid">
           <div class="banner-dynamic__text">
             <p>{{ t('ordenanzas.text') }}</p>
           </div>
+
           <ul class="banner-dynamic__list">
-            <li v-for="item in tm('ordenanzas.items')" :key="item">
+            <li
+              v-for="(item, index) in tm('ordenanzas.items')"
+              :key="index"
+            >
               <span class="dot"></span> {{ item }}
             </li>
           </ul>
@@ -89,51 +150,53 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import {
+  ref,
+  computed,
+  onMounted,
+  onBeforeUnmount,
+  watch,
+  nextTick
+} from 'vue'
+
 import { useI18n } from 'vue-i18n'
 import { useScroll } from '../../composables/useScroll'
+
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+
 const identityCanvasRef = ref(null)
 const identityImages = []
 const identityPlayhead = { frame: 0 }
 const H4_FRAME_COUNT = 79
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 const { scrollTo } = useScroll()
 
 let backgroundTween = null
 let masterTl = null
 
+// =====================
+// SERVICIOS
+// =====================
+
 function handleServiceClick(route) {
-    if (route.startsWith('/#')) {
-        scrollTo(route.substring(2))
-    } else if (route.startsWith('#')) {
-        scrollTo(route.substring(1))
-    } else if (route === '/contacto') {
-        scrollTo('contacto')
-    } else {
-        // External or other route handling if needed
-        scrollTo(route.replace(/^\//, ''))
-    }
+  if (route.startsWith('/#')) {
+    scrollTo(route.substring(2))
+  } else if (route.startsWith('#')) {
+    scrollTo(route.substring(1))
+  } else if (route === '/contacto') {
+    scrollTo('contacto')
+  } else {
+    scrollTo(route.replace(/^\//, ''))
+  }
 }
 
 defineProps({
   showCta: { type: Boolean, default: true }
 })
-
-const icons = {
-  inspecciones: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>`,
-  juridica: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>`,
-  economica: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>`,
-  tecnica: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>`
-}
-
-function getIcon(key) {
-  return icons[key] || ''
-}
 
 const routes = [
   '/inspecciones-tributarias',
@@ -149,8 +212,12 @@ const services = computed(() =>
   }))
 )
 
-// Datos para las estadísticas
+// =====================
+// STATS
+// =====================
+
 const rawStats = computed(() => tm('stats'))
+
 const parsedStats = computed(() =>
   rawStats.value.map((item) => {
     const raw = String(item.value)
@@ -158,28 +225,59 @@ const parsedStats = computed(() =>
     const suffix = raw.includes('%') ? '%' : ''
     const numericBase = Number(raw.replace(/[^\d]/g, '')) || 0
     const numeric = compact ? numericBase * 1000 : numericBase
-    const prefix = '+'
 
     return {
       ...item,
       numeric,
       compact,
       suffix,
-      prefix
+      prefix: '+'
     }
   })
 )
 
+const displayedIdentityStats = ref([])
 
+function resetIdentityStats() {
+  displayedIdentityStats.value = parsedStats.value.map(
+    (stat) => `${stat.prefix}0${stat.suffix}`
+  )
+}
 
-// Lógica de precarga para el Canvas de h4 (61 frames)
+let numbersAnimated = false
+
+function animateNumbers() {
+  if (numbersAnimated) return
+  numbersAnimated = true
+
+  parsedStats.value.forEach((stat, index) => {
+    const obj = { val: 0 }
+
+    gsap.to(obj, {
+      val: stat.numeric,
+      duration: 2.5,
+      ease: 'power2.out',
+      onUpdate: () => {
+        displayedIdentityStats.value[index] =
+          `${stat.prefix}${Math.floor(obj.val)}${stat.suffix}`
+      }
+    })
+  })
+}
+
+// =====================
+// CANVAS
+// =====================
+
 const preloadIdentityFrames = () => {
   for (let i = 1; i <= H4_FRAME_COUNT; i++) {
     const img = new Image()
     img.src = `/frames/h4/frame_${String(i).padStart(4, '0')}.webp`
+
     if (i === 1) {
       img.onload = () => renderIdentityFrame(0)
     }
+
     identityImages.push(img)
   }
 }
@@ -187,75 +285,66 @@ const preloadIdentityFrames = () => {
 const renderIdentityFrame = (index) => {
   const canvas = identityCanvasRef.value
   if (!canvas || !identityImages[index]) return
-  
-  const ctx = canvas.getContext('2d', { alpha: false })
+
+  const ctx = canvas.getContext('2d')
   const img = identityImages[index]
-  
+
   if (!img.complete) return
 
-  const canvasAspect = canvas.width / canvas.height
-  const imgAspect = img.width / img.height
-  
-  let drawWidth, drawHeight, drawX, drawY
-  
-  if (canvasAspect > imgAspect) {
-    drawWidth = canvas.width
-    drawHeight = canvas.width / imgAspect
-    drawX = 0
-    drawY = (canvas.height - drawHeight) / 2
-  } else {
-    drawWidth = canvas.height * imgAspect
-    drawHeight = canvas.height
-    drawX = (canvas.width - drawWidth) / 2
-    drawY = 0
-  }
-  
-  ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height)
 }
 
 const resizeIdentityCanvas = () => {
-  if (identityCanvasRef.value) {
-    const canvas = identityCanvasRef.value
-    canvas.width = canvas.offsetWidth * window.devicePixelRatio
-    canvas.height = canvas.offsetHeight * window.devicePixelRatio
-    renderIdentityFrame(Math.round(identityPlayhead.frame))
-  }
+  const canvas = identityCanvasRef.value
+  if (!canvas) return
+
+  canvas.width = canvas.offsetWidth * window.devicePixelRatio
+  canvas.height = canvas.offsetHeight * window.devicePixelRatio
+
+  renderIdentityFrame(Math.round(identityPlayhead.frame))
 }
 
+// =====================
+// MOUNT
+// =====================
+
 onMounted(() => {
+  ScrollTrigger.getAll().forEach((st) => st.kill())
+
+  resetIdentityStats()
   preloadIdentityFrames()
+
   window.addEventListener('resize', resizeIdentityCanvas)
+
+  resizeIdentityCanvas()
   setTimeout(resizeIdentityCanvas, 100)
 
-  // Reseteo de seguridad al inicio de la carga
-  gsap.set(".section-servicios-trigger", { 
-    "--watermark-opacity": 0,
-    "--watermark-visibility": "hidden"
+  gsap.set('.section-servicios-trigger', {
+    '--watermark-opacity': 0,
+    '--watermark-visibility': 'hidden'
   })
 
-  // 1. Transición de fondo
-  backgroundTween = gsap.to("#inicio", {
-    backgroundColor: "#10203a",
+  backgroundTween = gsap.to('#inicio', {
+    backgroundColor: '#10203a',
     scrollTrigger: {
-      trigger: ".section-servicios-trigger",
-      start: "top 20%",
-      end: "top top",
+      trigger: '.section-servicios-trigger',
+      start: 'top 20%',
+      end: 'top top',
       scrub: true
     }
   })
 
-  // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
   masterTl = gsap.timeline({
     scrollTrigger: {
-      trigger: ".section-servicios-trigger",
-      start: "top 5%", // Un poco de margen para asegurar la activación al cargar
-      end: "+=4500", 
+      trigger: '.section-servicios-trigger',
+      start: 'top 5%',
+      end: () => '+=4500',
       pin: true,
       scrub: 1,
+      invalidateOnRefresh: true,
       anticipatePin: 1,
-      invalidateOnRefresh: true, // Recalcular al cambiar altura/refresh
       onUpdate: (self) => {
-        // Ajustado para la nueva escala temporal (Fase 2: t=4 a t=10 de ~18)
         if (self.progress > 0.25 && self.progress < 0.45) {
           animateNumbers()
         }
@@ -263,111 +352,12 @@ onMounted(() => {
     }
   })
 
-  const cards = gsap.utils.toArray(".service-card")
-
-  // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
-  masterTl.to(".section-servicios-trigger", {
-    "--watermark-opacity": 0.16,
-    "--watermark-visibility": "visible",
-    duration: 0.2 // Entrada semi-rápida para evitar estados intermedios molestos
-  }, 1.8)
-
-  masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
-    { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" },
-    0.2
-  )
-
-  // Entrada de tarjetas en cascada (Stagger nativo)
-  masterTl.from(cards, {
-    y: 100,
-    opacity: 0,
-    rotateX: -15,
-    duration: 1.2,
-    stagger: 0.4, // Una a una con 0.4s de separación
-    ease: "power2.out"
-  }, 0.8)
-  
-  // TRANSICIÓN 1 -> 2 (t=4.0) - Duración reducida a la mitad del ajuste anterior
-  const t1to2 = 4.0;
-  
-  // Entrada Fase 2
-  masterTl.fromTo(".services__identity-overlay", 
-    { opacity: 0, y: 50, visibility: "hidden" }, 
-    { opacity: 1, y: 0, visibility: "visible", zIndex: 10, duration: 1.5, ease: "power2.out" },
-    t1to2
-  )
-  .fromTo(".identity__text .section__label, .identity__text .section__title, .identity__text .divider, .identity__text p, .identity__visual, .identity__stats",
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: "power2.out" },
-    t1to2 + 0.5
-  )
-
-  // Sincronización del VIDEO h4 (Frames) - Se completa antes de pasar a Fase 3
-  masterTl.to(identityPlayhead, {
-    frame: H4_FRAME_COUNT - 1,
-    duration: 5.0, // Gran espacio para asegurar el scroll total sin prisas
-    ease: "none",
-    onUpdate: () => renderIdentityFrame(Math.round(identityPlayhead.frame))
-  }, t1to2 + 0.8)
-
-  // Salida Fase 1
-  .to(".services__grid-wrapper", { 
-    opacity: 0, y: -100, filter: "blur(14px)", duration: 1.0
-  }, t1to2 + 0.1)
-  .to(".services-header", { 
-    opacity: 0, y: -80, duration: 0.8 
-  }, t1to2 + 0.2)
-
-  // FASE 2 STILL (Lectura rápida hasta t=4.2)
-
-
-  // TRANSICIÓN 2 -> 3 (t=10.0)
-  const t2to3 = 10.0;
-
-  // Entrada Fase 3
-  masterTl.fromTo(".services__banner-overlay",
-    { opacity: 0, y: 60, visibility: "visible", zIndex: 1 },
-    { opacity: 1, y: 0, zIndex: 12, duration: 1.2, ease: "power2.out" },
-    t2to3
-  )
-  .fromTo(".banner-dynamic__label, .banner-dynamic__title, .divider--center, .banner-dynamic__text p",
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
-    t2to3 + 0.2
-  )
-
-  // Salida Fase 2
-  .to(".services__identity-overlay", {
-    opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
-  }, t2to3 + 0.1);
-
-  // FASE 3 STILL (Lectura rápida hasta t=6.4)
-
-
-  // TRANSICIÓN 3 -> 4 (t=14.0)
-  const t3to4 = 14.0;
-
-  // Entrada Fase 4
-  masterTl.fromTo(".services__ordenanzas-overlay",
-    { opacity: 0, y: 60, visibility: "visible", zIndex: 1 },
-    { opacity: 1, y: 0, zIndex: 13, duration: 1.2, ease: "power2.out" },
-    t3to4
-  )
-  .fromTo(".services__ordenanzas-overlay .banner-dynamic__label, .services__ordenanzas-overlay .banner-dynamic__title, .services__ordenanzas-overlay .divider--center, .services__ordenanzas-overlay .banner-dynamic__grid",
-    { opacity: 0, y: 20 },
-    { opacity: 1, y: 0, stagger: 0.1, duration: 1, ease: "power2.out" },
-    t3to4 + 0.2
-  )
-
-  // Salida Fase 3
-  .to(".services__banner-overlay", {
-    opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
-  }, t3to4 + 0.1)
-  
-  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 18.0);
-
+  setTimeout(() => ScrollTrigger.refresh(), 400)
 })
+
+// =====================
+// CLEANUP
+// =====================
 
 onBeforeUnmount(() => {
   backgroundTween?.scrollTrigger?.kill()
@@ -376,42 +366,15 @@ onBeforeUnmount(() => {
   masterTl?.scrollTrigger?.kill()
   masterTl?.kill()
 
-  gsap.set("#inicio", { clearProps: "backgroundColor" })
+  gsap.set('#inicio', { clearProps: 'backgroundColor' })
 
   numbersAnimated = false
 })
-
-let numbersAnimated = false
-function animateNumbers() {
-  if (numbersAnimated) return
-  numbersAnimated = true
-  
-  const elements = document.querySelectorAll('.identity-stat__number')
-  elements.forEach(el => {
-    const target = parseInt(el.getAttribute('data-target'))
-    const suffix = el.getAttribute('data-suffix')
-    const prefix = target >= 1000 ? '+' : '+'
-    
-    const obj = { val: 0 }
-    gsap.to(obj, {
-      val: target,
-      duration: 2.5,
-      ease: "power2.out",
-      onUpdate: () => {
-        let displayVal = Math.floor(obj.val)
-        if (target >= 1000) {
-          displayVal = displayVal >= 1000 ? '1K' : displayVal
-        }
-        el.innerText = `${prefix}${displayVal}${suffix}`
-      }
-    })
-  })
-}
 </script>
 
 <style scoped>
 .section-servicios-trigger {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -550,7 +513,7 @@ function animateNumbers() {
 }
 
 .identity__text {
-  text-align: left;
+  text-align: start;
 }
 
 .identity__text .section__title {
@@ -763,7 +726,7 @@ function animateNumbers() {
   grid-template-columns: 1fr 1.2fr;
   gap: 60px;
   align-items: center;
-  text-align: left;
+  text-align: start;
   margin-top: 20px;
 }
 
@@ -802,7 +765,7 @@ function animateNumbers() {
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
-    text-align: left;
+    text-align: start;
   }
 }
 </style>

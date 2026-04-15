@@ -110,7 +110,7 @@
   </div>
 </template>
 <script setup>
-import { onMounted, onBeforeUnmount, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -125,7 +125,7 @@ import tasaImage from '@media/Tasa-1.5.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 
 const sceneWrapper = ref(null)
 const horizontalViewport = ref(null)
@@ -302,7 +302,18 @@ const allBlocks = [
 
 let mainTimeline = null
 let mediaContext = null
+let scrollDirection = 1
 const collapsePhaseEnd = 1.6
+
+function cleanupDesktopScene() {
+  resizeObserver?.disconnect()
+  resizeObserver = null
+  mainTimeline?.scrollTrigger?.kill()
+  mainTimeline?.kill()
+  mainTimeline = null
+  mediaContext?.revert()
+  mediaContext = null
+}
 
 function syncExpansionVideoPlayback() {
   const videoEl = expansionVideo.value
@@ -318,10 +329,14 @@ function syncExpansionVideoPlayback() {
   }
 }
 
-onMounted(() => {
+function initDesktopScene() {
+  cleanupDesktopScene()
   mediaContext = gsap.matchMedia()
 
   mediaContext.add('(min-width: 1025px)', () => {
+    const isRTL = document.documentElement.dir === 'rtl'
+    const xMult = isRTL ? 1 : -1
+
     const viewportWidth = () => horizontalViewport.value?.offsetWidth || window.innerWidth
     const collapsedPanelWidth = () => Math.max(Math.round(viewportWidth() * 0.22), 220)
     const remainingSlidesDistance = () => Math.max((slides.length - 1) * viewportWidth(), 0)
@@ -349,9 +364,43 @@ onMounted(() => {
         pin: true,
         scrub: 1.15,
         invalidateOnRefresh: true,
-        onUpdate: () => syncExpansionVideoPlayback(),
+        onUpdate: (self) => {
+          scrollDirection = self.direction
+          syncExpansionVideoPlayback()
+        },
         onLeave: () => expansionVideo.value?.pause(),
-        onLeaveBack: () => expansionVideo.value?.pause()
+        onLeaveBack: () => expansionVideo.value?.pause(),
+        snap: {
+          snapTo: (progress) => {
+            const totalDur = 2.35 + (slides.length - 1)
+            const pts = [0]
+            for (let i = 0; i < slides.length; i++) {
+              pts.push((2.35 + i) / totalDur)
+            }
+
+            // Find which segment the progress is in
+            let i = 0
+            while (i < pts.length - 1 && progress > pts[i + 1]) {
+              i++
+            }
+
+            if (i >= pts.length - 1) return pts[pts.length - 1]
+
+            const p1 = pts[i]
+            const p2 = pts[i + 1]
+            const segmentProgress = (progress - p1) / (p2 - p1)
+
+            // 30% threshold logic (Bidirectional)
+            if (scrollDirection > 0) {
+              return segmentProgress > 0.3 ? p2 : p1
+            } else {
+              return segmentProgress < 0.7 ? p1 : p2
+            }
+          },
+          duration: { min: 0.4, max: 0.8 },
+          delay: 0.1,
+          ease: 'power2.inOut'
+        }
       }
     })
 
@@ -375,13 +424,13 @@ onMounted(() => {
     }, 0.9)
 
     mainTimeline.to(horizontalTrack.value, {
-      x: () => -collapsedPanelWidth(),
+      x: () => xMult * collapsedPanelWidth(),
       duration: 1,
       ease: 'power2.inOut'
     }, 1.35)
 
     mainTimeline.to(horizontalTrack.value, {
-      x: () => -totalTravel(),
+      x: () => xMult * totalTravel(),
       duration: slides.length - 1,
       ease: 'none'
     }, 2.35)
@@ -394,16 +443,20 @@ onMounted(() => {
       mainTimeline = null
     }
   })
+}
+
+onMounted(() => {
+  initDesktopScene()
+})
+
+watch(locale, async () => {
+  await nextTick()
+  initDesktopScene()
+  ScrollTrigger.refresh()
 })
 
 onBeforeUnmount(() => {
-  resizeObserver?.disconnect()
-  resizeObserver = null
-  mainTimeline?.scrollTrigger?.kill()
-  mainTimeline?.kill()
-  mediaContext?.revert()
-  mainTimeline = null
-  mediaContext = null
+  cleanupDesktopScene()
 })
 </script>
 
@@ -476,7 +529,7 @@ onBeforeUnmount(() => {
 
 .inspection-featured__list li {
   position: relative;
-  padding-left: 24px;
+  padding-inline-start: 24px;
   color: var(--color-text);
   line-height: 1.7;
 }
@@ -484,7 +537,7 @@ onBeforeUnmount(() => {
 .inspection-featured__list li::before {
   content: '';
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 11px;
   width: 6px;
   height: 6px;

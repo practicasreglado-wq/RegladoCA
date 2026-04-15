@@ -103,7 +103,7 @@ const { t, tm } = useI18n()
 }
 .juridica-list li {
   position: relative;
-  padding-left: 28px;
+  padding-inline-start: 28px;
   font-size: 0.98rem;
   line-height: 1.75;
   color: var(--color-text);
@@ -111,7 +111,7 @@ const { t, tm } = useI18n()
 .juridica-list li::before {
   content: "";
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 10px;
   width: 6px;
   height: 6px;

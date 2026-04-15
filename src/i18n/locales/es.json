@@ -98,23 +98,37 @@
     ]
   },
   "about": {
-    "tags": ["Experiencia", "Confianza", "Principios"],
+    "tags": [
+      "Experiencia",
+      "Confianza",
+      "Principios"
+    ],
     "label": "Especialistas",
     "title": "Profesionales del derecho, la economía y la ingeniería",
     "paragraphs": [
-      "Reglado Consultores, está formada por un grupo de profesionales del derecho, la economía y la ingeniería con amplia experiencia en el sector de la consultoría, abogacía y colaboración en la prestación de servicios integrales a las administraciones públicas.",
-      "Nuestros técnicos cuentan con una alta cualificación profesional que, unida al conocimiento del mundo local y más concretamente, de los tributos municipales y sectores regulados, permite detectar bolsas de fraude, optimizando los recursos de los ayuntamientos y aumentando su recaudación.",
-      "Todo nuestro personal se encuentra inmerso en un plan de formación permanente que permite una total actualización conforme a la abundante doctrina jurisprudencia, así como, la comunicación de las distintas novedades al personal de los ayuntamientos.",
-      "Nuestra política laboral se basa en la confianza y en el esfuerzo de nuestros trabajadores, fomentando la conciliación entre la vida personal y laboral, así como, la consecución del 100% de la jornada laboral en modalidad de teletrabajo.",
-      "Por tanto, toda nuestra actuación se orienta principalmente a garantizar la calidad del empleo y buscando unas condiciones y un ambiente de trabajo en el que los empleados se sientan cómodos, valorados y satisfechos"
+      "Reglado Consultores reúne a profesionales del derecho, la economía y la ingeniería con amplia experiencia en consultoría y servicios integrales para administraciones públicas.",
+      "Combinamos alta cualificación técnica y conocimiento del ámbito local para detectar irregularidades, optimizar recursos municipales y mejorar la recaudación.",
+      "Apostamos por la formación continua y un entorno de trabajo basado en la confianza, la conciliación y la calidad del servicio."
     ],
     "cta": "Contáctanos"
   },
   "stats": [
-    { "value": "1K", "label": "Casos disputados" },
-    { "value": "98%", "label": "Casos ganados" },
-    { "value": "15", "label": "Años de experiencia" },
-    { "value": "30", "label": "Profesionales" }
+    {
+      "value": "1K",
+      "label": "Casos disputados"
+    },
+    {
+      "value": "98%",
+      "label": "Casos ganados"
+    },
+    {
+      "value": "15",
+      "label": "Años de experiencia"
+    },
+    {
+      "value": "30",
+      "label": "Profesionales"
+    }
   ],
   "ordenanzas": {
     "label": "Inspecciones y Regularizaciones Tributarias",
@@ -284,10 +298,22 @@
       ]
     },
     "metrics": [
-      { "label": "Experiencia", "value": 97 },
-      { "label": "Compromiso", "value": 100 },
-      { "label": "Principios", "value": 100 },
-      { "label": "Éxito", "value": 99 }
+      {
+        "label": "Experiencia",
+        "value": 97
+      },
+      {
+        "label": "Compromiso",
+        "value": 100
+      },
+      {
+        "label": "Principios",
+        "value": 100
+      },
+      {
+        "label": "Éxito",
+        "value": 99
+      }
     ]
   },
   "juridica_page": {

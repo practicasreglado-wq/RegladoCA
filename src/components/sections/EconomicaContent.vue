@@ -156,7 +156,7 @@ const getCardIcon = (index) => {
 }
 .economica-list li {
   position: relative;
-  padding-left: 28px;
+  padding-inline-start: 28px;
   font-size: 0.98rem;
   line-height: 1.75;
   color: var(--color-text);
@@ -164,7 +164,7 @@ const getCardIcon = (index) => {
 .economica-list li::before {
   content: "";
   position: absolute;
-  left: 0;
+  inset-inline-start: 0;
   top: 10px;
   width: 6px;
   height: 6px;
@@ -251,11 +251,11 @@ const getCardIcon = (index) => {
 .economica-card__accent {
   position: absolute;
   top: 20px;
-  right: 20px;
+  inset-inline-end: 20px;
   width: 32px;
   height: 32px;
   border-top: 1px solid rgba(255, 255, 255, 0.3);
-  border-right: 1px solid rgba(255, 255, 255, 0.3);
+  border-inline-end: 1px solid rgba(255, 255, 255, 0.3);
 }
 @media (max-width: 1080px) {
   .economica-grid { gap: 40px; }
