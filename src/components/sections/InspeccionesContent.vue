@@ -444,6 +444,8 @@ onBeforeUnmount(() => {
   border-radius: 40px;
   overflow: hidden;
   box-shadow: 0 40px 100px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 20;
 }
 
 .frame-premium img {
@@ -542,7 +544,6 @@ onBeforeUnmount(() => {
     height: 100%;
     position: relative;
     overflow: hidden;
-    z-index: 6;
     min-width: 0;
     max-width: var(--expansion-width);
     will-change: width;
@@ -555,7 +556,7 @@ onBeforeUnmount(() => {
     background: var(--color-bg-main);
     overflow: hidden;
     container-type: inline-size;
-    z-index: 2;
+    z-index: 20;
   }
 
   .expansion-card__video {
@@ -650,7 +651,6 @@ onBeforeUnmount(() => {
     width: 100vw;
     height: 100%;
     position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -703,8 +703,23 @@ onBeforeUnmount(() => {
   }
 }
 
+.mobile-only-content {
+  position: relative;
+  z-index: 20;
+}
+
+.mobile-only-content .section--dark {
+  background: transparent !important;
+}
+
 .mobile-block {
   margin-bottom: 80px;
+}
+
+.inspection-block__media {
+  position: relative;
+  z-index: 20;
+  margin-top: 24px;
 }
 
 @media (max-width: 1024px) {

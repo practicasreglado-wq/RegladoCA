@@ -227,6 +227,12 @@ onMounted(() => {
   window.addEventListener('resize', resizeIdentityCanvas)
   setTimeout(resizeIdentityCanvas, 100)
 
+  // Reseteo de seguridad al inicio de la carga
+  gsap.set(".section-servicios-trigger", { 
+    "--watermark-opacity": 0,
+    "--watermark-visibility": "hidden"
+  })
+
   // 1. Transición de fondo
   backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
@@ -238,38 +244,19 @@ onMounted(() => {
     }
   })
 
-  // Control de marca de agua (logo.svg) sincronizado con el fin de los títulos
-  ScrollTrigger.create({
-    trigger: ".section-servicios-trigger",
-    start: "top -600", // Aparece después de que los títulos se han acomodado
-    onEnter: () => {
-      gsap.to(".section-servicios-trigger", { 
-        "--watermark-opacity": 0.16, 
-        "--watermark-visibility": "visible",
-        duration: 1.2, 
-        ease: "power2.out" 
-      })
-    },
-    onLeaveBack: () => {
-      // Desaparición instantánea al volver al video
-      gsap.set(".section-servicios-trigger", { 
-        "--watermark-opacity": 0,
-        "--watermark-visibility": "hidden"
-      })
-    }
-  })
-
   // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
   masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
-      start: "top top",
-      end: "+=4500", // Aumentado para asegurar el scroll completo de frames
+      start: "top 5%", // Un poco de margen para asegurar la activación al cargar
+      end: "+=4500", 
       pin: true,
       scrub: 1,
       anticipatePin: 1,
+      invalidateOnRefresh: true, // Recalcular al cambiar altura/refresh
       onUpdate: (self) => {
-        if (self.progress > 0.20 && self.progress < 0.40) {
+        // Ajustado para la nueva escala temporal (Fase 2: t=4 a t=10 de ~18)
+        if (self.progress > 0.25 && self.progress < 0.45) {
           animateNumbers()
         }
       }
@@ -280,28 +267,29 @@ onMounted(() => {
 
   // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
   masterTl.to(".section-servicios-trigger", {
-    "--watermark-rotation": "360deg",
-    duration: 18, // Cubre toda la línea de tiempo principal
-    ease: "none"
-  }, 0)
+    "--watermark-opacity": 0.16,
+    "--watermark-visibility": "visible",
+    duration: 0.2 // Entrada semi-rápida para evitar estados intermedios molestos
+  }, 1.8)
 
   masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
     { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }
+    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" },
+    0.2
   )
 
-  cards.forEach((card, index) => {
-    masterTl.from(card, {
-      y: 100,
-      opacity: 0,
-      rotateX: -15,
-      duration: 1.2,
-      ease: "power2.out"
-    }, `-=${index === 0 ? 0.4 : 0.8}`)
-  })
+  // Entrada de tarjetas en cascada (Stagger nativo)
+  masterTl.from(cards, {
+    y: 100,
+    opacity: 0,
+    rotateX: -15,
+    duration: 1.2,
+    stagger: 0.4, // Una a una con 0.4s de separación
+    ease: "power2.out"
+  }, 0.8)
   
-  // TRANSICIÓN 1 -> 2 (t=3.0 -> t=4.5)
-  const t1to2 = 3.0;
+  // TRANSICIÓN 1 -> 2 (t=4.0) - Duración reducida a la mitad del ajuste anterior
+  const t1to2 = 4.0;
   
   // Entrada Fase 2
   masterTl.fromTo(".services__identity-overlay", 
@@ -334,7 +322,7 @@ onMounted(() => {
   // FASE 2 STILL (Lectura rápida hasta t=4.2)
 
 
-  // TRANSICIÓN 2 -> 3 (t=10.0 -> t=11.5)
+  // TRANSICIÓN 2 -> 3 (t=10.0)
   const t2to3 = 10.0;
 
   // Entrada Fase 3
@@ -357,7 +345,7 @@ onMounted(() => {
   // FASE 3 STILL (Lectura rápida hasta t=6.4)
 
 
-  // TRANSICIÓN 3 -> 4 (t=14.0 -> t=15.5)
+  // TRANSICIÓN 3 -> 4 (t=14.0)
   const t3to4 = 14.0;
 
   // Entrada Fase 4
@@ -377,7 +365,7 @@ onMounted(() => {
     opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
   }, t3to4 + 0.1)
   
-  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5);
+  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 18.0);
 
 })
 
@@ -428,10 +416,32 @@ function animateNumbers() {
   flex-direction: column;
   justify-content: center;
   background-color: var(--color-bg-main); 
+  position: relative; /* Ensure it stays grounded */
+  overflow: hidden;
+}
+
+.section-servicios-trigger::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  max-width: 80%;
+  aspect-ratio: 1;
+  background-image: url('../../assets/images/logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: var(--watermark-opacity, 0);
+  visibility: var(--watermark-visibility, hidden);
+  transform: translate(-50%, -50%) rotate(calc(var(--watermark-rotation-num, 0) * 1deg));
+  pointer-events: none;
+  z-index: 0;
 }
 
 .services-header {
-  padding-top: 50px; /* Bajamos los títulos según petición */
+  padding-top: 0; 
+  margin-top: -100px; /* Incrementado de -60px para subir el bloque aún más */
 }
 
 .section__reveal-container {
@@ -445,11 +455,16 @@ function animateNumbers() {
   transform: translateY(30px);
 }
 
+.services-header .section__label {
+  color: var(--color-accent) !important; /* Cambiado a azul según petición */
+}
+
 .services__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap);
-  margin-top: 25px; /* Subimos aún más las tarjetas según petición */
+  margin-top: 5px; /* Reducido al mínimo para compactar hacia arriba */
+  align-items: stretch; /* Garantiza que todas las tarjetas tengan la misma altura */
 }
 
 @media (max-width: 1024px) {
@@ -466,19 +481,17 @@ function animateNumbers() {
 
 .services__grid-wrapper {
   position: relative;
-  z-index: 2;
 }
 
 /* Estilos de la nueva sección de Identidad y Estadísticas */
 .services__identity-overlay {
   position: absolute;
-  top: 56%; /* Bajado del 50% al 56% según feedback para que se sienta centrado */
+  top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
   opacity: 0;
   visibility: hidden;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 20px; /* Aún más compacto */
@@ -491,6 +504,7 @@ function animateNumbers() {
   margin: 45px auto 0; /* Ajustado para mantener separación sin exceder la altura de la pantalla */
   width: 100%;
   gap: 20px;
+  align-items: stretch; 
 }
 
 .identity-stat {
@@ -543,7 +557,10 @@ function animateNumbers() {
   color: #ffffff;
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   margin-bottom: 20px;
-  opacity: 0; /* Asegurar que GSAP tome el control */
+}
+
+.identity__text .section__label {
+  color: var(--color-accent) !important; /* Ahora el azul está en la etiqueta superior */
 }
 
 .identity__text p {
@@ -611,6 +628,7 @@ function animateNumbers() {
   position: relative;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(16, 32, 58, 0.08);
+  z-index: 20;
 }
 
 .service-card::after {
@@ -661,6 +679,9 @@ function animateNumbers() {
   color: #1a335a !important;
   margin-bottom: 12px;
   line-height: 1.3;
+  min-height: 3.2em; /* Normaliza el espacio pase lo que pase con el texto */
+  display: flex;
+  align-items: center;
 }
 
 .service-card__desc {
@@ -668,6 +689,7 @@ function animateNumbers() {
   color: #315784 !important;
   line-height: 1.8;
   margin-bottom: 20px;
+  flex-grow: 1; /* Empuja el footer link hacia abajo por igual */
 }
 
 .service-card__link {
@@ -683,14 +705,13 @@ function animateNumbers() {
 /* Estilos del Banner Dinámico Integrado */
 .services__banner-overlay {
   position: absolute;
-  top: 54%; /* Bajamos también el banner un poco más para que sea coherente con la fase anterior */
+  top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
   max-width: 900px;
   opacity: 0;
   visibility: hidden;
-  z-index: 1;
   text-align: center;
 }
 
@@ -727,14 +748,13 @@ function animateNumbers() {
 /* Estilos específicos para la Fase 4 */
 .services__ordenanzas-overlay {
   position: absolute;
-  top: 54%;
+  top: 50%; 
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
   max-width: 1100px;
   opacity: 0;
   visibility: hidden;
-  z-index: 1;
   text-align: center;
 }
 

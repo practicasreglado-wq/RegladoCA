@@ -79,7 +79,7 @@ const { t, tm } = useI18n()
 
 <style scoped>
 
-.juridica-section { padding: 120px 0; overflow: hidden; }
+.juridica-section { padding: 120px 0; position: relative; }
 .juridica-section--alt { background: var(--color-bg-light); }
 .juridica-grid {
   display: grid;
@@ -118,7 +118,7 @@ const { t, tm } = useI18n()
   background: #4a7bb7;
   border-radius: 50%;
 }
-.juridica-image { position: relative; z-index: 1; }
+.juridica-image { position: relative; z-index: 20; }
 .juridica-image img {
   width: 100%;
   aspect-ratio: 1/1;

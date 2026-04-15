@@ -15,25 +15,24 @@
 .has-canvas-bg .section--light,
 .has-canvas-bg .section--white,
 .has-canvas-bg .banner,
-.has-canvas-bg .stats,
-.has-canvas-bg .about-law,
-.has-canvas-bg .about-presence,
-.has-canvas-bg .about-values,
-.has-canvas-bg section {
+.has-canvas-bg .stats {
   background-color: transparent !important;
   background: transparent !important;
 }
 
-.has-canvas-bg .section--light::after,
-.has-canvas-bg .section--white::after,
-.has-canvas-bg .juridica-section::after,
-.has-canvas-bg .tecnica-section::after,
-.has-canvas-bg .economica-section::after,
-.has-canvas-bg .economica-cards-section::after,
-.has-canvas-bg .footer::after {
-  opacity: var(--watermark-opacity, 0) !important;
-  visibility: var(--watermark-visibility, hidden) !important;
-  transform: translate(-50%, -50%) rotate(var(--watermark-rotation, 0deg)) !important;
+/* Las secciones de consultoría necesitan ser transparentes para mostrar la marca de agua */
+.has-canvas-bg #inspecciones-tributarias,
+.has-canvas-bg #consultoria-juridica,
+.has-canvas-bg #consultoria-tecnica,
+.has-canvas-bg #consultoria-economica {
+  background-color: transparent !important;
+  background: transparent !important;
+}
+
+/* La sección 'Sobre Nosotros' debe ser OPACA para cubrir la transición del vídeo anterior */
+#sobre-nosotros,
+.about-immersive-scene {
+  background-color: var(--color-navy) !important;
 }
 
 /* El contenido debe ser legible sobre los vídeos oscuros */

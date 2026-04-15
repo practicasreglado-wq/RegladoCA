@@ -81,6 +81,8 @@ const titleText = computed(() => props.title || t('about.title'))
   overflow: hidden;
   border-radius: 10px;
   box-shadow: var(--shadow);
+  position: relative;
+  z-index: 20;
 }
 
 .about__media img {

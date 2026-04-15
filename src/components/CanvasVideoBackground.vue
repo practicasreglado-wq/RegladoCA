@@ -1,3 +1,23 @@
+<template>
+  <div class="canvas-container" :class="{ 'is-ready': isReady }">
+    <!-- Cargador opcional -->
+    <div v-if="!isReady" class="canvas-loader">
+      <div class="loader-spinner"></div>
+    </div>
+    
+    <!-- Imagen de fallback estática si se detecta ahorro de datos o hardware lento -->
+    <div v-if="showFallback" class="canvas-fallback" :style="{ backgroundImage: `url(${fallbackImage})` }"></div>
+
+    <!-- Canvas Principal -->
+    <canvas 
+      v-else
+      ref="canvasRef" 
+      class="canvas-bg" 
+      :style="{ opacity: opacity }"
+    ></canvas>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
@@ -159,10 +179,16 @@ onMounted(async () => {
       trigger: '.section-servicios-trigger',
       start: 'top top',
       endTrigger: '#sobre-nosotros',
-      end: 'top top',
+      end: 'top 20%', // Ends slightly earlier for a cleaner handoff
       scrub: true,
       onUpdate: (self) => {
         opacity.value = 1 - self.progress
+        // Completamente oculto al final para evitar flickering
+        if (self.progress >= 1) {
+          gsap.set(canvasRef.value, { visibility: 'hidden' })
+        } else {
+          gsap.set(canvasRef.value, { visibility: 'visible' })
+        }
       }
     }
   })
@@ -178,3 +204,57 @@ onUnmounted(() => {
   opacityTween?.kill()
 })
 </script>
+
+<style scoped>
+.canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  background-color: #10203a;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.canvas-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-fallback {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+}
+
+.canvas-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.loader-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #4d79b8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+</style>

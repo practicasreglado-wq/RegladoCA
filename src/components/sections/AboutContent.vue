@@ -245,7 +245,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  observer?.disconnect()
+  // Limpieza adicional si fuera necesaria
 })
 </script>
 
@@ -254,7 +254,7 @@ onBeforeUnmount(() => {
   height: 100vh;
   position: relative;
   overflow: hidden;
-  background: var(--color-bg-main);
+  background: var(--color-navy); /* Solid background to cover the global canvas transition */
 }
 
 .scene-background {
@@ -263,7 +263,7 @@ onBeforeUnmount(() => {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  height: 420px;
+  height: 100%; /* Changed from 420px to 100% to avoid gaps */
   overflow: hidden;
   z-index: 1;
 }
@@ -367,8 +367,8 @@ onBeforeUnmount(() => {
   background: var(--color-white) !important;
   color: #314159 !important;
   box-shadow: 0 20px 50px rgba(16, 32, 58, 0.12);
-  display: flex;
-  flex-direction: column;
+  position: relative;
+  z-index: 20;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -458,6 +458,8 @@ onBeforeUnmount(() => {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  z-index: 20;
 }
 
 .about-law__visual :deep(.scroll-scrubber) {
@@ -485,6 +487,8 @@ onBeforeUnmount(() => {
   border-radius: 24px;
   background: var(--color-white) !important;
   box-shadow: 0 30px 70px rgba(16, 32, 58, 0.12);
+  position: relative;
+  z-index: 20;
 }
 
 .about-presence__content .section__title {
