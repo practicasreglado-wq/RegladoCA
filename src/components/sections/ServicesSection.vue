@@ -227,6 +227,7 @@ const renderIdentityFrame = (index) => {
     drawX = (canvas.width - drawWidth) / 2
     drawY = 0
   }
+
   
   ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight)
 }
@@ -241,11 +242,16 @@ const resizeIdentityCanvas = () => {
 }
 
 onMounted(() => {
+  // Limpieza radical para evitar duplicación de espacios (pin-spacers)
+  ScrollTrigger.getAll().forEach(st => st.kill())
+  
   resetIdentityStats()
   preloadIdentityFrames()
   window.addEventListener('resize', resizeIdentityCanvas)
-  setTimeout(resizeIdentityCanvas, 100)
-
+  
+  // Inicialización inmediata para evitar desajustes de ScrollTrigger
+  resizeIdentityCanvas()
+  
   // 1. Transición de fondo
   backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
@@ -262,9 +268,11 @@ onMounted(() => {
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
       start: "top top",
-      end: "+=4500", // Aumentado para asegurar el scroll completo de frames
+      end: () => "+=4500", 
       pin: true,
+      pinSpacing: true,
       scrub: 1,
+      invalidateOnRefresh: true,
       anticipatePin: 1,
       onUpdate: (self) => {
         if (self.progress > 0.20 && self.progress < 0.40) {
@@ -307,10 +315,10 @@ onMounted(() => {
     t1to2 + 0.5
   )
 
-  // Sincronización del VIDEO h4 (Frames) - Se completa antes de pasar a Fase 3
+  // Sincronización del VIDEO h4 (Frames)
   masterTl.to(identityPlayhead, {
     frame: H4_FRAME_COUNT - 1,
-    duration: 5.0, // Gran espacio para asegurar el scroll total sin prisas
+    duration: 5.0, 
     ease: "none",
     onUpdate: () => renderIdentityFrame(Math.round(identityPlayhead.frame))
   }, t1to2 + 0.8)
@@ -322,9 +330,6 @@ onMounted(() => {
   .to(".services-header", { 
     opacity: 0, y: -80, duration: 0.8 
   }, t1to2 + 0.2)
-
-  // FASE 2 STILL (Lectura rápida hasta t=4.2)
-
 
   // TRANSICIÓN 2 -> 3 (t=10.0 -> t=11.5)
   const t2to3 = 10.0;
@@ -345,9 +350,6 @@ onMounted(() => {
   .to(".services__identity-overlay", {
     opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
   }, t2to3 + 0.1);
-
-  // FASE 3 STILL (Lectura rápida hasta t=6.4)
-
 
   // TRANSICIÓN 3 -> 4 (t=14.0 -> t=15.5)
   const t3to4 = 14.0;
@@ -371,6 +373,10 @@ onMounted(() => {
   
   .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5);
 
+  // Un retardo de seguridad ligeramente mayor para el primer arranque
+  setTimeout(() => {
+    ScrollTrigger.refresh()
+  }, 400)
 })
 
 watch(locale, async () => {
@@ -427,7 +433,7 @@ function animateNumbers() {
 
 <style scoped>
 .section-servicios-trigger {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;

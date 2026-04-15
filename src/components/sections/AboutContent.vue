@@ -152,14 +152,19 @@ function animateLawMetrics() {
 }
 
 onMounted(() => {
+  // Limpieza previa (opcional pero recomendada para estabilidad)
+  // ScrollTrigger.getAll().forEach(st => st.kill()) // Quitamos esto aquí porque Services ya mata todo antes
+
   if (sceneRef.value && heroVideo.value) {
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sceneRef.value,
         start: "top top",
-        end: "+=3800",
+        end: () => "+=3800",
         pin: true,
+        pinSpacing: true,
         scrub: 1,
+        invalidateOnRefresh: true,
         snap: {
           snapTo: (value, self) => {
             const labels = tl.labels;
@@ -266,6 +271,9 @@ onMounted(() => {
       .addLabel("L5");
 
     sceneTimeline = tl
+    
+    // Un pequeño retraso para el refresh asegura que el layout sea definitivo
+    setTimeout(() => ScrollTrigger.refresh(), 100)
   }
 })
 
