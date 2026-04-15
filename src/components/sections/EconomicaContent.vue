@@ -171,7 +171,7 @@ const getCardIcon = (index) => {
   background: #4a7bb7;
   border-radius: 50%;
 }
-.economica-image { position: relative; z-index: 1; }
+.economica-image { position: relative; z-index: 20; }
 .economica-image img {
   width: 100%;
   aspect-ratio: 16/10;

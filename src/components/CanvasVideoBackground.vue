@@ -1,3 +1,30 @@
+<template>
+  <div class="canvas-container">
+    <div v-if="!isReady && !showFallback" class="canvas-loader">
+      <div class="loader-spinner"></div>
+    </div>
+
+    <div
+      v-if="showFallback"
+      class="canvas-fallback"
+      :style="{ backgroundImage: `url(${fallbackImage})` }"
+    ></div>
+
+    <template v-else>
+      <canvas
+        ref="canvasRef"
+        class="canvas-bg"
+        :style="{ opacity: isReady ? opacity : 0 }"
+      ></canvas>
+
+      <div
+        class="canvas-overlay"
+        :style="{ opacity: isReady ? opacity : 0 }"
+      ></div>
+    </template>
+  </div>
+</template>
+
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import gsap from 'gsap'
@@ -45,6 +72,7 @@ const preloadSequence = async (video, imagesArray) => {
 
   for (let i = 1; i <= video.frameCount; i++) {
     const img = new Image()
+
     const promise = new Promise((resolve) => {
       img.onload = () => resolve(true)
       img.onerror = () => resolve(false)
@@ -55,8 +83,10 @@ const preloadSequence = async (video, imagesArray) => {
       loadPromises.push(promise)
     } else {
       setTimeout(() => {
-        if (!img.src) img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`
-      }, 1000 + (i * 2))
+        if (!img.src) {
+          img.src = `/frames/${video.name}/frame_${String(i).padStart(4, '0')}.webp`
+        }
+      }, 1000 + i * 2)
     }
 
     imagesArray.push(img)
@@ -113,14 +143,30 @@ const resizeCanvas = () => {
     if (ctx) {
       ctx.imageSmoothingEnabled = true
       ctx.imageSmoothingQuality = 'medium'
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.scale(dpr, dpr)
     }
 
     if (images.length > 0 && images[0]?.complete) {
-      updateDrawParams(canvasRef.value, images[0], drawParams)
+      updateDrawParams(
+        {
+          width: w,
+          height: h
+        },
+        images[0],
+        drawParams
+      )
     }
 
     lastDrawnFrame = -1
-    render(canvasRef.value, images, Math.round(playhead.frame))
+    render(
+      {
+        width: w,
+        height: h
+      },
+      images,
+      Math.round(playhead.frame)
+    )
   }
 }
 
@@ -128,16 +174,21 @@ onMounted(async () => {
   useStaticFallback.value = shouldUseStaticFallback()
   showFallback.value = useStaticFallback.value
 
-  if (useStaticFallback.value) {
-    return
-  }
+  if (useStaticFallback.value) return
 
   await preloadSequence(props.video, images)
   isReady.value = true
 
   window.addEventListener('resize', resizeCanvas)
   resizeCanvas()
-  render(canvasRef.value, images, 0)
+  render(
+    {
+      width: window.innerWidth,
+      height: window.innerHeight
+    },
+    images,
+    0
+  )
 
   playheadTween = gsap.to(playhead, {
     frame: props.video.frameCount - 1,
@@ -148,7 +199,16 @@ onMounted(async () => {
       endTrigger: '#sobre-nosotros',
       end: 'top top',
       scrub: 1,
-      onUpdate: () => render(canvasRef.value, images, Math.round(playhead.frame))
+      onUpdate: () => {
+        render(
+          {
+            width: window.innerWidth,
+            height: window.innerHeight
+          },
+          images,
+          Math.round(playhead.frame)
+        )
+      }
     }
   })
 
@@ -159,10 +219,18 @@ onMounted(async () => {
       trigger: '.section-servicios-trigger',
       start: 'top top',
       endTrigger: '#sobre-nosotros',
-      end: 'top top',
+      end: 'top 20%',
       scrub: true,
       onUpdate: (self) => {
         opacity.value = 1 - self.progress
+
+        if (canvasRef.value) {
+          if (self.progress >= 1) {
+            gsap.set(canvasRef.value, { visibility: 'hidden' })
+          } else {
+            gsap.set(canvasRef.value, { visibility: 'visible' })
+          }
+        }
       }
     }
   })
@@ -179,65 +247,63 @@ onUnmounted(() => {
 })
 </script>
 
-<template>
-  <div 
-    class="video-background-container" 
-    :style="{ opacity: opacity }"
-    v-show="!useStaticFallback || showFallback"
-  >
-    <canvas 
-      ref="canvasRef" 
-      class="video-canvas"
-      :class="{ 'is-ready': isReady }"
-    ></canvas>
-    <div class="video-overlay"></div>
-    
-    <div 
-      v-if="showFallback" 
-      class="fallback-image"
-      :style="{ backgroundImage: `url(${fallbackImage})` }"
-    ></div>
-  </div>
-</template>
-
 <style scoped>
-.video-background-container {
+.canvas-container {
   position: fixed;
   inset: 0;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   z-index: -1;
+  background-color: #10203a;
   pointer-events: none;
-  background-color: #0a0a0a;
   overflow: hidden;
-  will-change: opacity;
 }
 
-.video-canvas {
+.canvas-bg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
-  opacity: 0;
   transition: opacity 0.8s ease;
 }
 
-.video-canvas.is-ready {
-  opacity: 1;
-}
-
-.video-overlay {
+.canvas-overlay {
   position: absolute;
   inset: 0;
   background: rgba(77, 121, 184, 0.4);
-  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
 }
 
-.fallback-image {
+.canvas-fallback {
   position: absolute;
   inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 1;
+  background-repeat: no-repeat;
 }
-</style>
+
+.canvas-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.loader-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #4d79b8;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+</style>

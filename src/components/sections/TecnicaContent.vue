@@ -137,7 +137,7 @@ const { t, tm } = useI18n()
   background: #4a7bb7;
   border-radius: 50%;
 }
-.tecnica-image { position: relative; z-index: 1; }
+.tecnica-image { position: relative; z-index: 20; }
 .tecnica-image img {
   width: 100%;
   aspect-ratio: 1/1;

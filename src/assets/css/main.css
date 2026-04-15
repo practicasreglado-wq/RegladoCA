@@ -157,46 +157,6 @@ button {
   overflow: hidden;
 }
 
-.section--light::after,
-.section--white::after,
-.juridica-section::after,
-.tecnica-section::after,
-.economica-section::after,
-.economica-cards-section::after,
-.footer::after {
-  content: '';
-  position: absolute;
-  top: 28px;
-  right: 28px;
-  width: 160px;
-  aspect-ratio: 1;
-  background-image: url('../images/logo.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: 0.16;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.section--light > *,
-.section--white > *,
-.juridica-section > *,
-.tecnica-section > *,
-.economica-section > *,
-.economica-cards-section > *,
-.footer > * {
-  position: relative;
-  z-index: 1;
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-gold {
-  color: var(--color-accent);
-}
 
 .text-navy {
   color: var(--color-white);
@@ -472,19 +432,6 @@ button {
 @media (max-width: 768px) {
   :root {
     --section-py: 60px;
-  }
-
-  .section--light::after,
-  .section--white::after,
-  .juridica-section::after,
-  .tecnica-section::after,
-  .economica-section::after,
-  .economica-cards-section::after,
-  .footer::after {
-    top: 18px;
-    right: 18px;
-    width: 108px;
-    opacity: 0.12;
   }
 
   .hide-mobile {
