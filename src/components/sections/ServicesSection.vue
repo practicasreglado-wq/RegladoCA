@@ -252,6 +252,12 @@ onMounted(() => {
   // Inicialización inmediata para evitar desajustes de ScrollTrigger
   resizeIdentityCanvas()
   
+  gsap.set('.section-servicios-trigger', {
+    '--watermark-opacity': 0,
+    '--watermark-visibility': 'hidden',
+    '--watermark-rotation-num': 0
+  })
+
   // 1. Transición de fondo
   backgroundTween = gsap.to("#inicio", {
     backgroundColor: "#10203a",
@@ -282,12 +288,28 @@ onMounted(() => {
     }
   })
 
+  // Watermark Animation
+  masterTl.to(".section-servicios-trigger", {
+    "--watermark-opacity": 0.16,
+    "--watermark-visibility": "visible",
+    duration: 0.2
+  }, 1.8)
+
+  masterTl.fromTo(".section-servicios-trigger", {
+    "--watermark-rotation-num": 0
+  }, {
+    "--watermark-rotation-num": 360,
+    ease: "none",
+    duration: 20
+  }, 0)
+
   const cards = gsap.utils.toArray(".service-card")
 
   // FASE 1: Títulos y Tarjetas (Lectura inicial hasta t=2.0)
   masterTl.fromTo(".services-header .section__label, .services-main-title, .services-main-subtitle", 
     { y: 50, opacity: 0 },
-    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" }
+    { y: 0, opacity: 1, duration: 1.5, ease: "power2.out" },
+    0.2
   )
 
   cards.forEach((card, index) => {
@@ -297,7 +319,7 @@ onMounted(() => {
       rotateX: -15,
       duration: 1.2,
       ease: "power2.out"
-    }, `-=${index === 0 ? 0.4 : 0.8}`)
+    }, 0.6 + (index * 0.2))
   })
   
   // TRANSICIÓN 1 -> 2 (t=3.0 -> t=4.5)
@@ -438,6 +460,27 @@ function animateNumbers() {
   flex-direction: column;
   justify-content: center;
   background-color: var(--color-bg-main); 
+  position: relative;
+  overflow: hidden;
+}
+
+.section-servicios-trigger::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 480px;
+  max-width: 80%;
+  aspect-ratio: 1;
+  background-image: url('../../assets/images/logo.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  opacity: var(--watermark-opacity, 0);
+  visibility: var(--watermark-visibility, hidden);
+  transform: translate(-50%, -50%) rotate(calc(var(--watermark-rotation-num, 0) * 1deg));
+  pointer-events: none;
+  z-index: 0;
 }
 
 .services-header {

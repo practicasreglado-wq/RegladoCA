@@ -179,13 +179,13 @@ button {
   z-index: 0;
 }
 
-.section--light > *,
-.section--white > *,
-.juridica-section > *,
-.tecnica-section > *,
-.economica-section > *,
-.economica-cards-section > *,
-.footer > * {
+.section--light>*,
+.section--white>*,
+.juridica-section>*,
+.tecnica-section>*,
+.economica-section>*,
+.economica-cards-section>*,
+.footer>* {
   position: relative;
   z-index: 1;
 }
