@@ -252,24 +252,7 @@ onMounted(() => {
   // Inicialización inmediata para evitar desajustes de ScrollTrigger
   resizeIdentityCanvas()
   
-  gsap.set('.section-servicios-trigger', {
-    '--watermark-opacity': 0,
-    '--watermark-visibility': 'hidden',
-    '--watermark-rotation-num': 0
-  })
-
-  // 1. Transición de fondo
-  backgroundTween = gsap.to("#inicio", {
-    backgroundColor: "#10203a",
-    scrollTrigger: {
-      trigger: ".section-servicios-trigger",
-      start: "top 20%",
-      end: "top top",
-      scrub: true
-    }
-  })
-
-  // 2. TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
+  // TIMELINE - Triple Swap Cinematic Animation (Estandarizada)
   masterTl = gsap.timeline({
     scrollTrigger: {
       trigger: ".section-servicios-trigger",
@@ -288,20 +271,11 @@ onMounted(() => {
     }
   })
 
-  // Watermark Animation
-  masterTl.to(".section-servicios-trigger", {
-    "--watermark-opacity": 0.16,
-    "--watermark-visibility": "visible",
+  // Global Watermark Fade In
+  masterTl.to(".global-watermark", {
+    opacity: 0.16,
     duration: 0.2
-  }, 1.8)
-
-  masterTl.fromTo(".section-servicios-trigger", {
-    "--watermark-rotation-num": 0
-  }, {
-    "--watermark-rotation-num": 360,
-    ease: "none",
-    duration: 20
-  }, 0)
+  }, 0.2)
 
   const cards = gsap.utils.toArray(".service-card")
 
@@ -393,7 +367,8 @@ onMounted(() => {
     opacity: 0, y: -40, filter: "blur(12px)", duration: 1.2, zIndex: 1, visibility: "hidden"
   }, t3to4 + 0.1)
   
-  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5);
+  .to(".services__ordenanzas-overlay", { opacity: 0, duration: 0.8, y: -50 }, 16.5)
+  .to(".global-watermark", { opacity: 0, duration: 0.8 }, 16.5);
 
   // Un retardo de seguridad ligeramente mayor para el primer arranque
   setTimeout(() => {
@@ -423,13 +398,8 @@ watch(locale, async () => {
 })
 
 onBeforeUnmount(() => {
-  backgroundTween?.scrollTrigger?.kill()
-  backgroundTween?.kill()
-
   masterTl?.scrollTrigger?.kill()
   masterTl?.kill()
-
-  gsap.set("#inicio", { clearProps: "backgroundColor" })
 
   numbersAnimated = false
 })
@@ -459,29 +429,11 @@ function animateNumbers() {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: var(--color-bg-main); 
   position: relative;
   overflow: hidden;
 }
 
-.section-servicios-trigger::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 480px;
-  max-width: 80%;
-  aspect-ratio: 1;
-  background-image: url('../../assets/images/logo.svg');
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: contain;
-  opacity: var(--watermark-opacity, 0);
-  visibility: var(--watermark-visibility, hidden);
-  transform: translate(-50%, -50%) rotate(calc(var(--watermark-rotation-num, 0) * 1deg));
-  pointer-events: none;
-  z-index: 0;
-}
+
 
 .services-header {
   padding-top: 50px; /* Bajamos los títulos según petición */

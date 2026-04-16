@@ -83,7 +83,7 @@ const { t, tm } = useI18n()
 }
 
 .juridica-section { padding: 120px 0; overflow: hidden; }
-.juridica-section--alt { background: var(--color-bg-light); }
+.juridica-section--alt { background: transparent; }
 .juridica-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;

@@ -133,7 +133,7 @@ const getCardIcon = (index) => {
 <style scoped>
 
 .economica-section { padding: 120px 0; overflow: hidden; }
-.economica-section--alt { background: var(--color-bg-light); }
+.economica-section--alt { background: transparent; }
 .economica-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -181,7 +181,7 @@ const getCardIcon = (index) => {
 }
 .economica-cards-section {
   padding: 100px 0;
-  background: var(--color-bg-light);
+  background: transparent;
 }
 .economica-cards-grid {
   display: grid;

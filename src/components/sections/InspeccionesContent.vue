@@ -463,7 +463,6 @@ onBeforeUnmount(() => {
 <style scoped>
 .inspecciones-parallax-wrapper {
   position: relative;
-  background-color: var(--color-bg-main);
   overflow: hidden;
   width: 100%;
   --expansion-width: 100vw;
@@ -473,7 +472,6 @@ onBeforeUnmount(() => {
 .mobile-only-content { display: block; }
 
 .section--dark {
-  background: var(--color-bg-main);
   padding: 60px 0;
 }
 
@@ -573,7 +571,6 @@ onBeforeUnmount(() => {
     height: 100vh;
     width: 100%;
     position: relative;
-    background: var(--color-bg-main);
     overflow: hidden;
   }
 
@@ -605,7 +602,6 @@ onBeforeUnmount(() => {
     position: relative;
     width: 100%;
     height: 100%;
-    background: var(--color-bg-main);
     overflow: hidden;
     container-type: inline-size;
     z-index: 2;
@@ -708,7 +704,6 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
     padding: 0 8vw;
-    background: var(--color-bg-main);
   }
 
   .slide-inner-box {

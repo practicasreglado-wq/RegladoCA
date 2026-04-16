@@ -99,7 +99,7 @@ const { t, tm } = useI18n()
 <style scoped>
 
 .tecnica-section { padding: 120px 0; overflow: hidden; }
-.tecnica-section--alt { background: var(--color-bg-light); }
+.tecnica-section--alt { background: transparent; }
 .tecnica-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;

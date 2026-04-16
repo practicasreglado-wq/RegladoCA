@@ -1,7 +1,9 @@
 <template>
   <div class="has-canvas-bg">
     <CanvasVideoBackground />
+    <div id="global-dark-overlay" style="position: fixed; inset: 0; background-color: var(--color-bg-main); z-index: -1; opacity: 0; pointer-events: none;"></div>
     <TheNavbar />
+    <GlobalWatermark />
     <main>
       <!-- Inicio -->
       <div id="inicio" class="dark-transition-bg">
@@ -62,13 +64,61 @@ import TecnicaContent      from '@/components/sections/TecnicaContent.vue'
 import EconomicaContent    from '@/components/sections/EconomicaContent.vue'
 import ContactoContent     from '@/components/sections/ContactoContent.vue'
 import CanvasVideoBackground from '@/components/CanvasVideoBackground.vue'
+import GlobalWatermark       from '@/components/GlobalWatermark.vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const { t, tm } = useI18n()
+
+onMounted(() => {
+  // Oscurece el video de fondo cuando salimos del Hero
+  gsap.to("#global-dark-overlay", {
+    opacity: 1,
+    scrollTrigger: {
+      trigger: ".section-servicios-trigger",
+      start: "top 20%",
+      end: "top top",
+      scrub: true
+    }
+  })
+
+  // Trigger: Se muestra desde Inspecciones hasta el final de las consultorías
+  // (La sección de Servicios controla su propia opacidad en ServicesSection.vue)
+  ScrollTrigger.create({
+    trigger: "#inspecciones-tributarias",
+    start: "top 80%",
+    endTrigger: "#consultoria-economica",
+    end: "bottom 20%",
+    onToggle: self => {
+      gsap.to(".global-watermark", { 
+        opacity: self.isActive ? 0.16 : 0, 
+        duration: 0.4, 
+        overwrite: "auto" 
+      })
+    }
+  })
+})
+
+onBeforeUnmount(() => {
+  ScrollTrigger.getAll().forEach(st => {
+    if (st.vars.trigger === "#inspecciones-tributarias") {
+      st.kill()
+    }
+  })
+})
 </script>
 
 <style scoped>
+main {
+  position: relative;
+  z-index: 10;
+}
+
 #inicio {
-  background-color: transparent; /* Quitamos !important para permitir la animación de GSAP */
+  background-color: transparent; 
   transition: background-color 0.8s ease;
 }
 
