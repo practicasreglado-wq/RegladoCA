@@ -5,19 +5,46 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, onBeforeUnmount, ref } from 'vue'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 const logoRef = ref(null)
 
+let scrollHandler = null
+let currentRotation = 0
+let lastScrollY = 0
+
 onMounted(() => {
   if (logoRef.value) {
-    gsap.to(logoRef.value, {
-      rotation: 360,
-      duration: 18,
-      repeat: -1,
-      ease: "none"
-    })
+    lastScrollY = window.scrollY
+    
+    scrollHandler = () => {
+      const currentScrollY = window.scrollY
+      const delta = currentScrollY - lastScrollY
+      lastScrollY = currentScrollY
+      
+      // Calculate rotation: 0.1 degrees per pixel scrolled (adjust if needed)
+      currentRotation += delta * 0.15
+      
+      // Tween the rotation to provide a buttery smooth 'scrub' inertia effect
+      gsap.to(logoRef.value, {
+        rotation: currentRotation,
+        duration: 1.2,
+        ease: "power2.out",
+        overwrite: "auto"
+      })
+    }
+    
+    window.addEventListener("scroll", scrollHandler, { passive: true })
+  }
+})
+
+onBeforeUnmount(() => {
+  if (scrollHandler) {
+    window.removeEventListener("scroll", scrollHandler)
   }
 })
 </script>
